@@ -178,7 +178,7 @@ function cidr(s) {
 /* ---------- Quiz widget ---------- */
 function buildQuiz(host, qs, onFinish) {
   let score = 0, answered = 0;
-  host.innerHTML = qs.map((q, i) => `<div class="q" data-i="${i}"><p>${i + 1}. ${esc(q.q)}</p><div class="opts">${q.o.map((o, j) => `<button class="opt" data-j="${j}">${esc(o)}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('') + `<div class="row"><span class="score" id="qs"></span><button class="btn ghost" id="qr" hidden>Try again</button></div>`;
+  host.innerHTML = qs.map((q, i) => `<div class="q" data-i="${i}"><p>${i + 1}. ${esc(q.q)}</p>${q.code ? `<pre class="qcode">${esc(q.code)}</pre>` : ''}<div class="opts">${q.o.map((o, j) => `<button class="opt" data-j="${j}">${esc(o)}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('') + `<div class="row"><span class="score" id="qs"></span><button class="btn ghost" id="qr" hidden>Try again</button></div>`;
   host.onclick = e => {
     const b = e.target.closest('.opt'); if (b) {
       const qd = b.closest('.q'); if (qd.dataset.done) return; qd.dataset.done = 1; const q = qs[+qd.dataset.i]; const j = +b.dataset.j;

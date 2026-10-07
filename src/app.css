@@ -217,3 +217,5 @@ body.dockopen main{padding-bottom:min(52vh,460px)}
 main select,main input{max-width:100%;min-width:0;box-sizing:border-box}
 :root[data-theme="dark"] .themes button.on,:root[data-theme="dark"] .btn:not(.ghost){color:#10122a}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]):not([data-theme="reading"]) .themes button.on,:root:not([data-theme="light"]):not([data-theme="reading"]) .btn:not(.ghost){color:#10122a}}
+
+.qcode{background:var(--term-bg);color:var(--term-ink);border-radius:10px;padding:12px 14px;margin:8px 0 10px;overflow-x:auto;font-size:.88rem;line-height:1.5;white-space:pre}

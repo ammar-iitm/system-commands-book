@@ -20,7 +20,7 @@ html=f'''<!doctype html>
 <div class="pal" id="pal"><div class="palbox"><input id="palq" placeholder="Search commands, topics, lectures…" autocomplete="off"><ul id="palul"></ul></div></div>
 <script>window.LECT={json.dumps(L,ensure_ascii=False)};</script>
 <script>{rd('engine.js')}</script>
-<script>{rd('content1.js')}</script><script>{rd('content2.js')}</script><script>{rd('content3.js')}</script>
+<script>{rd('content1.js')}</script><script>{rd('content2.js')}</script><script>{rd('content3.js')}</script><script>{rd('quiz_extra.js')}</script>
 <script>{rd('app.js')}</script></body></html>'''
 html=html.replace('</script>','</script>')
 open('navigating-linux-interactive-book.html','w',encoding='utf8').write(html)
