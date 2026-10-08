@@ -95,6 +95,13 @@ pre.diagram{white-space:pre}
 .score{font-family:var(--serif);font-size:1.6rem}
 .toc{position:fixed;right:14px;top:96px;width:190px;font-size:.8rem;display:none}
 @media(min-width:1840px){.toc{display:block}}
+@media(max-width:1839px){
+.toc{position:static;width:auto;display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 16px}
+.toc b{width:100%;margin:0 0 2px}
+.toc a{flex:none;display:inline-block;padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel);white-space:nowrap}
+.toc a:hover{background:var(--accent-soft)}
+}
+@media(max-width:700px){.toc{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;scrollbar-width:thin}.toc b{width:auto;margin:0 4px 0 0;white-space:nowrap}}
 .toc b{display:block;text-transform:uppercase;letter-spacing:1px;font-size:.68rem;color:var(--ink2);margin-bottom:6px}
 .toc a{display:block;padding:3px 0 3px 10px;border-left:2px solid var(--line);color:var(--ink2)}
 .toc a:hover{color:var(--accent);border-color:var(--accent);text-decoration:none}
