@@ -131,10 +131,11 @@ function render(opts) {
 function vHome(m) {
   const cmdCount = CH.reduce((a, c) => a + c.sections.reduce((b, s) => b + (s.cmds || []).length, 0), 0);
   const nQ = CH.reduce((a, c) => a + c.quiz.length, 0);
-  m.innerHTML = `<div class="page wide"><div class="hero"><div class="eyebrow">IIT Madras BS · System Commands (SE2001)</div>
+  m.innerHTML = `<div class="page wide"><div class="hero"><div class="eyebrow">IIT Madras BS</div>
     <h1>Navigating Linux</h1>
     <p class="lede">Read a concept, run its examples in a sandbox terminal, then check yourself. ${CH.length} chapters follow the weekly lectures.</p>
-    <div class="row"><a class="btn" href="#/ch/essentials">Start chapter 1</a><button class="btn ghost" id="hTerm">Open terminal</button><button class="btn ghost" id="hSearch">Search <kbd>Ctrl K</kbd></button></div>
+    <div class="row subj"><span class="badge"><b>System Commands</b> · SE2001</span><span class="badge"><b>Linux and Programming</b> · CS1102</span></div>
+    <div class="row" style="margin-top:14px"><a class="btn" href="#/ch/essentials">Start chapter 1</a><button class="btn ghost" id="hTerm">Open terminal</button><button class="btn ghost" id="hSearch">Search <kbd>Ctrl K</kbd></button></div>
     <div class="row" style="margin-top:16px;color:var(--ink2);font-size:.86rem"><span class="badge">${cmdCount} commands</span><span class="badge">${nQ} quiz questions</span><span class="badge">${window.CHALLENGES.length} terminal challenges</span></div></div>
     <div class="cards">${CH.map(c => `<a class="card" href="#/ch/${c.id}"><div class="tile">${ICON(c.icon)}</div><b>${c.n}. ${esc(c.title)}</b><span>${esc(c.intro)}</span><div class="meta"><span class="badge">${esc(c.weeks)}</span>${prog.done[c.id] ? '<span class="badge ok">complete</span>' : ''}${prog.quiz[c.id] ? `<span class="badge">quiz ${prog.quiz[c.id].score}/${prog.quiz[c.id].total}</span>` : ''}</div></a>`).join('')}</div>
     <p class="credit-line">Curated and created by Ammar Hashmi for IIT Madras BS students.</p></div>`;

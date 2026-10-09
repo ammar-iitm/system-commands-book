@@ -11,7 +11,7 @@ icon_uri='data:image/svg+xml,'+icon
 icon_links=f'<link rel="icon" type="image/svg+xml" href="{icon_uri}"><link rel="apple-touch-icon" href="{icon_uri}">'
 html=f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>System Commands (SE2001) — Interactive Book</title>{icon_links}
+<title>System Commands (SE2001) &amp; Linux and Programming (CS1102)</title>{icon_links}
 <style>{rd('app.css')}</style></head><body>
 <header class="topbar"><button class="iconbtn" id="menuBtn" aria-label="Menu"><i class="svgi" data-i="menu"></i></button>
 <a class="brand" href="#/home" style="color:inherit"><i class="svgi" data-i="terminal-square"></i><span>Navigating Linux<small>by Ammar Hashmi · IIT Madras BS</small></span></a><span class="spacer"></span>

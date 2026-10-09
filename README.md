@@ -1,6 +1,6 @@
-# System Commands (SE2001) – Interactive Book
+# System Commands (SE2001) and Linux and Programming (CS1102) – Interactive Book
 
-Curated and created by Ammar Hashmi, for IIT Madras BS students taking System Commands (SE2001).
+Curated and created by Ammar Hashmi, for IIT Madras BS students taking System Commands (SE2001) and Linux and Programming (CS1102).
 
 Open `navigating-linux-interactive-book.html` (or `index.html`, an identical copy) in any browser. It works offline and includes:
 

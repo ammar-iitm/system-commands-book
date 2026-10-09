@@ -270,3 +270,5 @@ h1>.svgi{color:var(--accent);width:.8em;height:.8em;margin-right:.1em;vertical-a
 .themes button .svgi,.pill .svgi{width:1rem;height:1rem;vertical-align:-.2em}
 .exhead button .svgi{width:.85em;height:.85em;vertical-align:-.1em}
 .exhead .run .svgi{fill:currentColor}
+
+.subj{margin-top:14px;gap:8px}.subj .badge{font-size:.86rem;padding:5px 12px}
