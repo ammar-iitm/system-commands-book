@@ -176,7 +176,7 @@ done</pre>
       cmds: [['case $v in p) …;; esac', 'Pattern switch'], ['select o in a b; do …; done', 'Menu loop'], ['PS3="Choose: "', 'Prompt for select']],
       ex: [] },
     { id: 'loops', h: 'Loops: for, while, until',
-      html: `<pre class="diagram">for f in *.txt; do echo "$f has $(wc -l < "$f") lines"; done
+      html: `<pre class="diagram">for f in *.txt; do echo "$f has $(wc -l &lt; "$f") lines"; done
 for i in {1..5}; do echo $i; done
 for ((i=0; i&lt;3; i++)); do echo $i; done
 while read -r line; do echo "&gt; $line"; done &lt; fruits.txt

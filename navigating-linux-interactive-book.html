@@ -41,10 +41,10 @@ main{padding:34px clamp(18px,4vw,56px) 140px;min-width:0}
 .page{max-width:900px;margin:0 auto}
 .page.wide{max-width:1100px}
 .eyebrow{font:700 .74rem var(--sans);letter-spacing:1.4px;text-transform:uppercase;color:var(--accent)}
-h1{font-family:var(--serif);font-size:clamp(2rem,4vw,2.9rem);line-height:1.12;margin:.2em 0 .3em;letter-spacing:-.4px}
-h2{font-family:var(--serif);font-size:1.6rem;margin:0 0 .5em;letter-spacing:-.2px}
+h1{font-family:var(--serif);font-size:clamp(1.8rem,3.4vw,2.5rem);line-height:1.15;margin:.2em 0 .3em;letter-spacing:-.3px;text-wrap:balance}
+h2{font-family:var(--serif);font-size:1.45rem;line-height:1.25;margin:0 0 .5em;letter-spacing:-.2px;text-wrap:balance}
 h3{font-size:1.05rem;margin:1.2em 0 .4em}h4{margin:1em 0 .3em;font-size:.95rem}
-.lede{font-size:1.12rem;color:var(--ink2);max-width:62ch}
+.lede{font-size:1.05rem;color:var(--ink2);max-width:62ch;margin:.2em 0 1.2em}
 .hero{padding:6px 0 26px}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:22px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);display:block;color:var(--ink);transition:transform .15s,border-color .15s}
@@ -53,7 +53,7 @@ h3{font-size:1.05rem;margin:1.2em 0 .4em}h4{margin:1em 0 .3em;font-size:.95rem}
 .card .meta{margin-top:10px;font-size:.74rem;color:var(--ink2);display:flex;gap:10px;align-items:center}
 .badge{display:inline-block;padding:2px 9px;border-radius:99px;background:var(--code-bg);font-size:.72rem;color:var(--ink2)}
 .badge.ok{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
-.sec{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px 28px;margin:22px 0;box-shadow:var(--shadow);scroll-margin-top:76px}
+.sec{border-top:1px solid var(--line);padding:30px 0 10px;margin:0;scroll-margin-top:76px}
 .sec p{margin:.7em 0}.sec ul,.sec ol{padding-left:1.3em}.sec li{margin:.25em 0}
 .t{border-collapse:collapse;width:100%;font-size:.9rem;margin:12px 0;display:block;overflow-x:auto}
 .t th,.t td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
@@ -96,18 +96,6 @@ pre.diagram{white-space:pre}
 .btn:hover{filter:brightness(1.07)}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .score{font-family:var(--serif);font-size:1.6rem}
-.toc{position:fixed;right:14px;top:96px;width:190px;font-size:.8rem;display:none}
-@media(min-width:1840px){.toc{display:block}}
-@media(max-width:1839px){
-.toc{position:static;width:auto;display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 16px}
-.toc b{width:100%;margin:0 0 2px}
-.toc a{flex:none;display:inline-block;padding:5px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel);white-space:nowrap}
-.toc a:hover{background:var(--accent-soft)}
-}
-@media(max-width:700px){.toc{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px;scrollbar-width:thin}.toc b{width:auto;margin:0 4px 0 0;white-space:nowrap}}
-.toc b{display:block;text-transform:uppercase;letter-spacing:1px;font-size:.68rem;color:var(--ink2);margin-bottom:6px}
-.toc a{display:block;padding:3px 0 3px 10px;border-left:2px solid var(--line);color:var(--ink2)}
-.toc a:hover{color:var(--accent);border-color:var(--accent);text-decoration:none}
 .pn{display:flex;justify-content:space-between;gap:12px;margin-top:30px}
 /* map */
 .weeks details{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin:10px 0;overflow:hidden}
@@ -198,7 +186,6 @@ textarea{min-height:170px;resize:vertical;line-height:1.5}
   .side{position:fixed;left:0;top:57px;width:290px;background:var(--bg);z-index:35;transform:translateX(-100%);transition:transform .2s;height:calc(100vh - 57px)}
   .side.open{transform:none;box-shadow:var(--shadow)}
   #menuBtn{display:inline-flex}.searchbtn{min-width:0}.searchbtn .lbl{display:none}
-  .sec{padding:18px 16px;border-radius:14px}
 }
 @media print{.topbar,.side,.dock,.toc,.noprint,.pal{display:none!important}.layout{display:block}main{padding:0}body{background:#fff;color:#000}.cheat section,.sec{box-shadow:none}}
 
@@ -215,13 +202,9 @@ body.dockopen main{padding-bottom:min(52vh,460px)}
 .themes{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--panel)}
 .themes button{border:0;background:none;padding:6px 11px;font-size:.82rem;color:var(--ink2)}
 .themes button.on{background:var(--accent);color:#fff}
-.wm{position:fixed;inset:0;z-index:1;pointer-events:none;display:grid;place-items:center;overflow:hidden;user-select:none}
-.wm span{transform:rotate(-24deg);font:800 clamp(2.4rem,9vw,7.5rem)/1.05 var(--serif);letter-spacing:.04em;color:var(--ink);opacity:.045;text-align:center;white-space:nowrap}
-.wm small{display:block;font:600 .22em var(--sans);letter-spacing:.3em;text-transform:uppercase}
 .layout,.topbar,.dock{position:relative}.topbar{position:sticky}.dock{position:fixed}
 .credit{display:inline-flex;gap:8px;align-items:center;margin-top:14px;padding:6px 14px;border-radius:99px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:.88rem}
 .foot b{color:var(--ink)}
-@media print{.wm span{opacity:.07}}
 @media(max-width:700px){.themes button{padding:6px 8px;font-size:.74rem}.themes .tl{display:none}}
 @media(max-height:480px) and (orientation:landscape){.topbar{padding:4px 12px}.dock{height:70vh}.side{top:45px;height:calc(100vh - 45px)}.hero{padding-bottom:10px}}
 main select,main input{max-width:100%;min-width:0;box-sizing:border-box}
@@ -229,6 +212,56 @@ main select,main input{max-width:100%;min-width:0;box-sizing:border-box}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]):not([data-theme="reading"]) .themes button.on,:root:not([data-theme="light"]):not([data-theme="reading"]) .btn:not(.ghost){color:#10122a}}
 
 .qcode{background:var(--term-bg);color:var(--term-ink);border-radius:10px;padding:12px 14px;margin:8px 0 10px;overflow-x:auto;font-size:.88rem;line-height:1.5;white-space:pre}
+
+
+/* ===== Readability layer =====
+   Prose is a ~68ch column; commands sit in a collapsed panel; the quiz shows one question at a time;
+   the chapter outline is a sticky rail on wide screens and one scrollable row on narrow ones. */
+.chapter{display:grid;grid-template-columns:minmax(0,1fr);max-width:1060px;margin:0 auto}
+.chapter .page{max-width:none;margin:0;min-width:0}
+.prose{max-width:68ch}
+.prose p{margin:.8em 0}
+.prose ul,.prose ol{padding-left:1.3em}
+.prose li{margin:.3em 0}
+.callout{max-width:68ch}
+.toc{order:-1;display:flex;gap:6px;overflow-x:auto;white-space:nowrap;scrollbar-width:thin;padding:0 0 8px;margin:0 0 14px;font-size:.8rem}
+.toc b{display:none}
+.toc a{flex:none;padding:5px 12px;border:1px solid var(--line);border-radius:999px;color:var(--ink2);background:var(--panel)}
+.toc a:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.toc a.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+@media(min-width:1180px){
+  .chapter{grid-template-columns:minmax(0,720px) 210px;gap:0 56px}
+  .toc{order:0;display:block;position:sticky;top:84px;align-self:start;max-height:calc(100vh - 150px);overflow:auto;margin:0;padding:0;font-size:.82rem;white-space:normal}
+  .toc b{display:block;text-transform:uppercase;letter-spacing:1px;font-size:.68rem;color:var(--ink2);margin:0 0 8px}
+  .toc a{display:block;border:0;border-left:2px solid var(--line);border-radius:0;background:none;padding:5px 0 5px 12px;line-height:1.35}
+  .toc a.on{background:none;border-color:var(--accent)}
+}
+:root[data-theme="reading"] .chapter{grid-template-columns:minmax(0,1fr);max-width:760px}
+.more{margin:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.more>summary{cursor:pointer;padding:9px 14px;font:600 .84rem var(--sans);color:var(--ink2);list-style:none;display:flex;gap:8px;align-items:center}
+.more>summary::-webkit-details-marker{display:none}
+.more>summary::before{content:"▸";color:var(--accent);transition:transform .15s}
+.more[open]>summary::before{transform:rotate(90deg)}
+.more[open]>summary{border-bottom:1px solid var(--line)}
+.more>summary:hover{color:var(--ink)}
+.more .cmdgrid{padding:8px}
+.more .hint{font-weight:400;color:var(--ink2);font-size:.78rem}
+.tryit{margin:18px 0 8px}
+.tryit .cmdtitle{margin-top:0}
+.ex{margin:6px 0;border-radius:10px}
+.exhead{padding:6px 8px 6px 12px}
+.exout{padding:10px 14px;font-size:.84rem}
+.quiz{margin-top:8px}
+.qtop{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:.84rem;color:var(--ink2)}
+.qbar{flex:1;height:6px;border-radius:99px;background:var(--code-bg);overflow:hidden}
+.qbar i{display:block;height:100%;background:var(--accent);transition:width .25s}
+.q{margin:0}
+.q p{font-size:1.02rem;line-height:1.5}
+.qdone{text-align:center;padding:18px 0}
+.credit-line{margin-top:56px;padding-top:14px;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink2)}
+.hero .row{margin-top:18px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:600px){.more .hint{display:none}}
 </style></head><body>
 <header class="topbar"><button class="iconbtn" id="menuBtn" aria-label="Menu">☰</button>
 <a class="brand" href="#/home" style="color:inherit"><span style="font-size:1.5rem">🐧</span><span>Navigating Linux<small>by Ammar Hashmi · IIT Madras BS</small></span></a><span class="spacer"></span>
@@ -798,10 +831,10 @@ function VirtualShell() {
   function writeFile(p, s, app) { if (p === '/dev/null') return; const { dir, name } = parentOf(p); if (!dir || dir.t !== 'd') throw new Error(`${p}: No such file or directory`); const ex = dir.c[name]; if (ex && ex.t === 'd') throw new Error(`${p}: Is a directory`); if (ex && !(ex.m & 0o222)) throw new Error(`${p}: Permission denied`); if (ex) ex.s = app ? ex.s + s : s; else dir.c[name] = { t: 'f', s, m: 0o644 }; }
   sh.readFile = readFile;
   function modeStr(n) { const m = n.m; const c = n.t === 'd' ? 'd' : n.link ? 'l' : '-'; let s = c; for (let i = 8; i >= 0; i--) s += (m & (1 << i)) ? 'rwx'[(8 - i) % 3] : '-'; return s; }
-  function lsLine(name, n, h) { const size = n.t === 'd' ? 4096 : n.s.length; const sz = h ? (size >= 1024 ? (size / 1024).toFixed(1) + 'K' : String(size)) : String(size); return `${modeStr(n)} ${n.t === 'd' ? 2 : 1} student student ${sz.padStart(5)} Oct  7 10:00 ${name}${n.link ? ' -> ' + n.link : ''}`; }
+  function lsLine(name, n, h) { const size = n.t === 'd' ? 4096 : (n.sz ?? n.s.length); const sz = h ? (size >= 1024 ? (size / 1024).toFixed(1) + 'K' : String(size)) : String(size); return `${modeStr(n)} ${n.t === 'd' ? 2 : 1} student student ${sz.padStart(5)} Oct  7 10:00 ${name}${n.link ? ' -> ' + n.link : ''}`; }
   // tokenizer / expander
   // ---- variables, attributes, arrays, functions ----
-  sh.arrs = {}; sh.attrs = {}; sh.funcs = {}; sh.args = []; sh.script = 'bash'; sh.frames = []; sh.stdinBuf = null; sh.depth = 0;
+  sh.arrs = {}; sh.attrs = {}; sh.funcs = {}; sh.args = []; sh.script = 'bash'; sh.frames = []; sh.stdinBuf = null; sh.opts = { e: false, u: false }; sh.noErr = 0; sh.tty = true; sh.subDepth = 0; sh.depth = 0;
   class Ctl { constructor(type, n) { this.type = type; this.n = n; } }
   sh.Ctl = Ctl;
   const isSet = n => n in sh.vars || n in sh.env || n in sh.arrs || /^\d+$/.test(n) && (+n === 0 || +n <= sh.args.length);
@@ -821,7 +854,7 @@ function VirtualShell() {
   sh.getVar = getVar; sh.setVar = setVar;
   function arith(src) {
     const re = /\s*(0[xX][0-9a-fA-F]+|\d+|\$?[A-Za-z_]\w*|\*\*|\+\+|--|<<|>>|<=|>=|==|!=|&&|\|\||[-+*\/%&|^]=|[-+*\/%<>()!?:=&|^~,])/y;
-    const t = []; re.lastIndex = 0; let m; src = String(src);
+    const t = []; re.lastIndex = 0; let m; src = String(src).trim();
     while (re.lastIndex < src.length && (m = re.exec(src))) t.push(m[1]);
     if (re.lastIndex < src.trimEnd().length) throw new Error('syntax error in expression (error token is "' + src.slice(re.lastIndex).trim() + '")');
     let p = 0; const peek = () => t[p], nx = () => t[p++];
@@ -901,7 +934,7 @@ function VirtualShell() {
     if (s[i + 1] === '(' && s[i + 2] === '(') { const e = matchClose(s, i + 1, '(', ')'); if (e > 0 && s[e - 1] === ')') return [String(arith(expandStr(s.slice(i + 3, e - 1)))), e + 1]; }
     if (s[i + 1] === '(') { const e = matchClose(s, i + 1, '(', ')'); if (e > 0) return [sh.sub(s.slice(i + 2, e)), e + 1]; }
     if (s[i + 1] === '{') { const e = matchClose(s, i + 1, '{', '}'); if (e > 0) return [paramExpand(s.slice(i + 2, e)), e + 1]; }
-    const m = /^\$([A-Za-z_]\w*|\d|[?$#@*!-])/.exec(s.slice(i)); if (m) return [getVar(m[1]), i + m[0].length];
+    const m = /^\$([A-Za-z_]\w*|\d|[?$#@*!-])/.exec(s.slice(i)); if (m) { if (sh.opts.u && /^[A-Za-z_\d]/.test(m[1]) && !isSet(m[1])) throw new Error(m[1] + ': unbound variable'); return [getVar(m[1]), i + m[0].length]; }
     return null;
   }
   function expandStr(s) {
@@ -952,7 +985,7 @@ function VirtualShell() {
       if (c === ' ' || c === '\t') { i++; continue; }
       if (c === '#') break;
       if (c === '|' ) { if (line[i + 1] === '|') { toks.push({ t: 'op', v: '||' }); i += 2; } else if (line[i + 1] === '&') { toks.push({ t: 'op', v: '|' }); i += 2; } else { toks.push({ t: 'op', v: '|' }); i++; } continue; }
-      if (c === '&') { if (line[i + 1] === '&') { toks.push({ t: 'op', v: '&&' }); i += 2; } else { toks.push({ t: 'op', v: '&' }); i++; } continue; }
+      if (c === '&') { if (line[i + 1] === '&') { toks.push({ t: 'op', v: '&&' }); i += 2; } else if (line[i + 1] === '>') { const ap = line[i + 2] === '>'; toks.push({ t: 'op', v: ap ? '&>>' : '&>' }); i += ap ? 3 : 2; } else { toks.push({ t: 'op', v: '&' }); i++; } continue; }
       if (c === ';') { toks.push({ t: 'op', v: ';' }); i++; continue; }
       const rm = /^(\d?)(<<<|>>|>&|>|<)/.exec(line.slice(i));
       if (rm && (rm[1] === '' || /[ \t]|^/.test(line[i - 1] || ' '))) { toks.push({ t: 'op', v: rm[0] }); i += rm[0].length; continue; }
@@ -968,11 +1001,11 @@ function VirtualShell() {
         if (ch === '*' || ch === '?') hasGlob = true; else if (ch === '[' ) hasGlob = true;
         w += ch; i++;
       }
-      if (hadExp && !quoted) { const parts = w.split(/[ \t\n]+/).filter(Boolean); toks.push({ t: 'w', v: parts[0] ?? '', quoted, glob: hasGlob, multi: parts }); } else toks.push({ t: 'w', v: w, quoted, glob: hasGlob && !quoted });
+      if (hadExp && !quoted && !/^[A-Za-z_]\w*(\[[^\]]*\])?\+?=/.test(w)) { const parts = w.split(/[ \t\n]+/).filter(Boolean); toks.push({ t: 'w', v: parts[0] ?? '', quoted, glob: hasGlob, multi: parts }); } else toks.push({ t: 'w', v: w, quoted, glob: hasGlob && !quoted });
     }
     return toks;
   }
-  sh.sub = function (cmd) { const r = sh.exec(cmd); return r.out.replace(/\n+$/, ''); };
+  sh.sub = function (cmd) { sh.subDepth++; try { const r = sh.exec(cmd); return r.out.replace(/\n+$/, ''); } finally { sh.subDepth--; } };
   // Commands
   const C = {};
   const optParse = (args, spec) => { const o = {}; const rest = []; let end = false; for (let i = 0; i < args.length; i++) { const a = args[i]; if (end || a === '-' || !a.startsWith('-') || /^-\d+$/.test(a) && !spec.num) { rest.push(a); continue; } if (a === '--') { end = true; continue; } if (a.startsWith('--')) { const [k, v] = a.slice(2).split('='); o[k] = v === undefined ? true : v; continue; } if (/^-\d+$/.test(a) && spec.num) { o.n = a.slice(1); continue; } for (let j = 1; j < a.length; j++) { const f = a[j]; if (spec.val && spec.val.includes(f)) { const v = a.slice(j + 1) || args[++i]; o[f] = v; break; } o[f] = true; } } return { o, rest }; };
@@ -982,7 +1015,7 @@ function VirtualShell() {
   C.pwd = () => ({ out: sh.cwd + '\n' });
   C.cd = a => { const t = a[0] === '-' ? (sh.oldpwd || sh.cwd) : !a[0] || a[0] === '~' ? sh.env.HOME : a[0]; const p = norm(t.replace(/^~/, sh.env.HOME)); const n = get(p); if (!n) return { err: `bash: cd: ${t}: No such file or directory\n`, code: 1 }; if (n.t !== 'd') return { err: `bash: cd: ${t}: Not a directory\n`, code: 1 }; sh.oldpwd = sh.cwd; sh.cwd = p; sh.env.PWD = p; return { out: a[0] === '-' ? p + '\n' : '' }; };
   C.ls = (args) => {
-    const { o, rest } = optParse(args, {}); const all = o.a || o.A || o.all; const long = o.l; const h = o.h; const targets = rest.length ? rest : ['.']; let out = '', err = '', code = 0;
+    const { o, rest } = optParse(args.map(x => x === '-1' ? '--one' : x), {}); const all = o.a || o.A || o.all; const long = o.l; const h = o.h; const targets = rest.length ? rest : ['.']; let out = '', err = '', code = 0;
     const multi = targets.length > 1;
     targets.forEach((t, ti) => {
       const n = get(t); if (!n) { err += `ls: cannot access '${t}': No such file or directory\n`; code = 2; return; }
@@ -991,7 +1024,7 @@ function VirtualShell() {
       let names = Object.keys(n.c).sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase())); if (!all) names = names.filter(x => !x.startsWith('.')); else if (!o.A) names = ['.', '..', ...names];
       if (long) { out += `total ${Math.max(4, names.length * 4)}\n`; for (const nm of names) { const cn = nm === '.' || nm === '..' ? { t: 'd', m: 0o755, c: {} } : n.c[nm]; out += lsLine(nm, cn, h) + '\n'; } }
       else if (o.i) out += names.map((nm, i) => (131000 + i * 7 + nm.length) + ' ' + nm).join('\n') + (names.length ? '\n' : '');
-      else if (o['1']) out += J(names); else out += names.join('  ') + (names.length ? '\n' : '');
+      else if (o.one || !sh.tty) out += J(names); else out += names.join('  ') + (names.length ? '\n' : '');
     });
     return { out, err, code };
   };
@@ -1000,7 +1033,37 @@ function VirtualShell() {
   C.rev = (a, stdin) => ({ out: J(lines(filesOrStdin(a, stdin).map(f => f.s).join('')).map(l => l.split('').reverse().join(''))) });
   C.nl = (a, stdin) => { let k = 0; return { out: lines(filesOrStdin(a, stdin).map(f => f.s).join('')).map(l => l === '' ? '' : String(++k).padStart(6) + '\t' + l).join('\n') + '\n' }; };
   C.echo = args => { let nl = true, esc = false; const a = [...args]; while (a[0] && /^-[neE]+$/.test(a[0])) { if (a[0].includes('n')) nl = false; if (a[0].includes('e')) esc = true; a.shift(); } let s = a.join(' '); if (esc) s = s.replace(/\\n/g, '\n').replace(/\\t/g, '\t'); return { out: s + (nl ? '\n' : '') }; };
-  C.printf = args => { const f = args[0] || ''; let ai = 1; const s = f.replace(/\\n/g, '\n').replace(/\\t/g, '\t'); const out = s.replace(/%(-?\d*)(?:\.(\d+))?([sdf%])/g, (m, w, pr, c) => { if (c === '%') return '%'; const v = args[ai++] ?? ''; let r = c === 'd' ? String(parseInt(v) || 0) : c === 'f' ? (parseFloat(v) || 0).toFixed(pr === undefined ? 6 : +pr) : v; const wn = parseInt(w); if (wn) r = w.startsWith('-') ? r.padEnd(-wn) : r.padStart(wn); return r; }); return { out }; };
+  C.printf = args => {
+    if (!args.length) return { err: 'printf: usage: printf [-v var] format [arguments]\n', code: 2 };
+    const ESC = { n: '\n', t: '\t', r: '\r', a: '\x07', b: '\b', f: '\f', v: '\v', '\\': '\\', '"': '"', "'": "'", e: '\x1b' };
+    const unesc = t => t.replace(/\\([0-7]{1,3}|x[0-9a-fA-F]{1,2}|[ntrabfv\\"'e])/g, (m, c) => c in ESC ? ESC[c] : String.fromCharCode(c[0] === 'x' ? parseInt(c.slice(1), 16) : parseInt(c, 8) || 0));
+    const fmt = unesc(args[0]); let ai = 1, err = '', code = 0;
+    const num = v => { if (v === undefined || v === '') return 0; if (/^['"]./.test(v)) return v.charCodeAt(1); const n = /^[-+]?0[xX]/.test(v) ? parseInt(v, 16) : Number(v); if (Number.isNaN(n)) { err += `printf: ${v}: invalid number\n`; code = 1; return 0; } return n; };
+    const pass = () => {
+      let used = 0;
+      const out = fmt.replace(/%([-+ 0#]*)(\d*)(?:\.(\d+))?([sdifeEgGxXocb%])/g, (m, fl, w, pr, c) => {
+        if (c === '%') return '%';
+        const raw = args[ai++]; used++; let r, numeric = true;
+        if (c === 's') { r = raw ?? ''; if (pr !== undefined) r = r.slice(0, +pr); numeric = false; }
+        else if (c === 'b') { r = unesc(raw ?? ''); numeric = false; }
+        else if (c === 'c') { r = (raw ?? '').charAt(0); numeric = false; }
+        else {
+          const n = num(raw);
+          if (c === 'd' || c === 'i') { r = String(Math.trunc(Math.abs(n))); if (pr !== undefined) r = r.padStart(+pr, '0'); r = (n < 0 ? '-' : fl.includes('+') ? '+' : fl.includes(' ') ? ' ' : '') + r; }
+          else if (c === 'f') { r = Math.abs(n).toFixed(pr === undefined ? 6 : +pr); r = (n < 0 ? '-' : fl.includes('+') ? '+' : '') + r; }
+          else if (c === 'e' || c === 'E') { r = n.toExponential(pr === undefined ? 6 : +pr).replace(/e([+-])(\d)$/, 'e$10$2'); if (c === 'E') r = r.toUpperCase(); }
+          else if (c === 'g' || c === 'G') r = String(Number(n.toPrecision(pr === undefined ? 6 : Math.max(1, +pr))));
+          else { r = BigInt.asUintN(64, BigInt(Math.trunc(n))).toString(c === 'o' ? 8 : 16); if (c === 'X') r = r.toUpperCase(); if (fl.includes('#') && n) r = (c === 'o' ? '0' : c === 'x' ? '0x' : '0X') + r; }
+        }
+        const wn = +w; if (wn > r.length) r = fl.includes('-') ? r.padEnd(wn) : (fl.includes('0') && numeric ? r.replace(/^([-+ ]?)/, (sg) => sg + '0'.repeat(wn - r.length)) : r.padStart(wn));
+        return r;
+      });
+      return { out, used };
+    };
+    let out = '', p;
+    do { p = pass(); out += p.out; } while (p.used && ai < args.length);
+    return { out, err, code };
+  };
   C.head = (args, stdin) => { const { o, rest } = optParse(args, { val: 'nc', num: true }); const n = +(o.n ?? 10); const fs = filesOrStdin(rest, stdin); return { out: fs.map((f, i) => (fs.length > 1 ? (i ? '\n' : '') + `==> ${f.name} <==\n` : '') + J(lines(f.s).slice(0, n))).join('') }; };
   C.tail = (args, stdin) => { const { o, rest } = optParse(args, { val: 'nc', num: true }); const fs = filesOrStdin(rest, stdin); let ns = String(o.n ?? 10); return { out: fs.map((f, i) => (fs.length > 1 ? (i ? '\n' : '') + `==> ${f.name} <==\n` : '') + J(ns.startsWith('+') ? lines(f.s).slice(+ns.slice(1) - 1) : lines(f.s).slice(-Math.abs(+ns) || undefined).slice(+ns === 0 ? 99999 : 0))).join('') }; };
   C.wc = (args, stdin) => { const { o, rest } = optParse(args, {}); const fs = filesOrStdin(rest, stdin); const rows = fs.map(f => [lines(f.s).length, f.s.split(/\s+/).filter(Boolean).length, f.s.length, f.name === '-' ? '' : f.name]); const any = o.l || o.w || o.c || o.m; const fmtRow = r => { const v = []; if (!any || o.l) v.push(r[0]); if (!any || o.w) v.push(r[1]); if (!any || o.c || o.m) v.push(r[2]); const nums = v.map(x => any && v.length === 1 && !r[3] ? String(x) : String(x).padStart(any ? 1 : 7)); return nums.join(' ') + (r[3] ? ' ' + r[3] : ''); }; let out = rows.map(r => fmtRow(r)).join('\n') + '\n'; if (rows.length > 1) out += fmtRow([0, 1, 2].map(i => rows.reduce((a, r) => a + r[i], 0)).concat(['total'])) + '\n'; return { out }; };
@@ -1009,7 +1072,8 @@ function VirtualShell() {
   C.cut = (args, stdin) => { const { o, rest } = optParse(args, { val: 'dfcb' }); const d = o.d ?? '\t'; const rng = spec => { const idx = new Set(); spec.split(',').forEach(p => { const m = /^(\d*)-(\d*)$/.exec(p); if (m) { const a = +m[1] || 1, b = +m[2] || 999; for (let i = a; i <= b; i++) idx.add(i); } else idx.add(+p); }); return idx; }; const ls = lines(filesOrStdin(rest, stdin).map(f => f.s).join('')); if (o.c) { const r = rng(o.c); return { out: J(ls.map(l => l.split('').filter((_, i) => r.has(i + 1)).join(''))) }; } if (!o.f) return { err: 'cut: you must specify a list of bytes, characters, or fields\n', code: 1 }; const r = rng(o.f); return { out: J(ls.map(l => { if (!l.includes(d)) return o.s ? null : l; return l.split(d).filter((_, i) => r.has(i + 1)).join(d); }).filter(x => x !== null)) }; };
   C.tr = (args, stdin) => { const { o, rest } = optParse(args, {}); const exp = s => s.replace(/\[:(\w+):\]/g, (m, c) => ({ lower: 'abcdefghijklmnopqrstuvwxyz', upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', digit: '0123456789', alpha: 'a-zA-Z', alnum: 'a-zA-Z0-9', space: ' \t\n', punct: '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~' })[c] || '').replace(/(.)-(.)/g, (m, a, b) => { let r = ''; for (let i = a.charCodeAt(0); i <= b.charCodeAt(0); i++) r += String.fromCharCode(i); return r; }).replace(/\\n/g, '\n').replace(/\\t/g, '\t'); const s1 = exp(rest[0] || ''), s2 = exp(rest[1] || ''); let out = ''; for (const ch of stdin) { const i = s1.indexOf(ch); if (o.d) { if (i < 0) out += ch; } else if (o.s && false) out += ch; else if (i >= 0 && s2) out += s2[Math.min(i, s2.length - 1)]; else out += ch; } if (o.s) { const set = s2 || s1; out = out.replace(new RegExp('([' + set.replace(/[\]\\^-]/g, '\\$&') + '])\\1+', 'g'), '$1'); } return { out }; };
   C.grep = (args, stdin, nm) => {
-    const { o, rest } = optParse(args, { val: 'efmABC' }); const ere = o.E || nm === 'egrep'; const fixed = o.F; let pats = o.e ? [o.e] : [rest.shift()]; if (pats[0] === undefined) return { err: 'Usage: grep [OPTION]... PATTERNS [FILE]...\n', code: 2 };
+    const pe = []; args = args.filter((x, i) => { if (x === '-e') return false; if (i && args[i - 1] === '-e') { pe.push(x); return false; } return true; });
+    const { o, rest } = optParse(args, { val: 'fmABC' }); const ere = o.E || nm === 'egrep'; const fixed = o.F; let pats = pe.length ? pe : [rest.shift()]; if (pats[0] === undefined) return { err: 'Usage: grep [OPTION]... PATTERNS [FILE]...\n', code: 2 };
     let re; try { const src = pats.map(p => fixed ? p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') : posixToJS(p, ere)).join('|'); re = new RegExp(o.w ? '\\b(?:' + src + ')\\b' : o.x ? '^(?:' + src + ')$' : src, o.i ? 'gi' : 'g'); } catch (e) { return { err: 'grep: Invalid regular expression\n', code: 2 }; }
     let files = rest.length ? rest : ['-']; if (o.r || o.R) { const exp = []; const walk = (p, n) => { if (n.t === 'f') exp.push(p); else Object.keys(n.c).sort().forEach(k => walk(p + '/' + k, n.c[k])); }; (rest.length ? rest : ['.']).forEach(f => { const n = get(f); if (n) walk(f.replace(/\/$/, ''), n); }); files = exp; }
     const multi = files.length > 1 || o.r; let out = '', err = '', matched = false; const after = +(o.A || 0), before = +(o.B || 0), ctx = o.C ? +o.C : 0;
@@ -1022,18 +1086,18 @@ function VirtualShell() {
       hit.forEach((h, i) => { if (h) { cnt++; matched = true; for (let k = Math.max(0, i - B); k <= Math.min(ls.length - 1, i + A); k++) show.add(k); } });
       if (o.c) { out += (multi && !o.h ? f + ':' : '') + cnt + '\n'; continue; } if (o.q) continue;
       let last = -2;
-      [...show].sort((a, b) => a - b).forEach(i => { if (last >= 0 && i > last + 1 && (A || B)) out += '--\n'; last = i; if (o.o && hit[i] && !o.v) { re.lastIndex = 0; let m; while ((m = re.exec(ls[i])) && m[0] !== '') out += pref(i, ':') + m[0] + '\n'; } else out += pref(i, hit[i] ? ':' : '-') + ls[i] + '\n'; });
+      [...show].sort((a, b) => a - b).forEach(i => { if (last >= 0 && i > last + 1 && (A || B)) out += '--\n'; last = i; if (o.o && hit[i] && !o.v) { re.lastIndex = 0; let m; while ((m = re.exec(ls[i]))) { if (m[0] === '') { re.lastIndex++; continue; } out += pref(i, ':') + m[0] + '\n'; } } else out += pref(i, hit[i] ? ':' : '-') + ls[i] + '\n'; });
     }
     return { out: o.q ? '' : out, err, code: matched ? 0 : (err ? 2 : 1) };
   };
   C.egrep = (a, s) => C.grep(['-E', ...a], s, 'egrep'); C.fgrep = (a, s) => C.grep(['-F', ...a], s);
   C.sed = (args, stdin) => {
     let n = false, ere = false, inplace = false; const scripts = []; const files = []; const a = [...args];
-    while (a.length) { const x = a.shift(); if (x === '-n') n = true; else if (x === '-E' || x === '-r') ere = true; else if (x === '-i' || x.startsWith('-i')) inplace = true; else if (x === '-e') scripts.push(a.shift()); else if (x === '-f') scripts.push(readFile(norm(a.shift()))); else if (/^-[nEr]+$/.test(x)) { if (x.includes('n')) n = true; if (/[Er]/.test(x)) ere = true; } else if (!scripts.length && !x.startsWith('-')) scripts.push(x); else files.push(x); }
+    while (a.length) { const x = a.shift(); if (x === '-n') n = true; else if (x === '-E' || x === '-r') ere = true; else if (x === '-i' || x.startsWith('-i')) inplace = x.slice(2) || true; else if (x === '-e') scripts.push(a.shift()); else if (x === '-f') scripts.push(readFile(norm(a.shift()))); else if (/^-[nEr]+$/.test(x)) { if (x.includes('n')) n = true; if (/[Er]/.test(x)) ere = true; } else if (!scripts.length && !x.startsWith('-')) scripts.push(x); else files.push(x); }
     if (!scripts.length) return { err: 'Usage: sed [OPTION]... {script-only-if-no-other-script} [input-file]...\n', code: 1 };
     const script = scripts.join('\n');
     try {
-      if (inplace) { for (const f of files) { const r = sedRun(script, readFile(norm(f)), { n, ere }); writeFile(norm(f), r); } return { out: '' }; }
+      if (inplace) { for (const f of files) { const src = readFile(norm(f)); if (typeof inplace === 'string') writeFile(norm(f + inplace), src); writeFile(norm(f), sedRun(script, src, { n, ere })); } return { out: '' }; }
       const inp = files.length ? files.map(f => readFile(norm(f))).join('') : stdin; return { out: sedRun(script, inp, { n, ere }) };
     } catch (e) { return { err: 'sed: -e expression #1: ' + e.message + '\n', code: 1 }; }
   };
@@ -1086,16 +1150,36 @@ function VirtualShell() {
   function testExpr(a) { if (a.length === 2) { const n = get(a[1]); if (a[0] === '-f') return n && n.t === 'f'; if (a[0] === '-d') return n && n.t === 'd'; if (a[0] === '-e') return !!n; if (a[0] === '-z') return a[1] === ''; if (a[0] === '-n') return a[1] !== ''; } if (a.length === 3) { const [x, op, y] = a; if (op === '=' || op === '==') return x === y; if (op === '!=') return x !== y; const nx = +x, ny = +y; return { '-eq': nx === ny, '-ne': nx !== ny, '-lt': nx < ny, '-le': nx <= ny, '-gt': nx > ny, '-ge': nx >= ny }[op]; } return a.length === 1 && a[0] !== ''; }
   sh.C = C;
   // Executing pipelines
+  // ---- redirections: processed left to right, so `2>&1 >f` and `>f 2>&1` differ exactly as in bash ----
+  function newRedir() { return { fo: { k: 'out' }, fe: { k: 'err' }, inFile: null, here: null }; }
+  function addRedir(R, op, tgt) {
+    const file = app => ({ k: 'file', f: tgt, app });
+    switch (op) {
+      case '>': case '1>': R.fo = file(false); break;
+      case '>>': case '1>>': R.fo = file(true); break;
+      case '2>': R.fe = file(false); break;
+      case '2>>': R.fe = file(true); break;
+      case '&>': R.fo = R.fe = file(false); break;
+      case '&>>': R.fo = R.fe = file(true); break;
+      case '<': R.inFile = tgt; break;
+      case '<<<': R.here = tgt + '\n'; break;
+      case '>&': case '1>&': if (/^\d+$/.test(tgt)) { if (tgt === '2') R.fo = { ...R.fe }; } else R.fo = R.fe = file(false); break;
+      case '2>&': if (tgt === '1') R.fe = { ...R.fo }; break;
+    }
+  }
+  function routeRedir(R, out, err) {
+    const res = { out: '', err: '' }, seen = new Set();
+    const put = (d, text) => { if (d.k === 'out') res.out += text; else if (d.k === 'err') res.err += text; else { const p = norm(d.f); writeFile(p, text, d.app || seen.has(p)); seen.add(p); } };
+    put(R.fo, out); put(R.fe, err); return res;
+  }
   function runSimple(toks, stdin) {
     // toks: word/op tokens for one command (no | ; && ||)
-    const words = []; let redirOut = null, redirErr = null, redirIn = null, errToOut = false, hereStr = null;
+    const words = []; const R = newRedir();
     for (let i = 0; i < toks.length; i++) {
       const t = toks[i];
       if (t.t === 'op') {
         const tgt = toks[++i]; if (!tgt || tgt.t !== 'w') throw new Error('syntax error near unexpected token `newline\'');
-        if (t.v === '>' || t.v === '1>') redirOut = { f: tgt.v, app: false }; else if (t.v === '>>' || t.v === '1>>') redirOut = { f: tgt.v, app: true };
-        else if (t.v === '2>') redirErr = { f: tgt.v, app: false }; else if (t.v === '2>>') redirErr = { f: tgt.v, app: true };
-        else if (t.v === '<<<') hereStr = tgt.v + '\n'; else if (t.v === '<') redirIn = tgt.v; else if (t.v === '>&' || t.v === '2>&') { if (tgt.v === '1' || tgt.v === '&1') errToOut = true; } else if (t.v === '&') { }
+        addRedir(R, t.v, tgt.v);
         continue;
       }
       let ws = t.multi ? t.multi.slice() : (t.quoted ? [t.v] : braceExpand(t.v)); if (t.glob && !(toks[0] && toks[0].v === '[[')) ws = ws.flatMap(glob);
@@ -1105,24 +1189,20 @@ function VirtualShell() {
     // assignments
     const assigns = []; while (words.length && /^[A-Za-z_][A-Za-z0-9_]*(\[[^\]]*\])?\+?=/.test(words[0])) assigns.push(words.shift());
     const doAssign = a => { const m = /^([A-Za-z_]\w*)(?:\[([^\]]*)\])?(\+?)=([\s\S]*)$/.exec(a); const [, nm, sub, plus, val] = m; if (sub !== undefined) { let ar = sh.arrs[nm]; const assoc = ar && !Array.isArray(ar); if (!ar) ar = sh.arrs[nm] = []; if (assoc) ar[expandStr(sub)] = plus ? (ar[expandStr(sub)] ?? '') + val : val; else { const ix = arith(expandStr(sub)); ar[ix] = plus ? (ar[ix] ?? '') + val : val; } return; } const at = sh.attrs[nm] || {}; if (plus) { if (at.i) setVar(nm, arith(getVar(nm)) + arith(val)); else setVar(nm, getVar(nm) + val); } else if (nm in sh.arrs && Array.isArray(sh.arrs[nm])) sh.arrs[nm][0] = val; else setVar(nm, val); };
-    if (!words.length) { try { for (const a of assigns) doAssign(a); } catch (e) { return { out: '', err: 'bash: ' + e.message + '\n', code: 1 }; } return { out: '', code: 0 }; }
+    if (!words.length) { try { for (const a of assigns) doAssign(a); routeRedir(R, '', ''); } catch (e) { return { out: '', err: 'bash: ' + e.message + '\n', code: 1 }; } return { out: '', code: 0 }; }
     const savedEnv = assigns.length ? { v: { ...sh.vars }, e: { ...sh.env } } : null; for (const a of assigns) { try { doAssign(a); const nm = a.slice(0, a.indexOf('=')).replace(/\+$/, ''); sh.env[nm] = getVar(nm); } catch (e) { } }
     let cmd = words.shift(); if (sh.aliases[cmd] && !toks[0].quoted) { const al = tokenize(sh.aliases[cmd]).map(t => t.v); cmd = al.shift(); words.unshift(...al); }
-    let inp = stdin; if (hereStr !== null) inp = hereStr; if (redirIn !== null) { try { inp = readFile(norm(redirIn)); } catch (e) { return { out: '', err: 'bash: ' + e.message + '\n', code: 1 }; } }
+    let inp = stdin; if (R.here !== null) inp = R.here; if (R.inFile !== null) { try { inp = readFile(norm(R.inFile)); } catch (e) { return { out: '', err: 'bash: ' + e.message + '\n', code: 1 }; } }
     // script execution
     let fn = C[cmd];
     if (sh.funcs[cmd]) fn = w => callFunc(cmd, w);
     else if (cmd.startsWith('./') || (cmd.includes('/') && get(norm(cmd)) && get(norm(cmd)).t === 'f')) { const n = get(norm(cmd)); if (!n) return { out: '', err: `bash: ${cmd}: No such file or directory\n`, code: 127 }; if (n.t === 'd') return { out: '', err: `bash: ${cmd}: Is a directory\n`, code: 126 }; if (!(n.m & 0o111)) return { out: '', err: `bash: ${cmd}: Permission denied\n`, code: 126 }; const wds = words.slice(); fn = () => { const r = runScriptText(n.s, wds, cmd, true); return { out: r.out, err: r.err, code: sh.last }; }; }
-    if (!fn) return { out: '', err: `bash: ${cmd}: command not found\n`, code: 127 };
-    let r;
+    if (!fn) return { out: '', err: sh.UNSIMULATED.has(cmd) ? `bash: ${cmd}: a real Linux command, but this sandbox does not simulate it\n` : `bash: ${cmd}: command not found\n`, code: 127 };
+    let r; sh.tty = !sh.stagePiped && !sh.subDepth && R.fo.k === 'out';
     try { r = fn(words, inp, cmd) || { out: '' }; } catch (e) { if (e instanceof Ctl) { if (savedEnv) { sh.vars = savedEnv.v; sh.env = savedEnv.e; } throw e; } r = { out: '', err: (['sudo'].includes(cmd) ? '' : cmd + ': ') + e.message + '\n', code: 1 }; }
     if (savedEnv) { sh.vars = savedEnv.v; sh.env = savedEnv.e; }
     let out = r.out || '', err = r.err || '';
-    if (errToOut) { out += err; err = ''; }
-    try {
-      if (redirErr) { writeFile(norm(redirErr.f), err, redirErr.app); err = ''; }
-      if (redirOut) { writeFile(norm(redirOut.f), out, redirOut.app); out = ''; }
-    } catch (e) { err += 'bash: ' + e.message + '\n'; r.code = 1; }
+    try { const x = routeRedir(R, out, err); out = x.out; err = x.err; } catch (e) { err += 'bash: ' + e.message + '\n'; r.code = 1; }
     return { out, err, code: r.code || 0, clear: r.clear };
   }
   // ======== script interpreter: scan → parse → exec ========
@@ -1240,16 +1320,23 @@ function VirtualShell() {
   function sliceRaw(T, a, b) { return curText.slice(T[a].i, T[b].j); }
   sh.parse = function (text) { curText = text; const T = scan(text); const r = parseList(T, 0, []); if (r.k < T.length) synErr(`unexpected token '${T[r.k].s}'`); return r.list; };
   function acc2(a, r) { a.out += r.out || ''; a.err += r.err || ''; }
-  function execList(list, acc) { for (const n of list) execNode(n, acc); }
+  function execList(list, acc) {
+    for (const n of list) {
+      execNode(n, acc);
+      // set -e: stop at the first failing plain command (not inside conditions, not in && / || lists)
+      if (sh.opts.e && sh.last !== 0 && !sh.noErr && (n.type === 'pipe' || (n.type === 'simple' && !/&&|\|\|/.test(n.raw)))) throw new Ctl('exit', sh.last);
+    }
+  }
+  function execCond(list, acc) { sh.noErr++; try { execList(list, acc); } finally { sh.noErr--; } }
   function withRedir(n, acc, fn) {
     if (!n.redir) return fn(acc);
-    const toks = tokenize(n.redir); let inFile = null, outF = null, errF = null;
-    for (let i = 0; i < toks.length; i++) { const t = toks[i]; if (t.t === 'op') { const tg = toks[++i]; if (!tg) continue; if (t.v === '<') inFile = tg.v; else if (t.v === '>' || t.v === '>>') outF = { f: tg.v, app: t.v === '>>' }; else if (t.v === '2>' || t.v === '2>>') errF = { f: tg.v, app: t.v === '2>>' }; } }
-    const saveBuf = sh.stdinBuf; if (inFile !== null) { try { sh.stdinBuf = lines(readFile(norm(inFile))); } catch (e) { acc.err += 'bash: ' + e.message + '\n'; sh.last = 1; return; } }
+    const toks = tokenize(n.redir), R = newRedir();
+    for (let i = 0; i < toks.length; i++) { const t = toks[i]; if (t.t === 'op') { const tg = toks[++i]; if (tg) addRedir(R, t.v, tg.v); } }
+    const saveBuf = sh.stdinBuf;
+    if (R.inFile !== null) { try { sh.stdinBuf = lines(readFile(norm(R.inFile))); } catch (e) { acc.err += 'bash: ' + e.message + '\n'; sh.last = 1; return; } }
     const sub = { out: '', err: '' };
     try { fn(sub); } finally { sh.stdinBuf = saveBuf; }
-    try { if (outF) { writeFile(norm(outF.f), sub.out, outF.app); sub.out = ''; } if (errF) { writeFile(norm(errF.f), sub.err, errF.app); sub.err = ''; } } catch (e) { sub.err += 'bash: ' + e.message + '\n'; }
-    acc2(acc, sub);
+    try { acc2(acc, routeRedir(R, sub.out, sub.err)); } catch (e) { acc.err += 'bash: ' + e.message + '\n'; }
   }
   function loopCtl(e, acc) { if (e instanceof Ctl && (e.type === 'break' || e.type === 'continue')) { acc.out += e.pOut || ''; acc.err += e.pErr || ''; e.pOut = e.pErr = ''; if (e.n > 1) { e.n--; throw e; } return e.type; } throw e; }
   function execNode(n, acc) {
@@ -1262,8 +1349,8 @@ function VirtualShell() {
         else { if (!Array.isArray(a) || !n.app) a = n.app && n.name in sh.vars ? [sh.vars[n.name]] : []; for (const w of words) { const m = /^\[(\d+)\]=([\s\S]*)$/.exec(w); if (m) a[+m[1]] = m[2]; else a.push(w); } sh.arrs[n.name] = a; }
         sh.last = 0; break;
       }
-      case 'if': withRedir(n, acc, ac => { for (const b of n.branches) { execList(b.cond, ac); if (sh.last === 0) { execList(b.body, ac); return; } } if (n.els) execList(n.els, ac); else sh.last = 0; }); break;
-      case 'while': withRedir(n, acc, ac => { let g = 0; while (g++ < 5000) { execList(n.cond, ac); if ((sh.last === 0) === n.until) break; try { execList(n.body, ac); } catch (e) { if (loopCtl(e, ac) === 'break') break; } } }); break;
+      case 'if': withRedir(n, acc, ac => { for (const b of n.branches) { execCond(b.cond, ac); if (sh.last === 0) { execList(b.body, ac); return; } } if (n.els) execList(n.els, ac); else sh.last = 0; }); break;
+      case 'while': withRedir(n, acc, ac => { let g = 0; while (g++ < 5000) { execCond(n.cond, ac); if ((sh.last === 0) === n.until) break; try { execList(n.body, ac); } catch (e) { if (loopCtl(e, ac) === 'break') break; } } }); break;
       case 'for': case 'select': withRedir(n, acc, ac => {
         let items; if (n.list === null) items = sh.args.slice(); else { items = []; for (const t of tokenize(n.list)) { if (t.t !== 'w') continue; const b = t.multi || (t.quoted ? [t.v] : braceExpand(t.v)); items.push(...(t.glob ? b.flatMap(glob) : b)); } }
         if (n.type === 'select') { items.forEach((x, i) => ac.err += `${i + 1}) ${x}\n`); ac.err += (sh.vars.PS3 || '#? '); items = []; }
@@ -1271,7 +1358,7 @@ function VirtualShell() {
       case 'cfor': withRedir(n, acc, ac => { if (n.init.trim()) arith(n.init); let g = 0; while (g++ < 5000 && (!n.cond.trim() || arith(n.cond) !== 0)) { try { execList(n.body, ac); } catch (e) { if (loopCtl(e, ac) === 'break') break; } if (n.step.trim()) arith(n.step); } }); break;
       case 'case': withRedir(n, acc, ac => { const w = expandStr(unq(n.word)); for (const c of n.clauses) { if (c.pats.some(p => p.split('|').some(q => globRe(unq(q), true).test(w)))) { execList(c.body, ac); return; } } sh.last = 0; }); break;
       case 'group': withRedir(n, acc, ac => execList(n.body, ac)); break;
-      case 'sub': withRedir(n, acc, ac => { const snap = snapshot(); try { execList(n.body, ac); } catch (e) { if (!(e instanceof Ctl && e.type === 'exit')) throw e; } finally { const st = sh.last; restore(snap); sh.last = st; } }); break;
+      case 'sub': withRedir(n, acc, ac => { const snap = snapshot(); try { execList(n.body, ac); } catch (e) { if (!(e instanceof Ctl && e.type === 'exit')) throw e; sh.last = e.n; } finally { const st = sh.last; restore(snap); sh.last = st; } }); break;
       case 'func': sh.funcs[n.name] = n.body; sh.last = 0; break;
       case 'pipe': { const sub = { out: '', err: '' }; execNode(n.left, sub); acc.err += sub.err; try { acc2(acc, execAndOr(n.right, sub.out)); } catch (e) { if (e instanceof Ctl) { acc.out += e.pOut || ''; e.pOut = ''; } throw e; } break; }
       case 'pipeInto': { const l = execAndOr(n.leftRaw); acc.err += l.err; const save = sh.stdinBuf; sh.stdinBuf = lines(l.out); try { execNode(n.right, acc); } finally { sh.stdinBuf = save; } break; }
@@ -1292,8 +1379,9 @@ function VirtualShell() {
         for (let k = 0; k < stages.length; k++) {
           const stg = stages[k]; if (!stg.length) { res.err += "bash: syntax error near unexpected token `|'\n"; code = 2; break; }
           const text = raw.slice(stg[0].i, stg[stg.length - 1].j);
-          let r;
+          let r; const iso = stages.length > 1, snap = iso ? snapshot() : null; sh.stagePiped = k < stages.length - 1;
           try { r = runStage(stg, text, data); } catch (e) { if (e instanceof Ctl) throw e; r = { out: '', err: 'bash: ' + e.message + '\n', code: 2 }; }
+          finally { if (iso) { const l = sh.last; restore(snap); sh.last = l; } sh.stagePiped = false; }
           res.err += r.err || ''; code = r.code || 0; if (r.clear) res.clear = true;
           if (k === stages.length - 1) res.out += r.out; else data = r.out;
         }
@@ -1377,9 +1465,189 @@ function VirtualShell() {
   };
   C.unset = a => { for (const x of a) { if (x === '-f' || x === '-v') continue; const m = /^([A-Za-z_]\w*)\[(.*)\]$/.exec(x); if (m) { const ar = sh.arrs[m[1]]; if (Array.isArray(ar)) delete ar[arith(m[2])]; else if (ar) delete ar[m[2]]; continue; } if ((sh.attrs[x] || {}).r) return { err: `bash: unset: ${x}: cannot unset: readonly variable\n`, code: 1 }; delete sh.vars[x]; delete sh.env[x]; delete sh.arrs[x]; delete sh.funcs[x]; } return { out: '' }; };
   C.export = a => { for (const x of a) { if (x === '-p') continue; const i = x.indexOf('='); if (i > 0) { setVar(x.slice(0, i), x.slice(i + 1)); sh.env[x.slice(0, i)] = getVar(x.slice(0, i)); } else sh.env[x] = getVar(x); } return { out: '' }; };
-  C.set = a => { if (a.length) { if (a[0] === '--') { sh.args = a.slice(1); } return { out: '' }; } const all = { ...sh.env, ...sh.vars }; return { out: Object.keys(all).sort().map(k => `${k}=${all[k]}`).join('\n') + '\n' }; };
+  C.set = a => {
+    if (!a.length) { const all = { ...sh.env, ...sh.vars }; return { out: Object.keys(all).sort().map(k => `${k}=${all[k]}`).join('\n') + '\n' }; }
+    let i = 0;
+    while (i < a.length) {
+      const x = a[i];
+      if (x === '--') { sh.args = a.slice(i + 1); return { out: '' }; }
+      if (!/^[-+][a-zA-Z]+$/.test(x)) break;
+      const on = x[0] === '-';
+      for (const f of x.slice(1)) {
+        if (f === 'e') sh.opts.e = on; else if (f === 'u') sh.opts.u = on;
+        else if (f === 'o') { const nm = a[++i]; if (nm === 'errexit') sh.opts.e = on; else if (nm === 'nounset') sh.opts.u = on; }
+      }
+      i++;
+    }
+    if (i < a.length) sh.args = a.slice(i);
+    return { out: '' };
+  };
   C[':'] = () => ({ out: '' }); C.trap = C.wait = C.disown = C.fg = C.bg = C.umask = () => ({ out: '' });
   C.bash = C.sh = a => { if (a[0] === '-c') { const r = runScriptText(a[1], a.slice(3), a[2] || 'bash', true); return { out: r.out, err: r.err, code: sh.last }; } const f = a.find(x => !x.startsWith('-')); if (!f) return { out: '' }; const n = get(norm(f)); if (!n) return { err: `bash: ${f}: No such file or directory\n`, code: 127 }; const r = runScriptText(n.s, a.slice(a.indexOf(f) + 1), f, true); return { out: r.out, err: r.err, code: sh.last }; };
+  C.paste = (a, stdin) => {
+    let d = '\t', ser = false; const files = [];
+    for (let i = 0; i < a.length; i++) {
+      const x = a[i];
+      if (x.length > 1 && x[0] === '-' && /^-[sd]/.test(x)) { for (let j = 1; j < x.length; j++) { if (x[j] === 's') ser = true; else if (x[j] === 'd') { d = x.slice(j + 1) || a[++i] || '\t'; break; } } }
+      else files.push(x);
+    }
+    d = d.replace(/\\t/g, '\t').replace(/\\n/g, '\n');
+    const cols = (files.length ? files : ['-']).map(f => lines(f === '-' ? (stdin || '') : readFile(norm(f))));
+    const dl = k => d[k % d.length] ?? '';
+    if (ser) return { out: cols.map(c => c.reduce((acc, l, k) => acc + (k ? dl(k - 1) : '') + l, '')).join('\n') + '\n' };
+    const n = Math.max(0, ...cols.map(c => c.length)); const out = [];
+    for (let r = 0; r < n; r++) out.push(cols.reduce((acc, c, k) => acc + (k ? dl(k - 1) : '') + (c[r] ?? ''), ''));
+    return { out: J(out) };
+  };
+  C.xargs = (a, stdin) => {
+    let n = 0, I = null, delim = null, noRun = false, trace = false, i = 0;
+    for (; i < a.length && a[i][0] === '-'; i++) {
+      const x = a[i];
+      if (x === '-n') n = +a[++i]; else if (/^-n\d+$/.test(x)) n = +x.slice(2);
+      else if (x === '-I') I = a[++i]; else if (/^-I./.test(x)) I = x.slice(2); else if (x === '-i') I = '{}';
+      else if (x === '-0') delim = '\0'; else if (x === '-d') delim = a[++i].replace(/\\n/g, '\n');
+      else if (x === '-r') noRun = true; else if (x === '-t') trace = true; else if (x === '-P') i++;
+    }
+    const cmd = a.length > i ? a.slice(i) : ['echo'];
+    const raw = stdin || '';
+    let items = delim !== null ? raw.split(delim) : I !== null ? raw.split('\n') : (raw.match(/"[^"]*"|'[^']*'|\S+/g) || []).map(w => w.replace(/^(["'])(.*)\1$/, '$2'));
+    items = items.filter(x => x !== '');
+    const q = x => /[\s'"$`\;&|<>*?()]/.test(x) || x === '' ? "'" + x.replace(/'/g, "'\\''") + "'" : x;
+    const batches = I !== null ? items.map(it => cmd.map(w => w.split(I).join(it))) : n > 0 ? Array.from({ length: Math.ceil(items.length / n) }, (_, k) => cmd.concat(items.slice(k * n, k * n + n))) : (items.length || !noRun) ? [cmd.concat(items)] : [];
+    let out = '', err = '', code = 0;
+    for (const b of batches) { const line = b.map(q).join(' '); if (trace) err += line + '\n'; const r = sh.exec(line); out += r.out; err += r.err; if (sh.last !== 0) code = 123; }
+    return { out, err, code };
+  };
+  // real SHA-256 so students can compare against the published checksum of a download
+  function sha256Hex(str) {
+    const bytes = Array.from(new TextEncoder().encode(str)), K = [], H = [0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19];
+    for (let p = 2, c = 0; c < 64; p++) { let pr = true; for (let d = 2; d * d <= p; d++) if (p % d === 0) { pr = false; break; } if (pr) K[c++] = Math.floor((Math.cbrt(p) % 1) * 4294967296) >>> 0; }
+    const l = bytes.length; bytes.push(0x80); while (bytes.length % 64 !== 56) bytes.push(0);
+    const hi = Math.floor(l / 0x20000000), lo = (l << 3) >>> 0; for (const v of [hi, lo]) bytes.push(v >>> 24 & 255, v >>> 16 & 255, v >>> 8 & 255, v & 255);
+    const rr = (x, n) => (x >>> n) | (x << (32 - n));
+    for (let o = 0; o < bytes.length; o += 64) {
+      const w = []; for (let t = 0; t < 16; t++) w[t] = (bytes[o + 4 * t] << 24 | bytes[o + 4 * t + 1] << 16 | bytes[o + 4 * t + 2] << 8 | bytes[o + 4 * t + 3]) >>> 0;
+      for (let t = 16; t < 64; t++) { const s0 = rr(w[t - 15], 7) ^ rr(w[t - 15], 18) ^ (w[t - 15] >>> 3), s1 = rr(w[t - 2], 17) ^ rr(w[t - 2], 19) ^ (w[t - 2] >>> 10); w[t] = (w[t - 16] + s0 + w[t - 7] + s1) >>> 0; }
+      let [A, B, Cc, D, E, F, G, Hh] = H;
+      for (let t = 0; t < 64; t++) { const S1 = rr(E, 6) ^ rr(E, 11) ^ rr(E, 25), ch = (E & F) ^ (~E & G), t1 = (Hh + S1 + ch + K[t] + w[t]) >>> 0, S0 = rr(A, 2) ^ rr(A, 13) ^ rr(A, 22), mj = (A & B) ^ (A & Cc) ^ (B & Cc), t2 = (S0 + mj) >>> 0; Hh = G; G = F; F = E; E = (D + t1) >>> 0; D = Cc; Cc = B; B = A; A = (t1 + t2) >>> 0; }
+      [A, B, Cc, D, E, F, G, Hh].forEach((v, k) => H[k] = (H[k] + v) >>> 0);
+    }
+    return H.map(v => v.toString(16).padStart(8, '0')).join('');
+  }
+  C.sha256sum = (a, stdin) => {
+    if (!a.length) return { out: sha256Hex(stdin || '') + '  -\n' };
+    let out = '', err = '', code = 0;
+    for (const f of a) { try { out += sha256Hex(readFile(norm(f))) + '  ' + f + '\n'; } catch (e) { err += `sha256sum: ${f}: No such file or directory\n`; code = 1; } }
+    return { out, err, code };
+  };
+
+  // ---- extra builtins the course teaches: readonly, getopts, tar, gzip family, kill family, pass-through wrappers ----
+  C.readonly = a => {
+    if (!a.length || a[0] === '-p') return { out: Object.keys(sh.attrs).filter(k => sh.attrs[k].r).map(k => `declare -r ${k}="${getVar(k)}"\n`).join('') };
+    for (const x of a) { const i = x.indexOf('='), nm = i > 0 ? x.slice(0, i) : x; const at = (sh.attrs[nm] = sh.attrs[nm] || {}); if (i > 0) { at.r = false; setVar(nm, x.slice(i + 1)); } at.r = true; }
+    return { out: '' };
+  };
+  C.getopts = a => {
+    if (a.length < 2) return { err: 'bash: getopts: usage: getopts optstring name [arg ...]\n', code: 2 };
+    const silent = a[0][0] === ':', spec = silent ? a[0].slice(1) : a[0], name = a[1], args = a.length > 2 ? a.slice(2) : sh.args;
+    let ind = +(sh.vars.OPTIND || 1); if (ind === 1) sh.optpos = 0;
+    const arg = args[ind - 1], done = () => { setVar('OPTIND', ind); setVar(name, '?'); return { out: '', code: 1 }; };
+    if (arg === '--') { ind++; return done(); }
+    if (arg === undefined || arg[0] !== '-' || arg === '-') return done();
+    const pos = sh.optpos || 1, ch = arg[pos], idx = ch === ':' ? -1 : spec.indexOf(ch); let err = '';
+    const next = () => { if (pos + 1 < arg.length) sh.optpos = pos + 1; else { sh.optpos = 0; ind++; } };
+    delete sh.vars.OPTARG;
+    if (idx < 0) { next(); setVar(name, '?'); if (silent) setVar('OPTARG', ch); else err = `bash: illegal option -- ${ch}\n`; }
+    else if (spec[idx + 1] === ':') {
+      let val; if (pos + 1 < arg.length) { val = arg.slice(pos + 1); ind++; sh.optpos = 0; } else { val = args[ind]; ind += 2; sh.optpos = 0; }
+      if (val === undefined) { setVar(name, silent ? ':' : '?'); if (silent) setVar('OPTARG', ch); else err = `bash: option requires an argument -- ${ch}\n`; }
+      else { setVar(name, ch); setVar('OPTARG', val); }
+    } else { next(); setVar(name, ch); }
+    setVar('OPTIND', ind); return { out: '', err };
+  };
+  const mkdirp = p => { let n = sh.fs; for (const x of norm(p).split('/').filter(Boolean)) { if (!n.c[x]) n.c[x] = { t: 'd', c: {}, m: 0o755 }; n = n.c[x]; } return n; };
+  const PACK = { tar: 'TARSIM1\n', gz: 'GZSIM1\n', bz2: 'BZSIM1\n', xz: 'XZSIM1\n' };
+  const walkTree = (path, n, out) => {
+    if (n.t === 'd') { out.push({ p: path.replace(/\/$/, '') + '/', t: 'd', m: n.m }); for (const k of Object.keys(n.c).sort()) walkTree(path.replace(/\/$/, '') + '/' + k, n.c[k], out); }
+    else out.push({ p: path, t: 'f', m: n.m, s: n.s });
+    return out;
+  };
+  C.tar = a => {
+    let mode = null, file = null, v = false, dir = null; const rest = [];
+    for (let i = 0; i < a.length; i++) {
+      const x = a[i];
+      if (x === '-C') { dir = a[++i]; continue; }
+      if (x.startsWith('--')) { if (x === '--file') file = a[++i]; else if (x === '--verbose') v = true; else if (x === '--create') mode = 'c'; else if (x === '--extract') mode = 'x'; else if (x === '--list') mode = 't'; continue; }
+      if (x[0] === '-' || (i === 0 && /^[cxtvzjJf]+$/.test(x))) { for (const ch of x.replace(/^-/, '')) { if ('cxt'.includes(ch)) mode = ch; else if (ch === 'v') v = true; else if (ch === 'f') file = a[++i]; } continue; }
+      rest.push(x);
+    }
+    if (!mode) return { err: "tar: You must specify one of the '-Acdtrux' options\n", code: 2 };
+    if (!file) return { err: 'tar: Refusing to read/write archive data from/to the terminal (use -f FILE)\n', code: 2 };
+    let out = '', err = '';
+    if (mode === 'c') {
+      if (!rest.length) return { err: 'tar: Cowardly refusing to create an empty archive\n', code: 2 };
+      const ents = []; for (const r of rest) { const n = get(r); if (!n) { err += `tar: ${r}: Cannot stat: No such file or directory\n`; continue; } walkTree(r.replace(/^\/+/, ''), n, ents); }
+      if (/^\//.test(rest.join(''))) err += "tar: Removing leading `/' from member names\n";
+      if (v) out = ents.map(e => e.p).join('\n') + (ents.length ? '\n' : '');
+      const body = JSON.stringify(ents), arc = { t: 'f', m: 0o644, s: PACK.tar + body };
+      arc.sz = Math.max(10240, Math.ceil((ents.reduce((t, e) => t + 512 + Math.ceil((e.s || '').length / 512) * 512, 0) + 1024) / 10240) * 10240);
+      if (/\.(tgz|gz|bz2|xz)$/.test(file)) arc.sz = Math.max(120, Math.round(arc.sz * 0.03));
+      const { dir: d, name } = parentOf(norm(file)); if (!d) return { err: `tar: ${file}: Cannot open: No such file or directory\n`, code: 2 }; d.c[name] = arc;
+      return { out, err, code: err ? 2 : 0 };
+    }
+    const an = get(file); if (!an || an.t !== 'f') return { err: `tar: ${file}: Cannot open: No such file or directory\ntar: Error is not recoverable: exiting now\n`, code: 2 };
+    if (!an.s.startsWith(PACK.tar)) return { err: 'tar: This does not look like a tar archive\ntar: Exiting with failure status due to previous errors\n', code: 2 };
+    const ents = JSON.parse(an.s.slice(PACK.tar.length)).filter(e => !rest.length || rest.some(r => e.p === r || e.p.startsWith(r.replace(/\/?$/, '/'))));
+    if (mode === 't') return { out: ents.map(e => e.p).join('\n') + (ents.length ? '\n' : '') };
+    const base = dir ? norm(dir) : sh.cwd; if (!get(base)) return { err: `tar: ${dir}: Cannot open: No such file or directory\n`, code: 2 };
+    for (const e of ents) { const full = base + '/' + e.p; if (e.t === 'd') mkdirp(full); else { mkdirp(full.slice(0, full.lastIndexOf('/')) || '/'); writeFile(full, e.s); get(full).m = e.m; } if (v) out += e.p + '\n'; }
+    return { out };
+  };
+  const squash = (cmd, ext, un) => a => {
+    const { o, rest } = optParse(a, {}); let out = '', err = '', code = 0;
+    if (!rest.length) return { err: `${cmd}: compressed data not written to a terminal. Use -f to force compression.\n`, code: 1 };
+    for (const f of rest) {
+      const n = get(f);
+      if (!n || n.t !== 'f') { err += `${cmd}: ${f}: No such file or directory\n`; code = 1; continue; }
+      if (!un) {
+        if (f.endsWith('.' + ext)) { err += `${cmd}: ${f} already has .${ext} suffix -- unchanged\n`; continue; }
+        const body = n.s, packed = { t: 'f', m: n.m, s: PACK[ext] + JSON.stringify({ s: body }), sz: Math.max(20, Math.round((n.sz ?? body.length) * 0.4) + 20) };
+        if (o.c) { out += packed.s; continue; }
+        writeFile(norm(f + '.' + ext), ''); get(f + '.' + ext).s = packed.s; get(f + '.' + ext).sz = packed.sz; get(f + '.' + ext).m = n.m; if (!o.k) { const { dir, name } = parentOf(norm(f)); delete dir.c[name]; }
+      } else {
+        if (!n.s.startsWith(PACK[ext])) { err += `${cmd}: ${f}: not in ${ext} format\n`; code = 1; continue; }
+        const body = JSON.parse(n.s.slice(PACK[ext].length)).s; if (o.c) { out += body; continue; }
+        const target = f.replace(new RegExp('\\.' + ext + '$'), ''); if (target === f) { err += `${cmd}: ${f}: unknown suffix -- ignored\n`; code = 1; continue; }
+        writeFile(norm(target), body); if (!o.k) { const { dir, name } = parentOf(norm(f)); delete dir.c[name]; }
+      }
+    }
+    return { out, err, code };
+  };
+  C.gzip = squash('gzip', 'gz', false); C.gunzip = squash('gunzip', 'gz', true); C.zcat = a => C.gunzip(['-c', ...a]);
+  C.bzip2 = squash('bzip2', 'bz2', false); C.bunzip2 = squash('bunzip2', 'bz2', true);
+  C.xz = squash('xz', 'xz', false); C.unxz = squash('unxz', 'xz', true);
+  const PROCS = { 1: 'systemd', 4242: 'bash', 4243: 'sleep' };
+  C.kill = a => {
+    if (a[0] === '-l') return { out: ' 1) SIGHUP\t 2) SIGINT\t 3) SIGQUIT\t 9) SIGKILL\t15) SIGTERM\t18) SIGCONT\t19) SIGSTOP\t20) SIGTSTP\n' };
+    const ids = a.filter(x => !x.startsWith('-')); if (!ids.length) return { err: 'kill: usage: kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... or kill -l [sigspec]\n', code: 2 };
+    let err = '', code = 0; for (const id of ids) { if (!(+id in PROCS)) { err += `bash: kill: (${id}) - No such process\n`; code = 1; } else if (+id === 1) { err += `bash: kill: (1) - Operation not permitted\n`; code = 1; } }
+    return { err, code };
+  };
+  C.pgrep = a => { const pat = a.filter(x => !x.startsWith('-'))[0] || ''; const hit = Object.entries(PROCS).filter(([, n]) => n.includes(pat)); return { out: hit.map(([p]) => p + '\n').join(''), code: hit.length ? 0 : 1 }; };
+  C.pkill = a => ({ out: '', code: Object.values(PROCS).includes(a.filter(x => !x.startsWith('-'))[0]) ? 0 : 1 });
+  C.killall = a => { const nm = a.filter(x => !x.startsWith('-'))[0]; return Object.values(PROCS).includes(nm) ? { out: '' } : { err: `${nm}: no process found\n`, code: 1 }; };
+  // wrappers that just run the rest of the command line
+  const passthru = name => a => { const args = name === 'nice' || name === 'nohup' || name === 'time' || name === 'timeout' ? a.filter((x, i) => !(name === 'nice' && (x === '-n' || /^-n?\d+$/.test(x) || (i && a[i - 1] === '-n'))) && !(name === 'timeout' && i === 0 && !x.startsWith('-')) && !(name === 'nohup' && x === '--')) : a; const q = x => /[\s'"$`\;&|<>*?()]/.test(x) ? "'" + x.replace(/'/g, "'\\''") + "'" : x; const r = sh.exec(args.map(q).join(' ')); return { out: r.out, err: r.err + (name === 'time' ? '\nreal\t0m0.002s\nuser\t0m0.001s\nsys\t0m0.001s\n' : ''), code: sh.last }; };
+  ['nice', 'nohup', 'time', 'timeout', 'exec', 'command', 'builtin'].forEach(n => { C[n] = passthru(n); });
+  C.less = C.more = (a, stdin) => C.cat(a, stdin);
+  C.base64 = (a, stdin) => { const { o, rest } = optParse(a, {}); const src = rest.length ? readFile(norm(rest[0])) : (stdin || ''); if (o.d || o.decode) { try { return { out: new TextDecoder().decode(Uint8Array.from(atob(src.replace(/\s+/g, '')), c => c.charCodeAt(0))) }; } catch (e) { return { err: 'base64: invalid input\n', code: 1 }; } } const b = btoa(String.fromCharCode(...new TextEncoder().encode(src))); return { out: (o.w === '0' ? b : b.replace(/(.{76})/g, '$1\n').replace(/\n$/, '')) + '\n' }; };
+  C.cmp = a => { const [x, y] = a.filter(v => !v.startsWith('-')); let A, B; try { A = readFile(norm(x)); B = readFile(norm(y)); } catch (e) { return { err: 'cmp: ' + e.message.replace(/^[^:]*: /, '') + '\n', code: 2 }; } if (A === B) return { out: '', code: 0 }; let i = 0; while (A[i] === B[i]) i++; return { out: `${x} ${y} differ: byte ${i + 1}, line ${A.slice(0, i).split('\n').length}\n`, code: 1 }; };
+  C.comm = (a) => { const { o, rest } = optParse(a, {}); const A = lines(readFile(norm(rest[0]))), B = lines(readFile(norm(rest[1]))); const rows = []; let i = 0, j = 0; while (i < A.length || j < B.length) { if (j >= B.length || (i < A.length && A[i] < B[j])) rows.push([0, A[i++]]); else if (i >= A.length || B[j] < A[i]) rows.push([1, B[j++]]); else { rows.push([2, A[i]]); i++; j++; } } const hide = [o['1'], o['2'], o['3']]; return { out: J(rows.filter(r => !hide[r[0]]).map(r => '\t'.repeat([0, 1, 2].slice(0, r[0]).filter(k => !hide[k]).length) + r[1])) }; };
+  C.uptime = () => ({ out: ' 10:30:00 up 3 days,  2:14,  2 users,  load average: 0.12, 0.10, 0.08\n' });
+  C.who = () => ({ out: 'student  pts/0        2026-10-07 09:12 (192.168.1.5)\n' });
+  C.w = () => ({ out: ' 10:30:00 up 3 days,  2 users,  load average: 0.12, 0.10, 0.08\nUSER     TTY      FROM             LOGIN@   IDLE WHAT\nstudent  pts/0    192.168.1.5      09:12    0.00s w\n' });
+  // real Linux commands that the sandbox does not simulate: say so instead of "command not found"
+  sh.UNSIMULATED = new Set('mount umount fdisk mkfs chown chgrp zip unzip split od hexdump yes cron at scp rsync curl wget ifconfig netstat dig nslookup host traceroute yum dnf rpm snap su passwd useradd usermod lspci lsusb lshw dmesg journalctl systemctl service md5sum sha1sum cksum shuf column fold fmt tree realpath mktemp locate whereis info lsof strace ltrace watch screen tmux nc telnet ftp sftp iostat vmstat mpstat sar lsmod modprobe renice join'.split(' '));
   C.test = a => ({ out: '', code: testExprFull(a) ? 0 : 1 });
   C['['] = a => ({ out: '', code: testExprFull(a.slice(0, -1)) ? 0 : 1 });
   function testExprFull(a) { const oi = a.indexOf('-o'); if (oi > 0) return testExprFull(a.slice(0, oi)) || testExprFull(a.slice(oi + 1)); const ai = a.indexOf('-a'); if (ai > 0 && a.length > 3) return testExprFull(a.slice(0, ai)) && testExprFull(a.slice(ai + 1)); if (a[0] === '!') return !testExprFull(a.slice(1)); return testExpr(a); }
@@ -1812,7 +2080,7 @@ done</pre>
       cmds: [['case $v in p) …;; esac', 'Pattern switch'], ['select o in a b; do …; done', 'Menu loop'], ['PS3="Choose: "', 'Prompt for select']],
       ex: [] },
     { id: 'loops', h: 'Loops: for, while, until',
-      html: `<pre class="diagram">for f in *.txt; do echo "$f has $(wc -l < "$f") lines"; done
+      html: `<pre class="diagram">for f in *.txt; do echo "$f has $(wc -l &lt; "$f") lines"; done
 for i in {1..5}; do echo $i; done
 for ((i=0; i&lt;3; i++)); do echo $i; done
 while read -r line; do echo "&gt; $line"; done &lt; fruits.txt
@@ -1943,8 +2211,6 @@ awk '$9 ~ /^5/' access.log                                       server errors
 awk '{bytes[$1]+=$NF} END{for(i in bytes) print i, bytes[i]}' access.log
 awk -F, 'NR>1 {sum[$2]+=$3; n[$2]++} END{for(s in sum) print s, sum[s]/n[s]}' scores.csv
 cmd | awk '...'                                                  use in any pipeline
-date --date="5 days ago" +%d/%m/%Y                                date arithmetic helper
-sort -n -k2 | sort -rn                                           numeric / reverse sort
 dig +noall +answer example.com | awk '{print $NF}'               DNS answer → IP</pre>`,
       cmds: [["sort -rn", 'Numeric reverse sort'], ['date --date="5 days ago" +%F', 'Relative date'], ['dig +noall +answer d', 'Short DNS answer']],
       ex: [{ c: "awk -F, 'NR>1{s[$2]+=$3; n[$2]++} END{for(k in s) printf \"%-10s %.1f\\n\", k, s[k]/n[k]}' scores.csv", n: 'Average marks per subject' }, { c: "awk '$9>=400' access.log | wc -l", n: 'Fields in the quoted log: $9 is the status? check with next command' }, { c: "awk '{print $9}' access.log | sort | uniq -c", n: 'HTTP status distribution' }, { c: "awk '{b[$1]+=$NF} END{for(i in b) print i, b[i]}' access.log | sort", n: 'Bytes per client' }] },
@@ -2229,7 +2495,7 @@ window.CHALLENGES = [
       ['*/5 * * * * runs…', 'Every 5 minutes', ['Every 5 hours', 'At minute 5 only', 'Every 5 days'], '*/N in the minute field means every N minutes.'],
       ['Which command shows disk usage of a folder in human-readable form?', 'du -sh folder', ['df -h folder', 'ls -S folder', 'free -h'], 'du sums file usage; df shows filesystem free space.'],
       ['Which command compares two files line by line?', 'diff a b', ['cmp -l only', 'comm -x', 'sort a b'], 'diff shows the differences.'],
-      ['What does find . -name "*.tmp" -exec rm {} \; do?', 'Deletes each found .tmp file', ['Lists them', 'Compresses them', 'Renames them'], '{} is replaced by each found path.'],
+      ['What does find . -name "*.tmp" -exec rm {} \\; do?', 'Deletes each found .tmp file', ['Lists them', 'Compresses them', 'Renames them'], '{} is replaced by each found path.'],
       ['Which prints today’s date like 2026-10-07?', 'date +%F', ['date -F', 'date --year', 'cal -d'], '%F is shorthand for %Y-%m-%d.'],
     ],
     extras: [
@@ -2335,7 +2601,6 @@ function stubs(s) {
   C.getenforce = () => ({ out: 'Enforcing\n' });
   C.top = () => ({ out: 'top - 10:30:00 up 3 days,  2 users,  load average: 0.12, 0.10, 0.08\nTasks:  90 total,   1 running\n  PID USER      %CPU %MEM COMMAND\n 4242 student    0.3  0.4 bash\n    1 root       0.0  0.1 systemd\n(snapshot — real top is interactive)\n' });
   C.jobs = () => ({ out: '' }); C.crontab = a => ({ out: a[0] === '-l' ? 'no crontab for student\n' : '(simulated)\n' });
-  C.sha256sum = a => ({ out: a.map(f => { let h = 0; try { for (const ch of s.readFile(s.norm(f))) h = (h * 31 + ch.charCodeAt(0)) >>> 0; } catch (e) { return `sha256sum: ${f}: No such file or directory\n`; } return h.toString(16).padStart(8, '0').repeat(8) + '  ' + f + '\n'; }).join('') });
   C.read = () => ({ out: '' }); C.bash = C.bash || (() => ({ out: '' }));
   C.whatis = a => ({ out: a.map(x => ({ ls: 'list directory contents', cp: 'copy files and directories', grep: 'print lines that match patterns', sed: 'stream editor for filtering and transforming text', awk: 'pattern scanning and processing language', cat: 'concatenate files and print on the standard output' })[x] ? `${x} (1) - ${({ ls: 'list directory contents', cp: 'copy files and directories', grep: 'print lines that match patterns', sed: 'stream editor for filtering and transforming text', awk: 'pattern scanning and processing language', cat: 'concatenate files and print on the standard output' })[x]}\n` : `${x}: nothing appropriate.\n`).join('') });
   C.apropos = a => ({ out: `${a[0]} (1) - commands related to "${a[0]}" (simulated)\n` });
@@ -2345,7 +2610,7 @@ function stubs(s) {
 stubs(sh);
 const term = { el: null, log: null, input: null, hist: [], hi: 0, active: null };
 function promptHTML() { const p = sh.prompt(); return `<span class="p">${esc(p.user)}</span>:<span class="d">${esc(p.dir)}</span>$ `; }
-function tprint(html) { const d = document.createElement('div'); d.className = 'l'; d.innerHTML = html; term.log.appendChild(d); term.el.scrollTop = term.el.scrollHeight; }
+function tprint(html) { const d = document.createElement('div'); d.className = 'l'; d.innerHTML = html; term.log.appendChild(d); while (term.log.childNodes.length > 400) term.log.removeChild(term.log.firstChild); term.el.scrollTop = term.el.scrollHeight; }
 function runCmd(cmd, opts) {
   opts = opts || {};
   const ph = promptHTML();
@@ -2359,7 +2624,7 @@ function runCmd(cmd, opts) {
 function updPrompt() { $('#tprompt').innerHTML = promptHTML(); }
 function openDock(open) { $('#dock').classList.toggle('open', open ?? true); document.body.classList.toggle('dockopen', $('#dock').classList.contains('open')); if (open !== false) setTimeout(() => term.input.focus(), 50); }
 function setInput(cmd) { openDock(true); term.input.value = cmd; term.input.focus(); }
-function resetSandbox() { sh = VirtualShell(); stubs(sh); term.log.innerHTML = ''; tprint('<span class="ok">Sandbox reset — fresh file system.</span>'); updPrompt(); }
+function resetSandbox() { sh = VirtualShell(); stubs(sh); term.active = null; $('#activeChal').style.display = 'none'; term.log.innerHTML = ''; tprint('<span class="ok">Sandbox reset — fresh file system.</span>'); updPrompt(); }
 function complete() {
   const v = term.input.value; const parts = v.split(/\s+/); const last = parts[parts.length - 1]; let cands = [];
   if (parts.length === 1) cands = Object.keys(sh.C).filter(c => c.startsWith(last));
@@ -2395,7 +2660,7 @@ function checkChallenge(cmd, r) {
   const c = term.active; if (!c) return;
   const got = (r.out || '').trim();
   if (got && got === expectedOut(c)) {
-    prog.chal[c.id] = true; save(); tprint('<span class="ok">✔ Challenge ' + c.id + ' solved!</span>'); term.active = null; $('#activeChal').style.display = 'none'; if (route().view === 'challenges') render();
+    prog.chal[c.id] = true; save(); tprint('<span class="ok">✔ Challenge ' + c.id + ' solved!</span>'); term.active = null; $('#activeChal').style.display = 'none'; if (route().view === 'challenges') render({ keepScroll: true });
   }
 }
 function setActive(c) { term.active = c; const a = $('#activeChal'); a.style.display = c ? '' : 'none'; if (c) { a.textContent = 'Challenge ' + c.id + ': ' + c.t; tprint('<span class="ok">▶ Challenge ' + c.id + ':</span> ' + esc(c.t)); openDock(true); } }
@@ -2421,24 +2686,27 @@ function renderSide() {
       <a href="#/cheat" class="${r.view === 'cheat' ? 'on' : ''}"><span class="n">📋</span>Cheat sheet</a></nav>`;
 }
 
-function render() {
+function render(opts) {
   const r = route();
   renderSide(); $('#side').classList.remove('open');
   const m = main();
-  window.scrollTo(0, 0);
+  const y = window.scrollY;
+  if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
   ({ home: vHome, ch: vChapter, map: vMap, playground: vPlayground, cards: vCards, cheat: vCheat, quiz: vQuiz, challenges: vChallenges }[r.view] || vHome)(m, r);
+  if (opts && opts.keepScroll) window.scrollTo(0, y);
 }
 
 /* ---------- Home ---------- */
 function vHome(m) {
   const cmdCount = CH.reduce((a, c) => a + c.sections.reduce((b, s) => b + (s.cmds || []).length, 0), 0);
+  const nQ = CH.reduce((a, c) => a + c.quiz.length, 0);
   m.innerHTML = `<div class="page wide"><div class="hero"><div class="eyebrow">IIT Madras BS · System Commands (SE2001)</div>
-    <h1>Navigating Linux, as an interactive book</h1>
-    <p class="lede">${CH.length} chapters built from the course command index and the “Navigating Linux” companion text. Read a concept, run its examples in a live sandbox terminal, then lock it in with quizzes, challenges and flashcards.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px"><span class="credit" style="margin:0">Subject: <b>System Commands</b></span><span class="credit" style="margin:0">Subject code: <b>SE2001</b></span></div><div class="credit">✍ Curated and created by Ammar Hashmi</div><p style="color:var(--ink2);margin:10px 0 0;max-width:62ch">Made for IIT Madras BS Data Science &amp; Applications students studying <b>System Commands</b> — a study companion for the weekly lectures.</p><div class="row" style="margin-top:14px"><a class="btn" href="#/ch/essentials">Start chapter 1</a><button class="btn ghost" id="hTerm">Open sandbox terminal</button><button class="btn ghost" id="hSearch">Search everything (Ctrl+K)</button></div>
-    <div class="row" style="margin-top:16px;color:var(--ink2);font-size:.88rem"><span class="badge">${CH.length} chapters</span><span class="badge">${cmdCount} command cards</span><span class="badge">${CH.reduce((a, c) => a + c.quiz.length, 0)} quiz questions</span><span class="badge">${window.CHALLENGES.length} terminal challenges</span></div></div>
+    <h1>Navigating Linux</h1>
+    <p class="lede">Read a concept, run its examples in a sandbox terminal, then check yourself. ${CH.length} chapters follow the weekly lectures.</p>
+    <div class="row"><a class="btn" href="#/ch/essentials">Start chapter 1</a><button class="btn ghost" id="hTerm">Open terminal</button><button class="btn ghost" id="hSearch">Search <kbd>Ctrl K</kbd></button></div>
+    <div class="row" style="margin-top:16px;color:var(--ink2);font-size:.86rem"><span class="badge">${cmdCount} commands</span><span class="badge">${nQ} quiz questions</span><span class="badge">${window.CHALLENGES.length} terminal challenges</span></div></div>
     <div class="cards">${CH.map(c => `<a class="card" href="#/ch/${c.id}"><div class="ic">${c.icon}</div><b>${c.n}. ${esc(c.title)}</b><span>${esc(c.intro)}</span><div class="meta"><span class="badge">${esc(c.weeks)}</span>${prog.done[c.id] ? '<span class="badge ok">complete</span>' : ''}${prog.quiz[c.id] ? `<span class="badge">quiz ${prog.quiz[c.id].score}/${prog.quiz[c.id].total}</span>` : ''}</div></a>`).join('')}</div>
-    <div class="foot"><b>Curated and created by Ammar Hashmi</b> · for IIT Madras BS students taking System Commands.</div></div>`;
+    <p class="credit-line">Curated and created by Ammar Hashmi for IIT Madras BS students.</p></div>`;
   $('#hTerm').onclick = () => openDock(true); $('#hSearch').onclick = () => openPal();
 }
 
@@ -2447,14 +2715,13 @@ function exHTML(e) { return `<div class="ex"><div class="exhead"><code>${esc(e.c
 function vChapter(m, r) {
   const i = CH.findIndex(c => c.id === r.a); const c = CH[i] || CH[0]; const ci = CH.indexOf(c);
   const prev = CH[ci - 1], next = CH[ci + 1];
-  m.innerHTML = `<div class="toc noprint"><b>On this page</b>${c.sections.map(s => `<a href="#/ch/${c.id}/${s.id}" data-sec="${s.id}">${esc(s.h)}</a>`).join('')}<a href="#/ch/${c.id}/quiz" data-sec="quiz">Chapter quiz</a></div>
-  <div class="page hasToc"><div class="eyebrow">Chapter ${c.n} · ${esc(c.weeks)}</div><h1>${c.icon} ${esc(c.title)}</h1><p class="lede">${esc(c.intro)}</p>
-  ${c.sections.map(s => `<section class="sec" id="s-${s.id}"><h2>${esc(s.h)}</h2>${s.html}
-     ${s.cmds && s.cmds.length ? `<div class="cmdtitle">Commands · click to load in terminal</div><div class="cmdgrid">${s.cmds.map(k => `<button class="cmd" data-c="${esc(k[0])}"><code>${esc(k[0])}</code><span>${esc(k[1])}</span></button>`).join('')}</div>` : ''}
-     ${s.ex && s.ex.length ? `<div class="cmdtitle">Try it · runs in the sandbox</div>${s.ex.map(exHTML).join('')}` : ''}</section>`).join('')}
+  const cmdBlock = s => s.cmds && s.cmds.length ? `<details class="more"><summary>Commands in this section <span class="badge">${s.cmds.length}</span><span class="hint">click one to load it in the terminal</span></summary><div class="cmdgrid">${s.cmds.map(k => `<button class="cmd" data-c="${esc(k[0])}"><code>${esc(k[0])}</code><span>${esc(k[1])}</span></button>`).join('')}</div></details>` : '';
+  const tryBlock = s => s.ex && s.ex.length ? `<div class="tryit"><div class="cmdtitle">Try it</div>${s.ex.map(exHTML).join('')}</div>` : '';
+  m.innerHTML = `<div class="chapter"><article class="page"><div class="eyebrow">Chapter ${c.n} · ${esc(c.weeks)}</div><h1>${c.icon} ${esc(c.title)}</h1><p class="lede">${esc(c.intro)}</p>
+  ${c.sections.map(s => `<section class="sec" id="s-${s.id}"><h2>${esc(s.h)}</h2><div class="prose">${s.html}</div>${tryBlock(s)}${cmdBlock(s)}</section>`).join('')}
   <section class="sec quiz" id="s-quiz"><h2>Check yourself</h2><div id="quizHost"></div></section>
-  <div class="row noprint"><button class="btn ${prog.done[c.id] ? 'ghost' : ''}" id="doneBtn">${prog.done[c.id] ? '✓ Completed — click to undo' : 'Mark chapter complete'}</button></div>
-  <div class="pn noprint">${prev ? `<a class="btn ghost" href="#/ch/${prev.id}">← ${esc(prev.title)}</a>` : '<span></span>'}${next ? `<a class="btn" href="#/ch/${next.id}">${esc(next.title)} →</a>` : ''}</div></div>`;
+  <div class="row noprint" style="margin-top:20px"><button class="btn ${prog.done[c.id] ? 'ghost' : ''}" id="doneBtn">${prog.done[c.id] ? '✓ Completed · click to undo' : 'Mark chapter complete'}</button></div>
+  <div class="pn noprint">${prev ? `<a class="btn ghost" href="#/ch/${prev.id}">← ${esc(prev.title)}</a>` : '<span></span>'}${next ? `<a class="btn" href="#/ch/${next.id}">${esc(next.title)} →</a>` : ''}</div></article><nav class="toc noprint" aria-label="On this page"><b>On this page</b>${c.sections.map(s => `<a href="#/ch/${c.id}/${s.id}" data-sec="${s.id}">${esc(s.h)}</a>`).join('')}<a href="#/ch/${c.id}/quiz" data-sec="quiz">Chapter quiz</a></nav></div>`;
   // handlers
   $$('.cmd', m).forEach(b => b.onclick = () => setInput(b.dataset.c));
   $$('.ex', m).forEach(ex => {
@@ -2462,13 +2729,21 @@ function vChapter(m, r) {
     $('.run', ex).onclick = () => { const res = runCmd(cmd); let h = esc((res.out || '').replace(/\n$/, '')); if (res.err) h += (h ? '\n' : '') + '<span class="e">' + esc(res.err.replace(/\n$/, '')) + '</span>'; if (res.clear) h = ''; out.innerHTML = h || '<span style="opacity:.5">(no output)</span>'; out.hidden = false; };
     $('.tt', ex).onclick = () => setInput(cmd);
   });
-  $('#doneBtn').onclick = () => { prog.done[c.id] = !prog.done[c.id]; save(); render(); };
+  $('#doneBtn').onclick = () => { prog.done[c.id] = !prog.done[c.id]; save(); render({ keepScroll: true }); };
   const cin = $('#cidrIn'); if (cin) { const upd = () => { $('#cidrOut').textContent = cidr(cin.value); }; cin.oninput = upd; upd(); }
   $$('[data-go]', m).forEach(a => a.onclick = e => { e.preventDefault(); go(a.dataset.go.replace(':', '/')); });
   buildQuiz($('#quizHost'), c.quiz, res => { prog.quiz[c.id] = res; save(); renderSide(); });
-  if (r.b) setTimeout(() => { const el = $('#s-' + r.b); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 60);
-  $$('.toc a', m).forEach(a => a.onclick = e => { e.preventDefault(); const el = $('#s-' + a.dataset.sec); if (el) el.scrollIntoView({ behavior: 'smooth' }); });
+  const secEl = id => document.getElementById('s-' + id);
+  if (r.b) setTimeout(() => { const el = secEl(r.b); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 60);
+  $$('.toc a', m).forEach(a => a.onclick = e => { e.preventDefault(); const el = secEl(a.dataset.sec); if (el) el.scrollIntoView({ behavior: 'smooth' }); });
+  // highlight the section being read in the outline
+  if (spy) spy.disconnect();
+  if ('IntersectionObserver' in window) {
+    spy = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) $$('.toc a', m).forEach(a => a.classList.toggle('on', 's-' + a.dataset.sec === en.target.id)); }), { rootMargin: '-15% 0px -70% 0px' });
+    $$('.sec', m).forEach(x => spy.observe(x));
+  }
 }
+let spy = null;
 function cidr(s) {
   const m = /^(\d+)\.(\d+)\.(\d+)\.(\d+)\/(\d+)$/.exec(s.trim()); if (!m) return 'Enter an address like 10.0.0.0/8';
   const o = m.slice(1, 5).map(Number), n = +m[5]; if (o.some(x => x > 255) || n > 32) return 'Invalid address';
@@ -2480,19 +2755,25 @@ function cidr(s) {
 
 /* ---------- Quiz widget ---------- */
 function buildQuiz(host, qs, onFinish) {
-  let score = 0, answered = 0;
-  host.innerHTML = qs.map((q, i) => `<div class="q" data-i="${i}"><p>${i + 1}. ${esc(q.q)}</p>${q.code ? `<pre class="qcode">${esc(q.code)}</pre>` : ''}<div class="opts">${q.o.map((o, j) => `<button class="opt" data-j="${j}">${esc(o)}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('') + `<div class="row"><span class="score" id="qs"></span><button class="btn ghost" id="qr" hidden>Try again</button></div>`;
-  host.onclick = e => {
-    const b = e.target.closest('.opt'); if (b) {
-      const qd = b.closest('.q'); if (qd.dataset.done) return; qd.dataset.done = 1; const q = qs[+qd.dataset.i]; const j = +b.dataset.j;
-      $$('.opt', qd).forEach((x, k) => { x.disabled = true; if (k === q.a) x.classList.add('right'); });
-      if (j === q.a) score++; else b.classList.add('wrong');
-      const w = $('.why', qd); w.hidden = false; w.textContent = (j === q.a ? '✔ ' : '✘ ') + q.e;
-      answered++;
-      if (answered === qs.length) { $('#qs').textContent = `Score: ${score} / ${qs.length}`; $('#qr').hidden = false; onFinish && onFinish({ score, total: qs.length }); }
+  let i = 0, score = 0;
+  const show = () => {
+    if (i >= qs.length) {
+      host.innerHTML = `<div class="qdone"><div class="score">${score} / ${qs.length}</div><p class="lede" style="margin:.4em auto 1em">${score === qs.length ? 'Perfect score.' : score >= qs.length * .7 ? 'Solid. Review the ones you missed in the chapter.' : 'Re-read the chapter, run its examples, then try again.'}</p><button class="btn ghost" id="qr">Try again</button></div>`;
+      $('#qr', host).onclick = () => buildQuiz(host, qs, onFinish);
+      onFinish && onFinish({ score, total: qs.length });
+      return;
     }
-    if (e.target.id === 'qr') buildQuiz(host, qs, onFinish);
+    const q = qs[i];
+    host.innerHTML = `<div class="qtop"><span>Question ${i + 1} of ${qs.length}</span><span class="qbar"><i style="width:${i / qs.length * 100}%"></i></span><span>${score} correct</span></div>
+      <div class="q"><p>${esc(q.q)}</p>${q.code ? `<pre class="qcode">${esc(q.code)}</pre>` : ''}<div class="opts">${q.o.map((o, j) => `<button class="opt" data-j="${j}">${esc(o)}</button>`).join('')}</div><div class="why" hidden></div><div class="row" style="margin-top:12px"><button class="btn" id="qn" hidden>${i + 1 === qs.length ? 'See score' : 'Next question →'}</button></div></div>`;
+    $$('.opt', host).forEach(b => b.onclick = () => {
+      const j = +b.dataset.j; $$('.opt', host).forEach((x, k) => { x.disabled = true; if (k === q.a) x.classList.add('right'); });
+      if (j === q.a) score++; else b.classList.add('wrong');
+      const w = $('.why', host); w.hidden = false; w.textContent = (j === q.a ? '✔ ' : '✘ ') + q.e;
+      const n = $('#qn', host); n.hidden = false; n.focus(); n.onclick = () => { i++; show(); };
+    });
   };
+  show();
 }
 
 /* ---------- Lecture map ---------- */
@@ -2560,7 +2841,7 @@ function vPlayground(m, r) {
 let deck = [], di = 0, deckCh = 'all';
 function vCards(m) {
   const all = []; CH.forEach(c => c.sections.forEach(s => (s.cmds || []).forEach(k => all.push({ ch: c.id, f: k[0], b: k[1], sec: s.h }))));
-  const mk = () => { deck = all.filter(x => deckCh === 'all' || x.ch === deckCh).filter(x => !prog.cards[x.f] || deckCh !== 'all' || true); di = 0; };
+  const mk = () => { deck = all.filter(x => deckCh === 'all' || x.ch === deckCh); di = 0; };
   mk();
   m.innerHTML = `<div class="page"><div class="eyebrow">Memorise</div><h1>Command flashcards</h1><p class="lede">${all.length} cards. Flip with <kbd>Space</kbd>, mark with <kbd>→</kbd> (got it) or <kbd>←</kbd> (again).</p>
   <div class="row"><select id="deckCh" style="width:auto"><option value="all">All chapters</option>${CH.map(c => `<option value="${c.id}" ${deckCh === c.id ? 'selected' : ''}>${c.n}. ${esc(c.title)}</option>`).join('')}</select><label class="chk"><input type="checkbox" id="hideKnown"> hide known</label><button class="btn ghost" id="shuf">Shuffle</button><span class="badge" id="fcStat"></span></div>
@@ -2568,10 +2849,10 @@ function vCards(m) {
   <div class="row" style="justify-content:center"><button class="btn ghost" id="fcAgain">← Again</button><button class="btn ghost" id="fcFlip">Flip</button><button class="btn" id="fcKnow">Got it →</button></div></div>`;
   const show = () => { const hide = $('#hideKnown').checked; let d = deck.filter(x => !hide || !prog.cards[x.f]); if (!d.length) { $('#fcF').textContent = '🎉 No cards left'; $('#fcB').textContent = 'Uncheck “hide known” to review again.'; $('#fcStat').textContent = ''; return; } di = ((di % d.length) + d.length) % d.length; const c = d[di]; $('#fc').classList.remove('flip'); $('#fcF').textContent = c.f; $('#fcB').innerHTML = esc(c.b) + `<div style="font:.75rem var(--sans);color:var(--ink2);margin-top:12px">${esc(c.sec)}</div>`; $('#fcStat').textContent = `${di + 1}/${d.length} · known ${deck.filter(x => prog.cards[x.f]).length}/${deck.length}`; show.cur = c; show.len = d.length; };
   $('#fc').onclick = () => $('#fc').classList.toggle('flip'); $('#fcFlip').onclick = () => $('#fc').classList.toggle('flip');
-  $('#fcKnow').onclick = () => { if (show.cur) { prog.cards[show.cur.f] = true; save(); } di++; show(); };
+  $('#fcKnow').onclick = () => { if (show.cur) { prog.cards[show.cur.f] = true; save(); } if (!$('#hideKnown').checked) di++; show(); };
   $('#fcAgain').onclick = () => { if (show.cur) { delete prog.cards[show.cur.f]; save(); } di++; show(); };
   $('#deckCh').onchange = e => { deckCh = e.target.value; mk(); show(); }; $('#hideKnown').onchange = () => { di = 0; show(); };
-  $('#shuf').onclick = () => { deck.sort(() => Math.random() - .5); di = 0; show(); };
+  $('#shuf').onclick = () => { deck = shuffle(deck); di = 0; show(); };
   window.__fckey = e => { if (route().view !== 'cards' || /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) return; if (e.code === 'Space') { e.preventDefault(); $('#fc').classList.toggle('flip'); } else if (e.key === 'ArrowRight') $('#fcKnow').click(); else if (e.key === 'ArrowLeft') $('#fcAgain').click(); };
   show();
 }
@@ -2587,10 +2868,11 @@ function vCheat(m) {
 
 /* ---------- Mixed quiz ---------- */
 let mixN = 10;
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 function vQuiz(m) {
   m.innerHTML = `<div class="page"><div class="eyebrow">Test yourself</div><h1>Mixed quiz</h1><p class="lede">Random questions drawn from every chapter.</p><div class="row noprint">${[10, 20, 30].map(n => `<button class="btn ${n === mixN ? '' : 'ghost'}" data-n="${n}">${n} questions</button>`).join('')}<button class="btn ghost" id="again">Reshuffle</button></div><div id="mq" class="quiz"></div></div>`;
   const pool = CH.flatMap(c => c.quiz.map(q => ({ ...q, _c: c.title })));
-  const qs = pool.sort(() => Math.random() - .5).slice(0, mixN);
+  const qs = shuffle(pool).slice(0, mixN);
   buildQuiz($('#mq'), qs, res => { const b = store.get('best', {}); b['n' + mixN] = Math.max(b['n' + mixN] || 0, res.score); store.set('best', b); });
   $$('[data-n]', m).forEach(b => b.onclick = () => { mixN = +b.dataset.n; vQuiz(m); }); $('#again').onclick = () => vQuiz(m);
 }
@@ -2622,7 +2904,7 @@ function palSearch(q) {
 function palGo(i) { const e = palRes[i]; if (!e) return; closePal(); go(e.go); }
 function initPal() {
   $('#palq').addEventListener('input', e => palSearch(e.target.value));
-  $('#palq').addEventListener('keydown', e => { const n = palRes.length; if (e.key === 'ArrowDown') { e.preventDefault(); palSel = (palSel + 1) % n; } else if (e.key === 'ArrowUp') { e.preventDefault(); palSel = (palSel - 1 + n) % n; } else if (e.key === 'Enter') { palGo(palSel); return; } else if (e.key === 'Escape') { closePal(); return; } else return; $$('#palul li').forEach((li, i) => li.classList.toggle('sel', i === palSel)); const s = $('#palul li.sel'); if (s) s.scrollIntoView({ block: 'nearest' }); });
+  $('#palq').addEventListener('keydown', e => { const n = palRes.length; if (!n && e.key !== 'Escape') return; if (e.key === 'ArrowDown') { e.preventDefault(); palSel = (palSel + 1) % n; } else if (e.key === 'ArrowUp') { e.preventDefault(); palSel = (palSel - 1 + n) % n; } else if (e.key === 'Enter') { palGo(palSel); return; } else if (e.key === 'Escape') { closePal(); return; } else return; $$('#palul li').forEach((li, i) => li.classList.toggle('sel', i === palSel)); const s = $('#palul li.sel'); if (s) s.scrollIntoView({ block: 'nearest' }); });
   $('#palul').addEventListener('click', e => { const li = e.target.closest('li[data-i]'); if (li) palGo(+li.dataset.i); });
   $('#pal').addEventListener('click', e => { if (e.target.id === 'pal') closePal(); });
   document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openPal(); } else if (e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); openPal(); } else if (e.key === 'Escape') closePal(); else if (e.key === '`' && e.ctrlKey) { e.preventDefault(); openDock(!$('#dock').classList.contains('open')); } });

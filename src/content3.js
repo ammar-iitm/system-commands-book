@@ -102,8 +102,6 @@ awk '$9 ~ /^5/' access.log                                       server errors
 awk '{bytes[$1]+=$NF} END{for(i in bytes) print i, bytes[i]}' access.log
 awk -F, 'NR>1 {sum[$2]+=$3; n[$2]++} END{for(s in sum) print s, sum[s]/n[s]}' scores.csv
 cmd | awk '...'                                                  use in any pipeline
-date --date="5 days ago" +%d/%m/%Y                                date arithmetic helper
-sort -n -k2 | sort -rn                                           numeric / reverse sort
 dig +noall +answer example.com | awk '{print $NF}'               DNS answer → IP</pre>`,
       cmds: [["sort -rn", 'Numeric reverse sort'], ['date --date="5 days ago" +%F', 'Relative date'], ['dig +noall +answer d', 'Short DNS answer']],
       ex: [{ c: "awk -F, 'NR>1{s[$2]+=$3; n[$2]++} END{for(k in s) printf \"%-10s %.1f\\n\", k, s[k]/n[k]}' scores.csv", n: 'Average marks per subject' }, { c: "awk '$9>=400' access.log | wc -l", n: 'Fields in the quoted log: $9 is the status? check with next command' }, { c: "awk '{print $9}' access.log | sort | uniq -c", n: 'HTTP status distribution' }, { c: "awk '{b[$1]+=$NF} END{for(i in b) print i, b[i]}' access.log | sort", n: 'Bytes per client' }] },

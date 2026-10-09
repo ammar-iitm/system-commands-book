@@ -154,7 +154,7 @@
       ['*/5 * * * * runs…', 'Every 5 minutes', ['Every 5 hours', 'At minute 5 only', 'Every 5 days'], '*/N in the minute field means every N minutes.'],
       ['Which command shows disk usage of a folder in human-readable form?', 'du -sh folder', ['df -h folder', 'ls -S folder', 'free -h'], 'du sums file usage; df shows filesystem free space.'],
       ['Which command compares two files line by line?', 'diff a b', ['cmp -l only', 'comm -x', 'sort a b'], 'diff shows the differences.'],
-      ['What does find . -name "*.tmp" -exec rm {} \; do?', 'Deletes each found .tmp file', ['Lists them', 'Compresses them', 'Renames them'], '{} is replaced by each found path.'],
+      ['What does find . -name "*.tmp" -exec rm {} \\; do?', 'Deletes each found .tmp file', ['Lists them', 'Compresses them', 'Renames them'], '{} is replaced by each found path.'],
       ['Which prints today’s date like 2026-10-07?', 'date +%F', ['date -F', 'date --year', 'cal -d'], '%F is shorthand for %Y-%m-%d.'],
     ],
     extras: [

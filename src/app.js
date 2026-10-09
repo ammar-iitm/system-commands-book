@@ -32,7 +32,6 @@ function stubs(s) {
   C.getenforce = () => ({ out: 'Enforcing\n' });
   C.top = () => ({ out: 'top - 10:30:00 up 3 days,  2 users,  load average: 0.12, 0.10, 0.08\nTasks:  90 total,   1 running\n  PID USER      %CPU %MEM COMMAND\n 4242 student    0.3  0.4 bash\n    1 root       0.0  0.1 systemd\n(snapshot — real top is interactive)\n' });
   C.jobs = () => ({ out: '' }); C.crontab = a => ({ out: a[0] === '-l' ? 'no crontab for student\n' : '(simulated)\n' });
-  C.sha256sum = a => ({ out: a.map(f => { let h = 0; try { for (const ch of s.readFile(s.norm(f))) h = (h * 31 + ch.charCodeAt(0)) >>> 0; } catch (e) { return `sha256sum: ${f}: No such file or directory\n`; } return h.toString(16).padStart(8, '0').repeat(8) + '  ' + f + '\n'; }).join('') });
   C.read = () => ({ out: '' }); C.bash = C.bash || (() => ({ out: '' }));
   C.whatis = a => ({ out: a.map(x => ({ ls: 'list directory contents', cp: 'copy files and directories', grep: 'print lines that match patterns', sed: 'stream editor for filtering and transforming text', awk: 'pattern scanning and processing language', cat: 'concatenate files and print on the standard output' })[x] ? `${x} (1) - ${({ ls: 'list directory contents', cp: 'copy files and directories', grep: 'print lines that match patterns', sed: 'stream editor for filtering and transforming text', awk: 'pattern scanning and processing language', cat: 'concatenate files and print on the standard output' })[x]}\n` : `${x}: nothing appropriate.\n`).join('') });
   C.apropos = a => ({ out: `${a[0]} (1) - commands related to "${a[0]}" (simulated)\n` });
@@ -42,7 +41,7 @@ function stubs(s) {
 stubs(sh);
 const term = { el: null, log: null, input: null, hist: [], hi: 0, active: null };
 function promptHTML() { const p = sh.prompt(); return `<span class="p">${esc(p.user)}</span>:<span class="d">${esc(p.dir)}</span>$ `; }
-function tprint(html) { const d = document.createElement('div'); d.className = 'l'; d.innerHTML = html; term.log.appendChild(d); term.el.scrollTop = term.el.scrollHeight; }
+function tprint(html) { const d = document.createElement('div'); d.className = 'l'; d.innerHTML = html; term.log.appendChild(d); while (term.log.childNodes.length > 400) term.log.removeChild(term.log.firstChild); term.el.scrollTop = term.el.scrollHeight; }
 function runCmd(cmd, opts) {
   opts = opts || {};
   const ph = promptHTML();
@@ -56,7 +55,7 @@ function runCmd(cmd, opts) {
 function updPrompt() { $('#tprompt').innerHTML = promptHTML(); }
 function openDock(open) { $('#dock').classList.toggle('open', open ?? true); document.body.classList.toggle('dockopen', $('#dock').classList.contains('open')); if (open !== false) setTimeout(() => term.input.focus(), 50); }
 function setInput(cmd) { openDock(true); term.input.value = cmd; term.input.focus(); }
-function resetSandbox() { sh = VirtualShell(); stubs(sh); term.log.innerHTML = ''; tprint('<span class="ok">Sandbox reset — fresh file system.</span>'); updPrompt(); }
+function resetSandbox() { sh = VirtualShell(); stubs(sh); term.active = null; $('#activeChal').style.display = 'none'; term.log.innerHTML = ''; tprint('<span class="ok">Sandbox reset — fresh file system.</span>'); updPrompt(); }
 function complete() {
   const v = term.input.value; const parts = v.split(/\s+/); const last = parts[parts.length - 1]; let cands = [];
   if (parts.length === 1) cands = Object.keys(sh.C).filter(c => c.startsWith(last));
@@ -92,7 +91,7 @@ function checkChallenge(cmd, r) {
   const c = term.active; if (!c) return;
   const got = (r.out || '').trim();
   if (got && got === expectedOut(c)) {
-    prog.chal[c.id] = true; save(); tprint('<span class="ok">✔ Challenge ' + c.id + ' solved!</span>'); term.active = null; $('#activeChal').style.display = 'none'; if (route().view === 'challenges') render();
+    prog.chal[c.id] = true; save(); tprint('<span class="ok">✔ Challenge ' + c.id + ' solved!</span>'); term.active = null; $('#activeChal').style.display = 'none'; if (route().view === 'challenges') render({ keepScroll: true });
   }
 }
 function setActive(c) { term.active = c; const a = $('#activeChal'); a.style.display = c ? '' : 'none'; if (c) { a.textContent = 'Challenge ' + c.id + ': ' + c.t; tprint('<span class="ok">▶ Challenge ' + c.id + ':</span> ' + esc(c.t)); openDock(true); } }
@@ -118,24 +117,27 @@ function renderSide() {
       <a href="#/cheat" class="${r.view === 'cheat' ? 'on' : ''}"><span class="n">📋</span>Cheat sheet</a></nav>`;
 }
 
-function render() {
+function render(opts) {
   const r = route();
   renderSide(); $('#side').classList.remove('open');
   const m = main();
-  window.scrollTo(0, 0);
+  const y = window.scrollY;
+  if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
   ({ home: vHome, ch: vChapter, map: vMap, playground: vPlayground, cards: vCards, cheat: vCheat, quiz: vQuiz, challenges: vChallenges }[r.view] || vHome)(m, r);
+  if (opts && opts.keepScroll) window.scrollTo(0, y);
 }
 
 /* ---------- Home ---------- */
 function vHome(m) {
   const cmdCount = CH.reduce((a, c) => a + c.sections.reduce((b, s) => b + (s.cmds || []).length, 0), 0);
+  const nQ = CH.reduce((a, c) => a + c.quiz.length, 0);
   m.innerHTML = `<div class="page wide"><div class="hero"><div class="eyebrow">IIT Madras BS · System Commands (SE2001)</div>
-    <h1>Navigating Linux, as an interactive book</h1>
-    <p class="lede">${CH.length} chapters built from the course command index and the “Navigating Linux” companion text. Read a concept, run its examples in a live sandbox terminal, then lock it in with quizzes, challenges and flashcards.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:16px"><span class="credit" style="margin:0">Subject: <b>System Commands</b></span><span class="credit" style="margin:0">Subject code: <b>SE2001</b></span></div><div class="credit">✍ Curated and created by Ammar Hashmi</div><p style="color:var(--ink2);margin:10px 0 0;max-width:62ch">Made for IIT Madras BS Data Science &amp; Applications students studying <b>System Commands</b> — a study companion for the weekly lectures.</p><div class="row" style="margin-top:14px"><a class="btn" href="#/ch/essentials">Start chapter 1</a><button class="btn ghost" id="hTerm">Open sandbox terminal</button><button class="btn ghost" id="hSearch">Search everything (Ctrl+K)</button></div>
-    <div class="row" style="margin-top:16px;color:var(--ink2);font-size:.88rem"><span class="badge">${CH.length} chapters</span><span class="badge">${cmdCount} command cards</span><span class="badge">${CH.reduce((a, c) => a + c.quiz.length, 0)} quiz questions</span><span class="badge">${window.CHALLENGES.length} terminal challenges</span></div></div>
+    <h1>Navigating Linux</h1>
+    <p class="lede">Read a concept, run its examples in a sandbox terminal, then check yourself. ${CH.length} chapters follow the weekly lectures.</p>
+    <div class="row"><a class="btn" href="#/ch/essentials">Start chapter 1</a><button class="btn ghost" id="hTerm">Open terminal</button><button class="btn ghost" id="hSearch">Search <kbd>Ctrl K</kbd></button></div>
+    <div class="row" style="margin-top:16px;color:var(--ink2);font-size:.86rem"><span class="badge">${cmdCount} commands</span><span class="badge">${nQ} quiz questions</span><span class="badge">${window.CHALLENGES.length} terminal challenges</span></div></div>
     <div class="cards">${CH.map(c => `<a class="card" href="#/ch/${c.id}"><div class="ic">${c.icon}</div><b>${c.n}. ${esc(c.title)}</b><span>${esc(c.intro)}</span><div class="meta"><span class="badge">${esc(c.weeks)}</span>${prog.done[c.id] ? '<span class="badge ok">complete</span>' : ''}${prog.quiz[c.id] ? `<span class="badge">quiz ${prog.quiz[c.id].score}/${prog.quiz[c.id].total}</span>` : ''}</div></a>`).join('')}</div>
-    <div class="foot"><b>Curated and created by Ammar Hashmi</b> · for IIT Madras BS students taking System Commands.</div></div>`;
+    <p class="credit-line">Curated and created by Ammar Hashmi for IIT Madras BS students.</p></div>`;
   $('#hTerm').onclick = () => openDock(true); $('#hSearch').onclick = () => openPal();
 }
 
@@ -144,14 +146,13 @@ function exHTML(e) { return `<div class="ex"><div class="exhead"><code>${esc(e.c
 function vChapter(m, r) {
   const i = CH.findIndex(c => c.id === r.a); const c = CH[i] || CH[0]; const ci = CH.indexOf(c);
   const prev = CH[ci - 1], next = CH[ci + 1];
-  m.innerHTML = `<div class="toc noprint"><b>On this page</b>${c.sections.map(s => `<a href="#/ch/${c.id}/${s.id}" data-sec="${s.id}">${esc(s.h)}</a>`).join('')}<a href="#/ch/${c.id}/quiz" data-sec="quiz">Chapter quiz</a></div>
-  <div class="page hasToc"><div class="eyebrow">Chapter ${c.n} · ${esc(c.weeks)}</div><h1>${c.icon} ${esc(c.title)}</h1><p class="lede">${esc(c.intro)}</p>
-  ${c.sections.map(s => `<section class="sec" id="s-${s.id}"><h2>${esc(s.h)}</h2>${s.html}
-     ${s.cmds && s.cmds.length ? `<div class="cmdtitle">Commands · click to load in terminal</div><div class="cmdgrid">${s.cmds.map(k => `<button class="cmd" data-c="${esc(k[0])}"><code>${esc(k[0])}</code><span>${esc(k[1])}</span></button>`).join('')}</div>` : ''}
-     ${s.ex && s.ex.length ? `<div class="cmdtitle">Try it · runs in the sandbox</div>${s.ex.map(exHTML).join('')}` : ''}</section>`).join('')}
+  const cmdBlock = s => s.cmds && s.cmds.length ? `<details class="more"><summary>Commands in this section <span class="badge">${s.cmds.length}</span><span class="hint">click one to load it in the terminal</span></summary><div class="cmdgrid">${s.cmds.map(k => `<button class="cmd" data-c="${esc(k[0])}"><code>${esc(k[0])}</code><span>${esc(k[1])}</span></button>`).join('')}</div></details>` : '';
+  const tryBlock = s => s.ex && s.ex.length ? `<div class="tryit"><div class="cmdtitle">Try it</div>${s.ex.map(exHTML).join('')}</div>` : '';
+  m.innerHTML = `<div class="chapter"><article class="page"><div class="eyebrow">Chapter ${c.n} · ${esc(c.weeks)}</div><h1>${c.icon} ${esc(c.title)}</h1><p class="lede">${esc(c.intro)}</p>
+  ${c.sections.map(s => `<section class="sec" id="s-${s.id}"><h2>${esc(s.h)}</h2><div class="prose">${s.html}</div>${tryBlock(s)}${cmdBlock(s)}</section>`).join('')}
   <section class="sec quiz" id="s-quiz"><h2>Check yourself</h2><div id="quizHost"></div></section>
-  <div class="row noprint"><button class="btn ${prog.done[c.id] ? 'ghost' : ''}" id="doneBtn">${prog.done[c.id] ? '✓ Completed — click to undo' : 'Mark chapter complete'}</button></div>
-  <div class="pn noprint">${prev ? `<a class="btn ghost" href="#/ch/${prev.id}">← ${esc(prev.title)}</a>` : '<span></span>'}${next ? `<a class="btn" href="#/ch/${next.id}">${esc(next.title)} →</a>` : ''}</div></div>`;
+  <div class="row noprint" style="margin-top:20px"><button class="btn ${prog.done[c.id] ? 'ghost' : ''}" id="doneBtn">${prog.done[c.id] ? '✓ Completed · click to undo' : 'Mark chapter complete'}</button></div>
+  <div class="pn noprint">${prev ? `<a class="btn ghost" href="#/ch/${prev.id}">← ${esc(prev.title)}</a>` : '<span></span>'}${next ? `<a class="btn" href="#/ch/${next.id}">${esc(next.title)} →</a>` : ''}</div></article><nav class="toc noprint" aria-label="On this page"><b>On this page</b>${c.sections.map(s => `<a href="#/ch/${c.id}/${s.id}" data-sec="${s.id}">${esc(s.h)}</a>`).join('')}<a href="#/ch/${c.id}/quiz" data-sec="quiz">Chapter quiz</a></nav></div>`;
   // handlers
   $$('.cmd', m).forEach(b => b.onclick = () => setInput(b.dataset.c));
   $$('.ex', m).forEach(ex => {
@@ -159,13 +160,21 @@ function vChapter(m, r) {
     $('.run', ex).onclick = () => { const res = runCmd(cmd); let h = esc((res.out || '').replace(/\n$/, '')); if (res.err) h += (h ? '\n' : '') + '<span class="e">' + esc(res.err.replace(/\n$/, '')) + '</span>'; if (res.clear) h = ''; out.innerHTML = h || '<span style="opacity:.5">(no output)</span>'; out.hidden = false; };
     $('.tt', ex).onclick = () => setInput(cmd);
   });
-  $('#doneBtn').onclick = () => { prog.done[c.id] = !prog.done[c.id]; save(); render(); };
+  $('#doneBtn').onclick = () => { prog.done[c.id] = !prog.done[c.id]; save(); render({ keepScroll: true }); };
   const cin = $('#cidrIn'); if (cin) { const upd = () => { $('#cidrOut').textContent = cidr(cin.value); }; cin.oninput = upd; upd(); }
   $$('[data-go]', m).forEach(a => a.onclick = e => { e.preventDefault(); go(a.dataset.go.replace(':', '/')); });
   buildQuiz($('#quizHost'), c.quiz, res => { prog.quiz[c.id] = res; save(); renderSide(); });
-  if (r.b) setTimeout(() => { const el = $('#s-' + r.b); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 60);
-  $$('.toc a', m).forEach(a => a.onclick = e => { e.preventDefault(); const el = $('#s-' + a.dataset.sec); if (el) el.scrollIntoView({ behavior: 'smooth' }); });
+  const secEl = id => document.getElementById('s-' + id);
+  if (r.b) setTimeout(() => { const el = secEl(r.b); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 60);
+  $$('.toc a', m).forEach(a => a.onclick = e => { e.preventDefault(); const el = secEl(a.dataset.sec); if (el) el.scrollIntoView({ behavior: 'smooth' }); });
+  // highlight the section being read in the outline
+  if (spy) spy.disconnect();
+  if ('IntersectionObserver' in window) {
+    spy = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) $$('.toc a', m).forEach(a => a.classList.toggle('on', 's-' + a.dataset.sec === en.target.id)); }), { rootMargin: '-15% 0px -70% 0px' });
+    $$('.sec', m).forEach(x => spy.observe(x));
+  }
 }
+let spy = null;
 function cidr(s) {
   const m = /^(\d+)\.(\d+)\.(\d+)\.(\d+)\/(\d+)$/.exec(s.trim()); if (!m) return 'Enter an address like 10.0.0.0/8';
   const o = m.slice(1, 5).map(Number), n = +m[5]; if (o.some(x => x > 255) || n > 32) return 'Invalid address';
@@ -177,19 +186,25 @@ function cidr(s) {
 
 /* ---------- Quiz widget ---------- */
 function buildQuiz(host, qs, onFinish) {
-  let score = 0, answered = 0;
-  host.innerHTML = qs.map((q, i) => `<div class="q" data-i="${i}"><p>${i + 1}. ${esc(q.q)}</p>${q.code ? `<pre class="qcode">${esc(q.code)}</pre>` : ''}<div class="opts">${q.o.map((o, j) => `<button class="opt" data-j="${j}">${esc(o)}</button>`).join('')}</div><div class="why" hidden></div></div>`).join('') + `<div class="row"><span class="score" id="qs"></span><button class="btn ghost" id="qr" hidden>Try again</button></div>`;
-  host.onclick = e => {
-    const b = e.target.closest('.opt'); if (b) {
-      const qd = b.closest('.q'); if (qd.dataset.done) return; qd.dataset.done = 1; const q = qs[+qd.dataset.i]; const j = +b.dataset.j;
-      $$('.opt', qd).forEach((x, k) => { x.disabled = true; if (k === q.a) x.classList.add('right'); });
-      if (j === q.a) score++; else b.classList.add('wrong');
-      const w = $('.why', qd); w.hidden = false; w.textContent = (j === q.a ? '✔ ' : '✘ ') + q.e;
-      answered++;
-      if (answered === qs.length) { $('#qs').textContent = `Score: ${score} / ${qs.length}`; $('#qr').hidden = false; onFinish && onFinish({ score, total: qs.length }); }
+  let i = 0, score = 0;
+  const show = () => {
+    if (i >= qs.length) {
+      host.innerHTML = `<div class="qdone"><div class="score">${score} / ${qs.length}</div><p class="lede" style="margin:.4em auto 1em">${score === qs.length ? 'Perfect score.' : score >= qs.length * .7 ? 'Solid. Review the ones you missed in the chapter.' : 'Re-read the chapter, run its examples, then try again.'}</p><button class="btn ghost" id="qr">Try again</button></div>`;
+      $('#qr', host).onclick = () => buildQuiz(host, qs, onFinish);
+      onFinish && onFinish({ score, total: qs.length });
+      return;
     }
-    if (e.target.id === 'qr') buildQuiz(host, qs, onFinish);
+    const q = qs[i];
+    host.innerHTML = `<div class="qtop"><span>Question ${i + 1} of ${qs.length}</span><span class="qbar"><i style="width:${i / qs.length * 100}%"></i></span><span>${score} correct</span></div>
+      <div class="q"><p>${esc(q.q)}</p>${q.code ? `<pre class="qcode">${esc(q.code)}</pre>` : ''}<div class="opts">${q.o.map((o, j) => `<button class="opt" data-j="${j}">${esc(o)}</button>`).join('')}</div><div class="why" hidden></div><div class="row" style="margin-top:12px"><button class="btn" id="qn" hidden>${i + 1 === qs.length ? 'See score' : 'Next question →'}</button></div></div>`;
+    $$('.opt', host).forEach(b => b.onclick = () => {
+      const j = +b.dataset.j; $$('.opt', host).forEach((x, k) => { x.disabled = true; if (k === q.a) x.classList.add('right'); });
+      if (j === q.a) score++; else b.classList.add('wrong');
+      const w = $('.why', host); w.hidden = false; w.textContent = (j === q.a ? '✔ ' : '✘ ') + q.e;
+      const n = $('#qn', host); n.hidden = false; n.focus(); n.onclick = () => { i++; show(); };
+    });
   };
+  show();
 }
 
 /* ---------- Lecture map ---------- */
@@ -257,7 +272,7 @@ function vPlayground(m, r) {
 let deck = [], di = 0, deckCh = 'all';
 function vCards(m) {
   const all = []; CH.forEach(c => c.sections.forEach(s => (s.cmds || []).forEach(k => all.push({ ch: c.id, f: k[0], b: k[1], sec: s.h }))));
-  const mk = () => { deck = all.filter(x => deckCh === 'all' || x.ch === deckCh).filter(x => !prog.cards[x.f] || deckCh !== 'all' || true); di = 0; };
+  const mk = () => { deck = all.filter(x => deckCh === 'all' || x.ch === deckCh); di = 0; };
   mk();
   m.innerHTML = `<div class="page"><div class="eyebrow">Memorise</div><h1>Command flashcards</h1><p class="lede">${all.length} cards. Flip with <kbd>Space</kbd>, mark with <kbd>→</kbd> (got it) or <kbd>←</kbd> (again).</p>
   <div class="row"><select id="deckCh" style="width:auto"><option value="all">All chapters</option>${CH.map(c => `<option value="${c.id}" ${deckCh === c.id ? 'selected' : ''}>${c.n}. ${esc(c.title)}</option>`).join('')}</select><label class="chk"><input type="checkbox" id="hideKnown"> hide known</label><button class="btn ghost" id="shuf">Shuffle</button><span class="badge" id="fcStat"></span></div>
@@ -265,10 +280,10 @@ function vCards(m) {
   <div class="row" style="justify-content:center"><button class="btn ghost" id="fcAgain">← Again</button><button class="btn ghost" id="fcFlip">Flip</button><button class="btn" id="fcKnow">Got it →</button></div></div>`;
   const show = () => { const hide = $('#hideKnown').checked; let d = deck.filter(x => !hide || !prog.cards[x.f]); if (!d.length) { $('#fcF').textContent = '🎉 No cards left'; $('#fcB').textContent = 'Uncheck “hide known” to review again.'; $('#fcStat').textContent = ''; return; } di = ((di % d.length) + d.length) % d.length; const c = d[di]; $('#fc').classList.remove('flip'); $('#fcF').textContent = c.f; $('#fcB').innerHTML = esc(c.b) + `<div style="font:.75rem var(--sans);color:var(--ink2);margin-top:12px">${esc(c.sec)}</div>`; $('#fcStat').textContent = `${di + 1}/${d.length} · known ${deck.filter(x => prog.cards[x.f]).length}/${deck.length}`; show.cur = c; show.len = d.length; };
   $('#fc').onclick = () => $('#fc').classList.toggle('flip'); $('#fcFlip').onclick = () => $('#fc').classList.toggle('flip');
-  $('#fcKnow').onclick = () => { if (show.cur) { prog.cards[show.cur.f] = true; save(); } di++; show(); };
+  $('#fcKnow').onclick = () => { if (show.cur) { prog.cards[show.cur.f] = true; save(); } if (!$('#hideKnown').checked) di++; show(); };
   $('#fcAgain').onclick = () => { if (show.cur) { delete prog.cards[show.cur.f]; save(); } di++; show(); };
   $('#deckCh').onchange = e => { deckCh = e.target.value; mk(); show(); }; $('#hideKnown').onchange = () => { di = 0; show(); };
-  $('#shuf').onclick = () => { deck.sort(() => Math.random() - .5); di = 0; show(); };
+  $('#shuf').onclick = () => { deck = shuffle(deck); di = 0; show(); };
   window.__fckey = e => { if (route().view !== 'cards' || /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) return; if (e.code === 'Space') { e.preventDefault(); $('#fc').classList.toggle('flip'); } else if (e.key === 'ArrowRight') $('#fcKnow').click(); else if (e.key === 'ArrowLeft') $('#fcAgain').click(); };
   show();
 }
@@ -284,10 +299,11 @@ function vCheat(m) {
 
 /* ---------- Mixed quiz ---------- */
 let mixN = 10;
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 function vQuiz(m) {
   m.innerHTML = `<div class="page"><div class="eyebrow">Test yourself</div><h1>Mixed quiz</h1><p class="lede">Random questions drawn from every chapter.</p><div class="row noprint">${[10, 20, 30].map(n => `<button class="btn ${n === mixN ? '' : 'ghost'}" data-n="${n}">${n} questions</button>`).join('')}<button class="btn ghost" id="again">Reshuffle</button></div><div id="mq" class="quiz"></div></div>`;
   const pool = CH.flatMap(c => c.quiz.map(q => ({ ...q, _c: c.title })));
-  const qs = pool.sort(() => Math.random() - .5).slice(0, mixN);
+  const qs = shuffle(pool).slice(0, mixN);
   buildQuiz($('#mq'), qs, res => { const b = store.get('best', {}); b['n' + mixN] = Math.max(b['n' + mixN] || 0, res.score); store.set('best', b); });
   $$('[data-n]', m).forEach(b => b.onclick = () => { mixN = +b.dataset.n; vQuiz(m); }); $('#again').onclick = () => vQuiz(m);
 }
@@ -319,7 +335,7 @@ function palSearch(q) {
 function palGo(i) { const e = palRes[i]; if (!e) return; closePal(); go(e.go); }
 function initPal() {
   $('#palq').addEventListener('input', e => palSearch(e.target.value));
-  $('#palq').addEventListener('keydown', e => { const n = palRes.length; if (e.key === 'ArrowDown') { e.preventDefault(); palSel = (palSel + 1) % n; } else if (e.key === 'ArrowUp') { e.preventDefault(); palSel = (palSel - 1 + n) % n; } else if (e.key === 'Enter') { palGo(palSel); return; } else if (e.key === 'Escape') { closePal(); return; } else return; $$('#palul li').forEach((li, i) => li.classList.toggle('sel', i === palSel)); const s = $('#palul li.sel'); if (s) s.scrollIntoView({ block: 'nearest' }); });
+  $('#palq').addEventListener('keydown', e => { const n = palRes.length; if (!n && e.key !== 'Escape') return; if (e.key === 'ArrowDown') { e.preventDefault(); palSel = (palSel + 1) % n; } else if (e.key === 'ArrowUp') { e.preventDefault(); palSel = (palSel - 1 + n) % n; } else if (e.key === 'Enter') { palGo(palSel); return; } else if (e.key === 'Escape') { closePal(); return; } else return; $$('#palul li').forEach((li, i) => li.classList.toggle('sel', i === palSel)); const s = $('#palul li.sel'); if (s) s.scrollIntoView({ block: 'nearest' }); });
   $('#palul').addEventListener('click', e => { const li = e.target.closest('li[data-i]'); if (li) palGo(+li.dataset.i); });
   $('#pal').addEventListener('click', e => { if (e.target.id === 'pal') closePal(); });
   document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openPal(); } else if (e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); openPal(); } else if (e.key === 'Escape') closePal(); else if (e.key === '`' && e.ctrlKey) { e.preventDefault(); openDock(!$('#dock').classList.contains('open')); } });
