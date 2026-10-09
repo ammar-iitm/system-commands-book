@@ -1,7 +1,7 @@
 const ch3 = (o) => window.CH.push(o);
 
 ch3({
-  id: 'sed', n: 11, weeks: 'Week 8', title: 'sed: the Stream Editor', icon: '🪄',
+  id: 'sed', n: 11, weeks: 'Week 8', title: 'sed: the Stream Editor', icon: 'scissors',
   intro: 'Edit streams non-interactively: addresses, substitution, deletion, insertion, scripts and branching.',
   sections: [
     { id: 'basic', h: 'How sed thinks',
@@ -49,7 +49,7 @@ sed 'y/abc/ABC/' f                  transliterate characters (like tr)</pre>
 });
 
 ch3({
-  id: 'awk', n: 12, weeks: 'Week 9', title: 'AWK Programming', icon: '🦅',
+  id: 'awk', n: 12, weeks: 'Week 9', title: 'AWK Programming', icon: 'table',
   intro: 'A full pattern-action language for column-oriented text: fields, variables, arrays, functions and reports.',
   sections: [
     { id: 'model', h: 'Execution model and syntax',
@@ -60,7 +60,7 @@ pattern { action }          ← runs for each line where pattern is true
 pattern                     ← no action: print the line
 END   { …runs once after input… }</pre>
       <p>Fields: <code>$0</code> whole line, <code>$1</code> first, <code>$NF</code> last, <code>$(NF-1)</code> second to last. Patterns can be <code>/regex/</code>, comparisons (<code>$3 &gt; 50</code>), <code>NR==2</code>, ranges <code>NR==2,NR==4</code> or <code>/start/,/end/</code>, and combinations with <code>&amp;&amp; || !</code>. Choose a separator with <code>-F:</code> or <code>BEGIN{FS=","}</code>; the FS can be a regex: <code>-F'[ .;:-]'</code>. Run a script file with <code>awk -f prog.awk file</code>; with <code>#!/usr/bin/awk -f</code> as shebang it becomes executable.</p>
-      <p class="cta">👉 Try programs in the <a href="#" data-go="playground:awk">AWK Playground</a>.</p>`,
+      <p class="cta">→ Try programs in the <a href="#" data-go="playground:awk">AWK Playground</a>.</p>`,
       cmds: [["awk '{print $1}' f", 'First column'], ["awk '{print $NF}' f", 'Last column'], ["awk -F, '{print $2}' f", 'CSV column'], ["awk 'NR==2' f", 'Line 2'], ["awk 'NR>1' f", 'Skip header'], ["awk '/re/' f", 'Lines matching regex'], ["awk '$3>50' f", 'Numeric condition'], ["awk '$1 ~ /^A/' f", 'Field matches regex'], ["awk 'END{print NR}' f", 'Count lines'], ["awk 'NR==2,NR==4' f", 'Range']],
       ex: [{ c: "awk '{print $2, $4}' employees.txt", n: 'Columns' }, { c: "awk '$4 > 50000 {print $2}' employees.txt", n: 'Filter' }, { c: "awk -F, 'NR>1{print $1\": \"$3}' scores.csv", n: 'CSV' }, { c: "awk 'NR==2,NR==4' employees.txt", n: 'Range' }, { c: "awk '/Sales/ {n++} END {print n\" in sales\"}' employees.txt", n: 'Count matches' }] },
     { id: 'builtin', h: 'Built-in variables',
@@ -117,7 +117,7 @@ dig +noall +answer example.com | awk '{print $NF}'               DNS answer → 
 });
 
 ch3({
-  id: 'utils', n: 13, weeks: 'Weeks 6 & 8', title: 'Utilities & Automation', icon: '🧰',
+  id: 'utils', n: 13, weeks: 'Weeks 6 & 8', title: 'Utilities & Automation', icon: 'wrench',
   intro: 'find, tar and compression, make, scheduling with cron and at, and startup scripts.',
   sections: [
     { id: 'find', h: 'find: locate files by property',
@@ -162,7 +162,7 @@ clean:
 });
 
 ch3({
-  id: 'extras', n: 14, weeks: 'Week 10', title: 'Version Control, Hardware, Prompts & Storage', icon: '🗄️',
+  id: 'extras', n: 14, weeks: 'Week 10', title: 'Version Control, Hardware, Prompts & Storage', icon: 'branch',
   intro: 'The final week: Git fundamentals, inspecting hardware, customising your prompt and managing disks and RAID.',
   sections: [
     { id: 'git', h: 'Version control with Git',

@@ -1,7 +1,7 @@
 const ch2 = (o) => window.CH.push(o);
 
 ch2({
-  id: 'streams', n: 6, weeks: 'Week 3', title: 'Streams, Redirection and Pipes', icon: '🔀',
+  id: 'streams', n: 6, weeks: 'Week 3', title: 'Streams, Redirection and Pipes', icon: 'swap',
   intro: 'Every program has three streams. Learn to redirect them to files and connect programs into pipelines.',
   sections: [
     { id: 'fd', h: 'The three standard streams',
@@ -34,7 +34,7 @@ ch2({
 });
 
 ch2({
-  id: 'pattern', n: 7, weeks: 'Week 4', title: 'Pattern Matching & Text Tools', icon: '🔍',
+  id: 'pattern', n: 7, weeks: 'Week 4', title: 'Pattern Matching & Text Tools', icon: 'asterisk',
   intro: 'Globs, regular expressions (BRE, ERE, PCRE) and the small text-slicing tools: cut, tr, sort, uniq, paste, fold.',
   sections: [
     { id: 'glob', h: 'Globs vs regular expressions',
@@ -49,7 +49,7 @@ ch2({
       <p><b>POSIX classes</b> live inside brackets: <code>[[:alpha:]]</code>, <code>[[:digit:]]</code>, <code>[[:alnum:]]</code>, <code>[[:upper:]]</code>, <code>[[:lower:]]</code>, <code>[[:space:]]</code>, <code>[[:punct:]]</code>, <code>[[:blank:]]</code>.</p>
       <p><b>BRE vs ERE:</b> in basic regex (<code>grep</code>, <code>sed</code>) the characters <code>+ ? | ( ) { }</code> are literal unless backslashed; in extended regex (<code>grep -E</code>/<code>egrep</code>, <code>sed -E</code>, <code>awk</code>) it is the other way round. <b>PCRE</b> (<code>grep -P</code>) adds lazy quantifiers (<code>.*?</code>), look-ahead/behind, named groups and <code>\\d</code>.</p>
       <p><b>Precedence</b> (high→low): grouping, quantifiers, concatenation, alternation. So <code>ab|cd</code> means (ab)|(cd), and <code>(ma)+</code> repeats the group while <code>ma+</code> repeats only the <em>a</em>. Also note greediness: <code>M*a</code> vs <code>M.*a</code> differ.</p>
-      <p class="cta">👉 Experiment live in the <a href="#" data-go="playground:regex">Regex Playground</a>.</p>`,
+      <p class="cta">→ Experiment live in the <a href="#" data-go="playground:regex">Regex Playground</a>.</p>`,
       cmds: [["grep 'pat' file", 'BRE search'], ["grep -E 'a|b' file", 'ERE alternation'], ["grep '^pat' file", 'Lines starting with pat'], ["grep 'pat$' file", 'Lines ending with pat'], ["grep '[[:digit:]]\\{3\\}' f", 'Three digits (BRE)'], ["egrep '[[:digit:]]{6}' f", 'Six digits (ERE)'], ["grep '\\(ab\\)\\1' f", 'Back-reference'], ["grep -P '\\d+' f", 'PCRE digits']],
       ex: [{ c: "grep '^a' fruits.txt", n: 'Anchored start' }, { c: "grep 'a$' fruits.txt", n: 'Anchored end' }, { c: "grep -E '^(a|b)' fruits.txt", n: 'ERE alternation' }, { c: "egrep '^[0-9]{2}f[0-9]{7}' rollnos.txt", n: 'Valid roll numbers' }, { c: "grep -E '^[[:alnum:]._-]+@[[:alnum:].-]+\\.[a-z]{2,}$' emails.txt", n: 'Plausible e-mail addresses' }, { c: "grep -v '[[:alpha:]]@' emails.txt", n: 'Lines NOT matching' }] },
     { id: 'cut', h: 'cut, tr, sort, uniq, paste, fold, rev',
@@ -67,7 +67,7 @@ ch2({
 });
 
 ch2({
-  id: 'grep', n: 8, weeks: 'Week 4', title: 'grep in Depth', icon: '🔎',
+  id: 'grep', n: 8, weeks: 'Week 4', title: 'grep in Depth', icon: 'search',
   intro: 'Everything you can do with grep: invert, count, context, recursion, multiple patterns and only-matching output.',
   sections: [
     { id: 'opts', h: 'The options that matter',
@@ -86,7 +86,7 @@ ch2({
 });
 
 ch2({
-  id: 'vars', n: 9, weeks: 'Week 5', title: 'Shell Variables', icon: '💲',
+  id: 'vars', n: 9, weeks: 'Week 5', title: 'Shell Variables', icon: 'dollar',
   intro: 'Creating, exporting, expanding and manipulating variables; special variables; arrays.',
   sections: [
     { id: 'basic', h: 'Creating and using variables',
@@ -131,7 +131,7 @@ declare -A age; age[asha]=20; age[dev]=22; echo \${age[asha]}; echo \${!age[@]}<
 });
 
 ch2({
-  id: 'scripting', n: 10, weeks: 'Weeks 6–7', title: 'Shell Scripting', icon: '📜',
+  id: 'scripting', n: 10, weeks: 'Weeks 6–7', title: 'Shell Scripting', icon: 'code',
   intro: 'Turn commands into programs: shebangs, arguments, tests, conditionals, loops, functions, debugging and getopts.',
   sections: [
     { id: 'run', h: 'Your first script and ways to run it',

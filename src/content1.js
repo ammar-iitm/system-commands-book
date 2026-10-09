@@ -2,7 +2,7 @@ window.CH = window.CH || [];
 const ch = (o) => window.CH.push(o);
 
 ch({
-  id: 'essentials', n: 1, weeks: 'Week 1', title: 'Essentials of Linux', icon: '🐧',
+  id: 'essentials', n: 1, weeks: 'Week 1', title: 'Essentials of Linux', icon: 'terminal-square',
   intro: 'What Linux and the shell actually are, how the file system is laid out, and the first twenty commands that every other chapter builds on.',
   sections: [
     { id: 'what', h: 'What is Linux, shell and terminal?',
@@ -86,7 +86,7 @@ ch({
 });
 
 ch({
-  id: 'editors', n: 2, weeks: 'Week 2', title: 'Command Line Editors', icon: '✍️',
+  id: 'editors', n: 2, weeks: 'Week 2', title: 'Command Line Editors', icon: 'pencil',
   intro: 'ed, vi/vim, nano and emacs — why they exist, how modal editing works, and the minimum you need to survive on any server.',
   sections: [
     { id: 'why', h: 'Why terminal editors?',
@@ -132,7 +132,7 @@ r !date   insert output of a shell command
 });
 
 ch({
-  id: 'network', n: 3, weeks: 'Week 2', title: 'Networking and SSH', icon: '🌐',
+  id: 'network', n: 3, weeks: 'Week 2', title: 'Networking and SSH', icon: 'globe',
   intro: 'IP addresses, subnets, ports, firewalls, and how to log in to a remote machine securely with SSH keys.',
   sections: [
     { id: 'ip', h: 'Networks, IP addresses and subnets',
@@ -168,7 +168,7 @@ ch({
 });
 
 ch({
-  id: 'process', n: 4, weeks: 'Week 3', title: 'Process Management', icon: '⚙️',
+  id: 'process', n: 4, weeks: 'Week 3', title: 'Process Management', icon: 'cpu',
   intro: 'What a process is, foreground vs background, job control, signals, and exit codes.',
   sections: [
     { id: 'proc', h: 'Processes, PIDs and the process tree',
@@ -210,7 +210,7 @@ nohup cmd &amp;  survive logout            disown    detach job from shell</pre>
 });
 
 ch({
-  id: 'software', n: 5, weeks: 'Week 3', title: 'Software Management (apt & dpkg)', icon: '📦',
+  id: 'software', n: 5, weeks: 'Week 3', title: 'Software Management (apt & dpkg)', icon: 'package',
   intro: 'Finding, installing and inspecting packages on Debian/Ubuntu systems.',
   sections: [
     { id: 'os', h: 'Know your system',

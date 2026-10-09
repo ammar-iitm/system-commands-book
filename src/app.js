@@ -107,14 +107,14 @@ function renderSide() {
   const r = route(); const pct = Math.round(doneCount() / CH.length * 100);
   $('#side').innerHTML = `
     <div class="ring"><i style="width:${pct}%"></i></div><div class="ringtxt">${doneCount()} of ${CH.length} chapters complete</div>
-    <h6>Start</h6><nav class="nav"><a href="#/home" class="${r.view === 'home' ? 'on' : ''}"><span class="n">⌂</span>Overview</a><a href="#/map" class="${r.view === 'map' ? 'on' : ''}"><span class="n">🗺</span>Lecture map</a></nav>
+    <h6>Start</h6><nav class="nav"><a href="#/home" class="${r.view === 'home' ? 'on' : ''}"><span class="n">${ICON('home')}</span>Overview</a><a href="#/map" class="${r.view === 'map' ? 'on' : ''}"><span class="n">${ICON('map')}</span>Lecture map</a></nav>
     <h6>Chapters</h6><nav class="nav">${CH.map(c => `<a href="#/ch/${c.id}" class="${r.view === 'ch' && r.a === c.id ? 'on' : ''} ${prog.done[c.id] ? 'done' : ''}"><span class="n">${prog.done[c.id] ? '✓' : c.n}</span>${esc(c.title)}<span class="wk">${esc(c.weeks.replace('Week', 'W').replace('Weeks', 'W'))}</span></a>`).join('')}</nav>
     <h6>Practice</h6><nav class="nav">
-      <a href="#/playground/regex" class="${r.view === 'playground' ? 'on' : ''}"><span class="n">⚗</span>Playground</a>
-      <a href="#/challenges" class="${r.view === 'challenges' ? 'on' : ''}"><span class="n">🎯</span>Challenges</a>
-      <a href="#/quiz" class="${r.view === 'quiz' ? 'on' : ''}"><span class="n">❓</span>Mixed quiz</a>
-      <a href="#/cards" class="${r.view === 'cards' ? 'on' : ''}"><span class="n">🃏</span>Flashcards</a>
-      <a href="#/cheat" class="${r.view === 'cheat' ? 'on' : ''}"><span class="n">📋</span>Cheat sheet</a></nav>`;
+      <a href="#/playground/regex" class="${r.view === 'playground' ? 'on' : ''}"><span class="n">${ICON('flask')}</span>Playground</a>
+      <a href="#/challenges" class="${r.view === 'challenges' ? 'on' : ''}"><span class="n">${ICON('target')}</span>Challenges</a>
+      <a href="#/quiz" class="${r.view === 'quiz' ? 'on' : ''}"><span class="n">${ICON('help')}</span>Mixed quiz</a>
+      <a href="#/cards" class="${r.view === 'cards' ? 'on' : ''}"><span class="n">${ICON('layers')}</span>Flashcards</a>
+      <a href="#/cheat" class="${r.view === 'cheat' ? 'on' : ''}"><span class="n">${ICON('clipboard')}</span>Cheat sheet</a></nav>`;
 }
 
 function render(opts) {
@@ -136,19 +136,19 @@ function vHome(m) {
     <p class="lede">Read a concept, run its examples in a sandbox terminal, then check yourself. ${CH.length} chapters follow the weekly lectures.</p>
     <div class="row"><a class="btn" href="#/ch/essentials">Start chapter 1</a><button class="btn ghost" id="hTerm">Open terminal</button><button class="btn ghost" id="hSearch">Search <kbd>Ctrl K</kbd></button></div>
     <div class="row" style="margin-top:16px;color:var(--ink2);font-size:.86rem"><span class="badge">${cmdCount} commands</span><span class="badge">${nQ} quiz questions</span><span class="badge">${window.CHALLENGES.length} terminal challenges</span></div></div>
-    <div class="cards">${CH.map(c => `<a class="card" href="#/ch/${c.id}"><div class="ic">${c.icon}</div><b>${c.n}. ${esc(c.title)}</b><span>${esc(c.intro)}</span><div class="meta"><span class="badge">${esc(c.weeks)}</span>${prog.done[c.id] ? '<span class="badge ok">complete</span>' : ''}${prog.quiz[c.id] ? `<span class="badge">quiz ${prog.quiz[c.id].score}/${prog.quiz[c.id].total}</span>` : ''}</div></a>`).join('')}</div>
+    <div class="cards">${CH.map(c => `<a class="card" href="#/ch/${c.id}"><div class="tile">${ICON(c.icon)}</div><b>${c.n}. ${esc(c.title)}</b><span>${esc(c.intro)}</span><div class="meta"><span class="badge">${esc(c.weeks)}</span>${prog.done[c.id] ? '<span class="badge ok">complete</span>' : ''}${prog.quiz[c.id] ? `<span class="badge">quiz ${prog.quiz[c.id].score}/${prog.quiz[c.id].total}</span>` : ''}</div></a>`).join('')}</div>
     <p class="credit-line">Curated and created by Ammar Hashmi for IIT Madras BS students.</p></div>`;
   $('#hTerm').onclick = () => openDock(true); $('#hSearch').onclick = () => openPal();
 }
 
 /* ---------- Chapter ---------- */
-function exHTML(e) { return `<div class="ex"><div class="exhead"><code>${esc(e.c)}</code>${e.n ? `<span class="note">${esc(e.n)}</span>` : ''}<button class="run">▶ Run</button><button class="tt" title="Copy into terminal">⌗ edit</button></div><pre class="exout" hidden></pre></div>`; }
+function exHTML(e) { return `<div class="ex"><div class="exhead"><code>${esc(e.c)}</code>${e.n ? `<span class="note">${esc(e.n)}</span>` : ''}<button class="run">${ICON('play')} Run</button><button class="tt" title="Copy into terminal">${ICON('pencil')} Edit</button></div><pre class="exout" hidden></pre></div>`; }
 function vChapter(m, r) {
   const i = CH.findIndex(c => c.id === r.a); const c = CH[i] || CH[0]; const ci = CH.indexOf(c);
   const prev = CH[ci - 1], next = CH[ci + 1];
   const cmdBlock = s => s.cmds && s.cmds.length ? `<details class="more"><summary>Commands in this section <span class="badge">${s.cmds.length}</span><span class="hint">click one to load it in the terminal</span></summary><div class="cmdgrid">${s.cmds.map(k => `<button class="cmd" data-c="${esc(k[0])}"><code>${esc(k[0])}</code><span>${esc(k[1])}</span></button>`).join('')}</div></details>` : '';
   const tryBlock = s => s.ex && s.ex.length ? `<div class="tryit"><div class="cmdtitle">Try it</div>${s.ex.map(exHTML).join('')}</div>` : '';
-  m.innerHTML = `<div class="chapter"><article class="page"><div class="eyebrow">Chapter ${c.n} · ${esc(c.weeks)}</div><h1>${c.icon} ${esc(c.title)}</h1><p class="lede">${esc(c.intro)}</p>
+  m.innerHTML = `<div class="chapter"><article class="page"><div class="eyebrow">Chapter ${c.n} · ${esc(c.weeks)}</div><h1>${ICON(c.icon)} ${esc(c.title)}</h1><p class="lede">${esc(c.intro)}</p>
   ${c.sections.map(s => `<section class="sec" id="s-${s.id}"><h2>${esc(s.h)}</h2><div class="prose">${s.html}</div>${tryBlock(s)}${cmdBlock(s)}</section>`).join('')}
   <section class="sec quiz" id="s-quiz"><h2>Check yourself</h2><div id="quizHost"></div></section>
   <div class="row noprint" style="margin-top:20px"><button class="btn ${prog.done[c.id] ? 'ghost' : ''}" id="doneBtn">${prog.done[c.id] ? '✓ Completed · click to undo' : 'Mark chapter complete'}</button></div>
@@ -278,7 +278,7 @@ function vCards(m) {
   <div class="row"><select id="deckCh" style="width:auto"><option value="all">All chapters</option>${CH.map(c => `<option value="${c.id}" ${deckCh === c.id ? 'selected' : ''}>${c.n}. ${esc(c.title)}</option>`).join('')}</select><label class="chk"><input type="checkbox" id="hideKnown"> hide known</label><button class="btn ghost" id="shuf">Shuffle</button><span class="badge" id="fcStat"></span></div>
   <div class="fc-wrap"><div class="fc" id="fc"><div class="fc-in"><div class="fc-face fc-front"><small>command</small><code id="fcF"></code></div><div class="fc-face fc-back"><small>what it does</small><div id="fcB"></div></div></div></div></div>
   <div class="row" style="justify-content:center"><button class="btn ghost" id="fcAgain">← Again</button><button class="btn ghost" id="fcFlip">Flip</button><button class="btn" id="fcKnow">Got it →</button></div></div>`;
-  const show = () => { const hide = $('#hideKnown').checked; let d = deck.filter(x => !hide || !prog.cards[x.f]); if (!d.length) { $('#fcF').textContent = '🎉 No cards left'; $('#fcB').textContent = 'Uncheck “hide known” to review again.'; $('#fcStat').textContent = ''; return; } di = ((di % d.length) + d.length) % d.length; const c = d[di]; $('#fc').classList.remove('flip'); $('#fcF').textContent = c.f; $('#fcB').innerHTML = esc(c.b) + `<div style="font:.75rem var(--sans);color:var(--ink2);margin-top:12px">${esc(c.sec)}</div>`; $('#fcStat').textContent = `${di + 1}/${d.length} · known ${deck.filter(x => prog.cards[x.f]).length}/${deck.length}`; show.cur = c; show.len = d.length; };
+  const show = () => { const hide = $('#hideKnown').checked; let d = deck.filter(x => !hide || !prog.cards[x.f]); if (!d.length) { $('#fcF').textContent = 'All cards known'; $('#fcB').textContent = 'Uncheck “hide known” to review again.'; $('#fcStat').textContent = ''; return; } di = ((di % d.length) + d.length) % d.length; const c = d[di]; $('#fc').classList.remove('flip'); $('#fcF').textContent = c.f; $('#fcB').innerHTML = esc(c.b) + `<div style="font:.75rem var(--sans);color:var(--ink2);margin-top:12px">${esc(c.sec)}</div>`; $('#fcStat').textContent = `${di + 1}/${d.length} · known ${deck.filter(x => prog.cards[x.f]).length}/${deck.length}`; show.cur = c; show.len = d.length; };
   $('#fc').onclick = () => $('#fc').classList.toggle('flip'); $('#fcFlip').onclick = () => $('#fc').classList.toggle('flip');
   $('#fcKnow').onclick = () => { if (show.cur) { prog.cards[show.cur.f] = true; save(); } if (!$('#hideKnown').checked) di++; show(); };
   $('#fcAgain').onclick = () => { if (show.cur) { delete prog.cards[show.cur.f]; save(); } di++; show(); };
@@ -292,7 +292,7 @@ document.addEventListener('keydown', e => window.__fckey && window.__fckey(e));
 /* ---------- Cheat sheet ---------- */
 function vCheat(m) {
   m.innerHTML = `<div class="page wide"><div class="row noprint" style="justify-content:space-between"><div><div class="eyebrow">Reference</div><h1>Cheat sheet</h1></div><button class="btn" id="prn">Print / save PDF</button></div><input class="search-in noprint" id="chq" placeholder="Filter commands…" autocomplete="off">
-  <div class="cheat" id="cheat">${CH.map(c => `<section data-ch="${c.id}"><h3>${c.icon} ${c.n}. ${esc(c.title)}</h3><table>${c.sections.flatMap(s => s.cmds || []).map(k => `<tr><td><code>${esc(k[0])}</code></td><td>${esc(k[1])}</td></tr>`).join('')}</table></section>`).join('')}</div></div>`;
+  <div class="cheat" id="cheat">${CH.map(c => `<section data-ch="${c.id}"><h3>${ICON(c.icon)} ${c.n}. ${esc(c.title)}</h3><table>${c.sections.flatMap(s => s.cmds || []).map(k => `<tr><td><code>${esc(k[0])}</code></td><td>${esc(k[1])}</td></tr>`).join('')}</table></section>`).join('')}</div></div>`;
   $('#prn').onclick = () => window.print();
   $('#chq').oninput = e => { const q = e.target.value.toLowerCase(); $$('#cheat section').forEach(s => { let any = false; $$('tr', s).forEach(tr => { const ok = !q || tr.textContent.toLowerCase().includes(q); tr.style.display = ok ? '' : 'none'; if (ok) any = true; }); s.style.display = any ? '' : 'none'; }); };
 }
@@ -343,6 +343,7 @@ function initPal() {
 
 /* ================= Boot ================= */
 function boot() {
+  $$('[data-i]').forEach(el => { el.outerHTML = ICON(el.dataset.i); });
   const setTheme = t => { document.documentElement.dataset.theme = t; $$('#themes button').forEach(b => b.classList.toggle('on', b.dataset.t === t)); store.set('theme', t); };
   setTheme(store.get('theme', null) || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
   $$('#themes button').forEach(b => b.onclick = () => setTheme(b.dataset.t));
