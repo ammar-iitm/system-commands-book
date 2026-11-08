@@ -57,7 +57,7 @@ for (const [cmd, out, err] of cases) { const r = run(cmd); check(cmd, r.out, out
 
 // ---- book content ----
 const ctx = { console }; ctx.window = ctx; vm.createContext(ctx);
-for (const f of ['engine', 'content1', 'content2', 'content3', 'quiz_extra', 'learn', 'practice'])
+for (const f of ['engine', 'content1', 'content2', 'content3', 'quiz_extra', 'learn', 'practice', 'growth'])
   vm.runInContext(fs.readFileSync(path.join(__dirname, 'src', f + '.js'), 'utf8'), ctx, { filename: f });
 for (const c of ctx.CH) {
   for (const s of c.sections) for (const e of s.ex || []) {
@@ -175,6 +175,52 @@ check('answer missing line', LEARN.compareAnswer('a', 'a\nb').rows[1].got, null)
     const r = LEARN.pipeSteps(mk, e.c), full = VirtualShell().run(e.c);
     check(`pipeSteps final stage = real run: ${e.c}`, r.steps[r.steps.length - 1].output, full.out || '');
   }
+}
+
+// ---- onboarding + growth (src/growth.js) ----
+{
+  const GROW = require('./src/growth.js');
+  const ids = GROW.INSTALL.map(x => x.id); check('install ids unique', new Set(ids).size, ids.length);
+  GROW.INSTALL.forEach(x => check(`install ${x.id} has steps`, x.steps.length >= 3 && !!x.tip, true));
+  // picker: every answer combination yields a match; a total beginner is never sent to Arch
+  let combos = 0, bad = 0;
+  const rec = (i, a) => { if (i === GROW.PICKER.length) { combos++; const p = GROW.pickDistro(a); if (!p.top || !GROW.DISTROS[p.top.id] || (a[1] === 0 && p.top.id === 'arch')) bad++; return; } GROW.PICKER[i].o.forEach((_, j) => rec(i + 1, a.concat(j))); };
+  rec(0, []); check(`picker over ${combos} answer sets`, bad, 0);
+  check('picker: mac users start with the mac path', GROW.pickDistro([3, 0, 0, 0, 0]).start, 'mac');
+  // explainer
+  const ex = c => GROW.explain(c).parts.map(p => p.kind + ':' + p.text).join(' ');
+  check('explain pipeline', ex("grep -rn 'x' a.log | sort | uniq -c > o.txt"), "cmd:grep flag:-rn arg:'x' file:a.log op:| cmd:sort op:| cmd:uniq flag:-c op:> file:o.txt");
+  check('explain 2>&1', ex('ls nothing > out 2>&1'), 'cmd:ls arg:nothing op:> file:out op:2>&1');
+  check('explain && / ;', ex('mkdir a && cd a; ls'), 'cmd:mkdir arg:a op:&& cmd:cd arg:a op:; cmd:ls');
+  check('explain combined flags', GROW.explain('ls -la').parts[1].desc.includes('long format') && GROW.explain('ls -la').parts[1].desc.includes('hidden'), true);
+  for (const c of ctx.CH) for (const s of c.sections) for (const e of s.ex || []) {
+    const r = GROW.explain(e.c); if (!r.parts.length || r.parts.some(p => !p.desc)) { failed++; console.log('FAIL explain example: ' + e.c); }
+  }
+  // friendly hints
+  const names = Object.keys(VirtualShell().C);
+  check('hint: typo suggests ls', /ls/.test((GROW.hint('bash: lss: command not found', 'lss', names) || {}).tip), true);
+  check('hint: missing file', !!GROW.hint('cat: x: No such file or directory', 'cat x', names), true);
+  check('hint: unknown error is silent', GROW.hint('weird', 'x', names), null);
+  // guided tour: every step really works, in order, in the simulator
+  { const sh = VirtualShell(); GROW.TOUR.forEach((s, i) => { const r = sh.run(s.cmd); check(`tour step ${i + 1} (${s.cmd}) matches and runs`, GROW.tourMatch(i, s.cmd) && !r.err, true); if (i === GROW.TOUR.length - 1) check('tour final output', (r.out || '').trim(), '1'); }); }
+  check('tour does not match the wrong step', GROW.tourMatch(0, 'ls'), false);
+  // exam builder + grader
+  const pool = ctx.CH.reduce((a, c) => a + c.quiz.length, 0);
+  GROW.EXAMS.forEach(x => {
+    const e = GROW.buildExam(ctx.CH, x.n, 42), e2 = GROW.buildExam(ctx.CH, x.n, 42);
+    check(`exam ${x.id}: size`, e.length, Math.min(x.n, pool));
+    check(`exam ${x.id}: same seed gives same paper`, JSON.stringify(e), JSON.stringify(e2));
+    check(`exam ${x.id}: no duplicate questions`, new Set(e.map(q => q.q + '|' + (q.code || ''))).size, e.length);
+    check(`exam ${x.id}: answers stay correct after shuffling`, e.every(q => { const src = ctx.CH.flatMap(c => c.quiz).find(o => o.q === q.q && (o.code || '') === (q.code || '')); return src && q.o[q.a] === src.o[src.a] && q.o.length === src.o.length; }), true);
+  });
+  const e1 = GROW.buildExam(ctx.CH, 15, 7), perfect = GROW.gradeExam(e1, e1.map(q => q.a)), none = GROW.gradeExam(e1, e1.map(() => null));
+  check('grade: perfect', perfect.score === 15 && perfect.pct === 100 && perfect.weak.length === 0, true);
+  check('grade: blank', none.score === 0 && none.wrong.length === 15 && none.weak.length > 0, true);
+  check('exam covers many chapters', new Set(e1.map(q => q._c)).size >= 10, true);
+  check('fmtTime', GROW.fmtTime(75) + ' ' + GROW.fmtTime(600), '1:15 10:00');
+  check('certRef stable + name sensitive', GROW.certRef('Ammar', '2026-11-08') === GROW.certRef(' ammar ', '2026-11-08') && GROW.certRef('Ammar', '2026-11-08') !== GROW.certRef('Sara', '2026-11-08'), true);
+  const prog = { done: {} }; check('cert locked', GROW.certReady(ctx.CH, prog).ready, false);
+  ctx.CH.forEach(c => prog.done[c.id] = true); check('cert unlocked', GROW.certReady(ctx.CH, prog).ready, true);
 }
 
 console.log(failed ? `\n${failed} check(s) failed` : 'all checks passed');

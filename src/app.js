@@ -46,13 +46,17 @@ function tprint(html) { const d = document.createElement('div'); d.className = '
 function runCmd(cmd, opts) {
   opts = opts || {};
   const ph = promptHTML();
+  const xm = cmd.match(/^\s*explain\s+(.+)$/);
+  if (xm) { tprint(ph + esc(cmd)); tprint(explainText(xm[1])); return { out: '', err: '' }; }
   const before = LEARN.flat(sh.fs);
   const r = sh.run(cmd);
   if (r.clear) { term.log.innerHTML = ''; }
   else { tprint(ph + esc(cmd)); if (r.out) tprint(esc(r.out.replace(/\n$/, ''))); if (r.err) tprint('<span class="e">' + esc(r.err.replace(/\n$/, '')) + '</span>'); }
   updPrompt();
   renderTree(LEARN.fsDiff(before, LEARN.flat(sh.fs)), before);
+  friendlyHint(cmd, r);
   checkChallenge(cmd, r);
+  tourAfter(cmd, r);
   return r;
 }
 function updPrompt() { $('#tprompt').innerHTML = promptHTML(); }
@@ -69,7 +73,7 @@ function complete() {
 function initTerminal() {
   term.el = $('#term'); term.log = $('#tlog'); term.input = $('#tinput');
   tprint('<span class="ok">Linux sandbox — a simulated Bash with a small file system (~/ has fruits.txt, scores.csv, access.log, employees.txt…).</span>');
-  tprint('Try:  <span class="p">ls</span>   <span class="p">cat notes.txt | wc -w</span>   <span class="p">awk \'{print $2}\' employees.txt</span>   ·  type <span class="p">help</span> for the list.');
+  tprint('Try:  <span class="p">ls</span>   <span class="p">cat notes.txt | wc -w</span>   <span class="p">awk \'{print $2}\' employees.txt</span>   ·  type <span class="p">help</span> for the list.  Not sure what a command does? <span class="p">explain ls -l</span>');
   term.input.addEventListener('keydown', e => {
     if (e.key === 'Enter') { const c = term.input.value; term.input.value = ''; if (c.trim()) { term.hist.push(c); } term.hi = term.hist.length; runCmd(c); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); if (term.hi > 0) term.input.value = term.hist[--term.hi]; }
@@ -139,7 +143,7 @@ function renderSide() {
   const r = route(); const pct = Math.round(doneCount() / CH.length * 100);
   $('#side').innerHTML = `
     <div class="ring"><i style="width:${pct}%"></i></div><div class="ringtxt">${doneCount()} of ${CH.length} chapters complete</div>
-    <h6>Start</h6><nav class="nav"><a href="#/home" class="${r.view === 'home' ? 'on' : ''}"><span class="n">${ICON('home')}</span>Overview</a><a href="#/map" class="${r.view === 'map' ? 'on' : ''}"><span class="n">${ICON('map')}</span>Lecture map</a></nav>
+    <h6>Start</h6><nav class="nav"><a href="#/start" class="${r.view === 'start' ? 'on' : ''}"><span class="n">${ICON('globe')}</span>Start here</a><a href="#/home" class="${r.view === 'home' ? 'on' : ''}"><span class="n">${ICON('home')}</span>Overview</a><a href="#/map" class="${r.view === 'map' ? 'on' : ''}"><span class="n">${ICON('map')}</span>Lecture map</a></nav>
     <h6>Chapters</h6><nav class="nav">${CH.map(c => `<a href="#/ch/${c.id}" class="${r.view === 'ch' && r.a === c.id ? 'on' : ''} ${prog.done[c.id] ? 'done' : ''}"><span class="n">${prog.done[c.id] ? '✓' : c.n}</span>${esc(c.title)}<span class="wk">${esc(c.weeks.replace('Week', 'W').replace('Weeks', 'W'))}</span></a>`).join('')}</nav>
     <h6>Practice</h6><nav class="nav">
       <a href="#/playground/regex" class="${r.view === 'playground' ? 'on' : ''}"><span class="n">${ICON('flask')}</span>Playground</a>
@@ -149,6 +153,8 @@ function renderSide() {
       <a href="#/predict" class="${r.view === 'predict' ? 'on' : ''}"><span class="n">${ICON('eye')}</span>Predict the output</a>
       <a href="#/quiz" class="${r.view === 'quiz' ? 'on' : ''}"><span class="n">${ICON('help')}</span>Mixed quiz</a>
       <a href="#/cards" class="${r.view === 'cards' ? 'on' : ''}"><span class="n">${ICON('layers')}</span>Flashcards</a>
+      <a href="#/exam" class="${r.view === 'exam' ? 'on' : ''}"><span class="n">${ICON('clipboard')}</span>Mock exam</a>
+      <a href="#/certificate" class="${r.view === 'certificate' ? 'on' : ''}"><span class="n">${ICON('check')}</span>Certificate</a>
       <a href="#/cheat" class="${r.view === 'cheat' ? 'on' : ''}"><span class="n">${ICON('clipboard')}</span>Cheat sheet</a></nav>`;
 }
 
@@ -158,7 +164,7 @@ function render(opts) {
   const m = main();
   const y = window.scrollY;
   if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
-  ({ home: vHome, ch: vChapter, map: vMap, playground: vPlayground, cards: vCards, cheat: vCheat, quiz: vQuiz, challenges: vChallenges, pipes: vPipes, fix: vFix, predict: vPredict }[r.view] || vHome)(m, r);
+  ({ home: vHome, ch: vChapter, map: vMap, playground: vPlayground, cards: vCards, cheat: vCheat, quiz: vQuiz, challenges: vChallenges, pipes: vPipes, fix: vFix, predict: vPredict, start: vStart, certificate: vCert, exam: vExam }[r.view] || vHome)(m, r);
   if (opts && opts.keepScroll) window.scrollTo(0, y);
 }
 
@@ -170,16 +176,16 @@ function vHome(m) {
     <h1>Navigating Linux</h1>
     <p class="lede">Read a concept, run its examples in a sandbox terminal, then check yourself. ${CH.length} chapters follow the weekly lectures.</p>
     <div class="row subj"><span class="badge"><b>System Commands</b> · SE2001</span><span class="badge"><b>Linux and Programming</b> · CS1102</span></div>
-    <div class="row" style="margin-top:14px"><a class="btn" href="#/ch/essentials">Start chapter 1</a><button class="btn ghost" id="hTerm">Open terminal</button><button class="btn ghost" id="hSearch">Search <kbd>Ctrl K</kbd></button></div>
+    <div class="row" style="margin-top:14px"><a class="btn" href="#/ch/essentials">Start chapter 1</a><a class="btn ghost" href="#/start">New to Linux? Start here</a><button class="btn ghost" id="hTerm">Open terminal</button><button class="btn ghost" id="hSearch">Search <kbd>Ctrl K</kbd></button></div>
     <div class="row" style="margin-top:16px;color:var(--ink2);font-size:.86rem"><span class="badge">${cmdCount} commands</span><span class="badge">${nQ} quiz questions</span><span class="badge">${window.CHALLENGES.length} terminal challenges</span></div></div>
     <div class="cards">${CH.map(c => `<a class="card" href="#/ch/${c.id}"><div class="tile">${ICON(c.icon)}</div><b>${c.n}. ${esc(c.title)}</b><span>${esc(c.intro)}</span><div class="meta"><span class="badge">${esc(c.weeks)}</span>${prog.done[c.id] ? '<span class="badge ok">complete</span>' : ''}${prog.quiz[c.id] ? `<span class="badge">quiz ${prog.quiz[c.id].score}/${prog.quiz[c.id].total}</span>` : ''}</div></a>`).join('')}</div>
-    <div class="tools"><div class="eyebrow">Practice tools</div></div><div class="cards"><a class="card" href="#/pipes"><div class="tile">${ICON('pipe')}</div><b>Pipe lab</b><span>Step through a pipeline and see the text after every stage.</span></a><a class="card" href="#/fix"><div class="tile">${ICON('wrench')}</div><b>Fix the command</b><span>Find the bug in a broken command: a wrong option, a missing quote, the wrong redirect.</span><div class="meta"><span class="badge">${window.PRACTICE.FIX.filter(x => prog.fix[x.id]).length}/${window.PRACTICE.FIX.length} fixed</span></div></a><a class="card" href="#/predict"><div class="tile">${ICON('eye')}</div><b>Predict the output</b><span>Guess what a command prints, then run it and see how you did.</span><div class="meta"><span class="badge">${window.PRACTICE.PREDICT.filter(x => prog.pred[x.id]).length}/${window.PRACTICE.PREDICT.length} correct</span></div></a></div>
+    <div class="tools"><div class="eyebrow">Practice tools</div></div><div class="cards"><a class="card" href="#/pipes"><div class="tile">${ICON('pipe')}</div><b>Pipe lab</b><span>Step through a pipeline and see the text after every stage.</span></a><a class="card" href="#/fix"><div class="tile">${ICON('wrench')}</div><b>Fix the command</b><span>Find the bug in a broken command: a wrong option, a missing quote, the wrong redirect.</span><div class="meta"><span class="badge">${window.PRACTICE.FIX.filter(x => prog.fix[x.id]).length}/${window.PRACTICE.FIX.length} fixed</span></div></a><a class="card" href="#/predict"><div class="tile">${ICON('eye')}</div><b>Predict the output</b><span>Guess what a command prints, then run it and see how you did.</span><div class="meta"><span class="badge">${window.PRACTICE.PREDICT.filter(x => prog.pred[x.id]).length}/${window.PRACTICE.PREDICT.length} correct</span></div></a><a class="card" href="#/exam"><div class="tile">${ICON('clipboard')}</div><b>Mock exam</b><span>Timed papers drawn from every chapter, with a review of what you missed.</span></a><a class="card" href="#/start"><div class="tile">${ICON('globe')}</div><b>Start here</b><span>New to Linux? Install paths, a distro picker and a guided first run.</span></a><a class="card" href="#/certificate"><div class="tile">${ICON('check')}</div><b>Certificate</b><span>Finish every chapter to unlock a printable completion certificate.</span></a></div>
     <p class="credit-line">Curated and created by Ammar Hashmi for IIT Madras BS students.</p></div>`;
   $('#hTerm').onclick = () => openDock(true); $('#hSearch').onclick = () => openPal();
 }
 
 /* ---------- Chapter ---------- */
-function exHTML(e) { const pv = LEARN.splitPipeline(e.c), canViz = !pv.error && pv.stages.length > 1; return `<div class="ex"><div class="exhead"><code>${esc(e.c)}</code>${e.n ? `<span class="note">${esc(e.n)}</span>` : ''}<span class="exbtns"><button class="run">${ICON('play')} Run</button><button class="tt" title="Copy into terminal">${ICON('pencil')} Edit</button>${canViz ? `<button class="viz" title="Step through the pipeline">${ICON('pipe')} Visualize</button>` : ''}<button class="prd" title="Guess the output first">${ICON('eye')} Predict</button></span></div><pre class="exout" hidden></pre></div>`; }
+function exHTML(e) { const pv = LEARN.splitPipeline(e.c), canViz = !pv.error && pv.stages.length > 1; return `<div class="ex"><div class="exhead"><code>${esc(e.c)}</code>${e.n ? `<span class="note">${esc(e.n)}</span>` : ''}<span class="exbtns"><button class="run">${ICON('play')} Run</button><button class="tt" title="Copy into terminal">${ICON('pencil')} Edit</button>${canViz ? `<button class="viz" title="Step through the pipeline">${ICON('pipe')} Visualize</button>` : ''}<button class="prd" title="Guess the output first">${ICON('eye')} Predict</button><button class="xpl" title="Break this command into parts">${ICON('help')} Explain</button></span></div><pre class="exout" hidden></pre></div>`; }
 function vChapter(m, r) {
   const i = CH.findIndex(c => c.id === r.a); const c = CH[i] || CH[0]; const ci = CH.indexOf(c);
   const prev = CH[ci - 1], next = CH[ci + 1];
@@ -203,7 +209,7 @@ function vChapter(m, r) {
   $('#doneBtn').onclick = () => { prog.done[c.id] = !prog.done[c.id]; save(); render({ keepScroll: true }); };
   const cin = $('#cidrIn'); if (cin) { const upd = () => { $('#cidrOut').textContent = cidr(cin.value); }; cin.oninput = upd; upd(); }
   $$('[data-go]', m).forEach(a => a.onclick = e => { e.preventDefault(); go(a.dataset.go.replace(':', '/')); });
-  buildQuiz($('#quizHost'), c.quiz, res => { prog.quiz[c.id] = res; save(); renderSide(); });
+  buildQuiz($('#quizHost'), c.quiz, res => { prog.quiz[c.id] = res; save(); renderSide(); }, 'Chapter ' + c.n + ': ' + c.title);
   const secEl = id => document.getElementById('s-' + id);
   if (r.b) setTimeout(() => { const el = secEl(r.b); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 60);
   $$('.toc a', m).forEach(a => a.onclick = e => { e.preventDefault(); const el = secEl(a.dataset.sec); if (el) el.scrollIntoView({ behavior: 'smooth' }); });
@@ -225,12 +231,13 @@ function cidr(s) {
 }
 
 /* ---------- Quiz widget ---------- */
-function buildQuiz(host, qs, onFinish) {
+function buildQuiz(host, qs, onFinish, title) {
   let i = 0, score = 0;
   const show = () => {
     if (i >= qs.length) {
-      host.innerHTML = `<div class="qdone"><div class="score">${score} / ${qs.length}</div><p class="lede" style="margin:.4em auto 1em">${score === qs.length ? 'Perfect score.' : score >= qs.length * .7 ? 'Solid. Review the ones you missed in the chapter.' : 'Re-read the chapter, run its examples, then try again.'}</p><button class="btn ghost" id="qr">Try again</button></div>`;
-      $('#qr', host).onclick = () => buildQuiz(host, qs, onFinish);
+      host.innerHTML = `<div class="qdone"><div class="score">${score} / ${qs.length}</div><p class="lede" style="margin:.4em auto 1em">${score === qs.length ? 'Perfect score.' : score >= qs.length * .7 ? 'Solid. Review the ones you missed in the chapter.' : 'Re-read the chapter, run its examples, then try again.'}</p><button class="btn" id="qs">Share result</button> <button class="btn ghost" id="qr">Try again</button></div>`;
+      $('#qr', host).onclick = () => buildQuiz(host, qs, onFinish, title);
+      $('#qs', host).onclick = () => shareModal({ title: title || 'Linux quiz', score, total: qs.length });
       onFinish && onFinish({ score, total: qs.length });
       return;
     }
@@ -344,7 +351,7 @@ function vQuiz(m) {
   m.innerHTML = `<div class="page"><div class="eyebrow">Test yourself</div><h1>Mixed quiz</h1><p class="lede">Random questions drawn from every chapter.</p><div class="row noprint">${[10, 20, 30].map(n => `<button class="btn ${n === mixN ? '' : 'ghost'}" data-n="${n}">${n} questions</button>`).join('')}<button class="btn ghost" id="again">Reshuffle</button></div><div id="mq" class="quiz"></div></div>`;
   const pool = CH.flatMap(c => c.quiz.map(q => ({ ...q, _c: c.title })));
   const qs = shuffle(pool).slice(0, mixN);
-  buildQuiz($('#mq'), qs, res => { const b = store.get('best', {}); b['n' + mixN] = Math.max(b['n' + mixN] || 0, res.score); store.set('best', b); });
+  buildQuiz($('#mq'), qs, res => { const b = store.get('best', {}); b['n' + mixN] = Math.max(b['n' + mixN] || 0, res.score); store.set('best', b); }, 'Mixed quiz (' + mixN + ' questions)');
   $$('[data-n]', m).forEach(b => b.onclick = () => { mixN = +b.dataset.n; vQuiz(m); }); $('#again').onclick = () => vQuiz(m);
 }
 
@@ -490,7 +497,7 @@ function buildIndex() {
   index = [];
   CH.forEach(c => { c.sections.forEach(s => { index.push({ k: 'sec', t: s.h, sub: `Ch ${c.n} · ${c.title}`, txt: (s.h + ' ' + strip(s.html)).toLowerCase(), go: `ch/${c.id}/${s.id}` }); (s.cmds || []).forEach(k => index.push({ k: 'cmd', t: k[0], sub: k[1], txt: (k[0] + ' ' + k[1]).toLowerCase(), go: `ch/${c.id}/${s.id}`, cmd: true })); }); });
   LECT.forEach(w => w.lectures.forEach(l => l.items.forEach(it => index.push({ k: 'lec', t: it.x, sub: `Week ${w.week} · ${l.title} @ ${it.t}`, txt: (it.x + ' ' + l.title).toLowerCase(), go: 'map' }))));
-  [['Pipe lab', 'Step through a pipeline stage by stage', 'pipes', 'pipe pipeline visualizer stdin stdout stage'], ['Fix the command', 'Practice: find the bug in a broken command', 'fix', 'fix debug broken bug command practice'], ['Predict the output', 'Practice: guess the output, then run it', 'predict', 'predict guess output practice']]
+  [['Start here', 'Install paths, distro picker and a guided first run for new people', 'start', 'start here install wsl ubuntu distro beginner new tour'], ['Mock exam', 'Timed mock paper drawn from every chapter', 'exam', 'mock exam test timed practice paper'], ['Certificate', 'Completion certificate once every chapter is done', 'certificate', 'certificate completion print pdf'], ['Pipe lab', 'Step through a pipeline stage by stage', 'pipes', 'pipe pipeline visualizer stdin stdout stage'], ['Fix the command', 'Practice: find the bug in a broken command', 'fix', 'fix debug broken bug command practice'], ['Predict the output', 'Practice: guess the output, then run it', 'predict', 'predict guess output practice']]
     .forEach(x => index.push({ k: 'sec', t: x[0], sub: x[1], txt: (x[0] + ' ' + x[3]).toLowerCase(), go: x[2] }));
 }
 function openPal() { if (!index) buildIndex(); $('#pal').classList.add('open'); const i = $('#palq'); i.value = ''; i.focus(); palSearch(''); }
@@ -511,6 +518,8 @@ function initPal() {
   document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openPal(); } else if (e.key === '/' && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) { e.preventDefault(); openPal(); } else if (e.key === 'Escape') closePal(); else if (e.key === '`' && e.ctrlKey) { e.preventDefault(); openDock(!$('#dock').classList.contains('open')); } });
 }
 
+/*@@GROWTH@@*/
+
 /* ================= Boot ================= */
 function boot() {
   $$('[data-i]').forEach(el => { el.outerHTML = ICON(el.dataset.i); });
@@ -519,7 +528,7 @@ function boot() {
   $$('#themes button').forEach(b => b.onclick = () => setTheme(b.dataset.t));
   $('#menuBtn').onclick = () => $('#side').classList.toggle('open');
   $('#searchBtn').onclick = openPal; $('#termBtn').onclick = () => openDock(!$('#dock').classList.contains('open'));
-  initTerminal(); initPal(); render();
+  initTerminal(); initPal(); render(); tourBoot();
 }
 document.addEventListener('DOMContentLoaded', boot);
 })();
