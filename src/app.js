@@ -179,7 +179,7 @@ function vHome(m) {
 }
 
 /* ---------- Chapter ---------- */
-function exHTML(e) { const pv = LEARN.splitPipeline(e.c), canViz = !pv.error && pv.stages.length > 1; return `<div class="ex"><div class="exhead"><code>${esc(e.c)}</code>${e.n ? `<span class="note">${esc(e.n)}</span>` : ''}<button class="run">${ICON('play')} Run</button><button class="tt" title="Copy into terminal">${ICON('pencil')} Edit</button>${canViz ? `<button class="viz" title="Step through the pipeline">${ICON('pipe')} Visualize</button>` : ''}<button class="prd" title="Guess the output first">${ICON('eye')} Predict</button></div><pre class="exout" hidden></pre></div>`; }
+function exHTML(e) { const pv = LEARN.splitPipeline(e.c), canViz = !pv.error && pv.stages.length > 1; return `<div class="ex"><div class="exhead"><code>${esc(e.c)}</code>${e.n ? `<span class="note">${esc(e.n)}</span>` : ''}<span class="exbtns"><button class="run">${ICON('play')} Run</button><button class="tt" title="Copy into terminal">${ICON('pencil')} Edit</button>${canViz ? `<button class="viz" title="Step through the pipeline">${ICON('pipe')} Visualize</button>` : ''}<button class="prd" title="Guess the output first">${ICON('eye')} Predict</button></span></div><pre class="exout" hidden></pre></div>`; }
 function vChapter(m, r) {
   const i = CH.findIndex(c => c.id === r.a); const c = CH[i] || CH[0]; const ci = CH.indexOf(c);
   const prev = CH[ci - 1], next = CH[ci + 1];
