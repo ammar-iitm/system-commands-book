@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>System Commands (SE2001) &amp; Linux and Programming (CS1102)</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%232f5d50%22/%3E%3Crect%20x=%227%22%20y=%2212%22%20width=%2250%22%20height=%2240%22%20rx=%227%22%20fill=%22%2312151c%22/%3E%3Ccircle%20cx=%2214%22%20cy=%2219%22%20r=%222%22%20fill=%22%23f87171%22/%3E%3Ccircle%20cx=%2221%22%20cy=%2219%22%20r=%222%22%20fill=%22%23fbbf24%22/%3E%3Ccircle%20cx=%2228%22%20cy=%2219%22%20r=%222%22%20fill=%22%238fcfb5%22/%3E%3Cpath%20d=%22M15%2031l9%207-9%207%22%20fill=%22none%22%20stroke=%22%238fcfb5%22%20stroke-width=%224.5%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/%3E%3Cpath%20d=%22M30%2046h18%22%20stroke=%22%23e8ebf2%22%20stroke-width=%224.5%22%20stroke-linecap=%22round%22/%3E%3C/svg%3E"><link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%232f5d50%22/%3E%3Crect%20x=%227%22%20y=%2212%22%20width=%2250%22%20height=%2240%22%20rx=%227%22%20fill=%22%2312151c%22/%3E%3Ccircle%20cx=%2214%22%20cy=%2219%22%20r=%222%22%20fill=%22%23f87171%22/%3E%3Ccircle%20cx=%2221%22%20cy=%2219%22%20r=%222%22%20fill=%22%23fbbf24%22/%3E%3Ccircle%20cx=%2228%22%20cy=%2219%22%20r=%222%22%20fill=%22%238fcfb5%22/%3E%3Cpath%20d=%22M15%2031l9%207-9%207%22%20fill=%22none%22%20stroke=%22%238fcfb5%22%20stroke-width=%224.5%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/%3E%3Cpath%20d=%22M30%2046h18%22%20stroke=%22%23e8ebf2%22%20stroke-width=%224.5%22%20stroke-linecap=%22round%22/%3E%3C/svg%3E">
+<title>System Commands (SE2001) &amp; Linux and Programming (CS1102)</title><link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%232f5d50%22/%3E%3Crect%20x=%227%22%20y=%2212%22%20width=%2250%22%20height=%2240%22%20rx=%227%22%20fill=%22%2312151c%22/%3E%3Ccircle%20cx=%2214%22%20cy=%2219%22%20r=%222%22%20fill=%22%23f87171%22/%3E%3Ccircle%20cx=%2221%22%20cy=%2219%22%20r=%222%22%20fill=%22%23fbbf24%22/%3E%3Ccircle%20cx=%2228%22%20cy=%2219%22%20r=%222%22%20fill=%22%238fcfb5%22/%3E%3Cpath%20d=%22M15%2031l9%207-9%207%22%20fill=%22none%22%20stroke=%22%238fcfb5%22%20stroke-width=%224.5%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/%3E%3Cpath%20d=%22M30%2046h18%22%20stroke=%22%23e8ebf2%22%20stroke-width=%224.5%22%20stroke-linecap=%22round%22/%3E%3C/svg%3E"><link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%2064%2064%22%3E%3Crect%20width=%2264%22%20height=%2264%22%20rx=%2214%22%20fill=%22%232f5d50%22/%3E%3Crect%20x=%227%22%20y=%2212%22%20width=%2250%22%20height=%2240%22%20rx=%227%22%20fill=%22%2312151c%22/%3E%3Ccircle%20cx=%2214%22%20cy=%2219%22%20r=%222%22%20fill=%22%23f87171%22/%3E%3Ccircle%20cx=%2221%22%20cy=%2219%22%20r=%222%22%20fill=%22%23fbbf24%22/%3E%3Ccircle%20cx=%2228%22%20cy=%2219%22%20r=%222%22%20fill=%22%238fcfb5%22/%3E%3Cpath%20d=%22M15%2031l9%207-9%207%22%20fill=%22none%22%20stroke=%22%238fcfb5%22%20stroke-width=%224.5%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22/%3E%3Cpath%20d=%22M30%2046h18%22%20stroke=%22%23e8ebf2%22%20stroke-width=%224.5%22%20stroke-linecap=%22round%22/%3E%3C/svg%3E"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2f5d50">
 <style>:root{
   --bg:#f6f4ef;--panel:#ffffff;--ink:#1d2330;--ink2:#566074;--line:#e3dfd5;--accent:#4a7c6f;--accent2:#3b6ea5;--accent-soft:#e6f1ec;
   --code-bg:#f1eee6;--term-bg:#10141c;--term-ink:#d7e0ee;--term-prompt:#7ee0a8;--term-dir:#7aa7ff;--term-err:#ff8b8b;
@@ -434,6 +434,51 @@ h1>.svgi{color:var(--accent);width:.8em;height:.8em;margin-right:.1em;vertical-a
 .steps label::before{content:counter(st);order:-1;flex:none;width:1.7em;height:1.7em;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.85rem;display:grid;place-items:center}
 .steps input{order:0;flex:none;width:1.15em;height:1.15em;margin-top:.3em}
 .steps input:checked+span{color:var(--ink2);text-decoration:line-through;text-decoration-color:var(--line)}
+
+/* ================= missions, projects, interview, daily, badges, paths, languages, listen ================= */
+.streakline{font-size:.8rem;color:var(--ink2);margin:2px 0 10px}.streakline b{color:var(--accent)}
+.instwrap{padding:14px 4px 0}.instwrap .btn{width:100%}
+.mpanel{max-height:46vh;overflow:auto}.mpanel p{display:block!important}.mpanel .eyebrow{margin:0 0 2px;font-size:.7rem}
+.mbrief{margin:.4em 0!important}.mtask{margin:.4em 0!important;color:var(--ink)!important}
+.mhint{background:var(--accent-soft);border-radius:8px;padding:6px 10px;margin:6px 0;font-size:.88rem}.mhint[hidden]{display:none}
+.mlist{display:grid;gap:10px;margin:8px 0 6px}
+.mcard{display:grid;grid-template-columns:2rem 1fr auto;gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.mcard.done{border-color:var(--accent)}.mcard b{display:block}.mcard span:not(.mnum){color:var(--ink2);font-size:.9rem;display:block}
+.mnum{width:2rem;height:2rem;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;display:grid;place-items:center}
+.mcard.done .mnum{background:var(--accent);color:#fff}
+@media(max-width:600px){.mcard{grid-template-columns:2rem 1fr}.mcard .btn{grid-column:1/-1}}
+.pstep{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin:12px 0}
+.pshead{display:flex;gap:10px;align-items:center;cursor:pointer}.pshead input{accent-color:var(--accent);width:1.1em;height:1.1em}
+.psn{width:1.7em;height:1.7em;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.85rem;display:grid;place-items:center;flex:none}
+.pstep p{margin:.5em 0;color:var(--ink2);font-size:.92rem}
+.codebox{position:relative}.codebox pre{background:var(--term-bg);color:var(--term-ink);border-radius:10px;padding:12px 14px;margin:0;overflow-x:auto;font:.84rem/1.55 var(--mono);white-space:pre}
+.copy{position:absolute;top:6px;right:6px;background:#1d2535;border:1px solid #38425a;color:#cfe;border-radius:8px;padding:2px 10px;font-size:.75rem;cursor:pointer}
+.chk{list-style:none;padding:0}.chk li{margin:6px 0}.chk label{display:flex;gap:10px;align-items:flex-start;cursor:pointer}.chk input{accent-color:var(--accent);margin-top:.35em}
+.ivsearch{width:100%;margin:6px 0 12px;padding:10px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--ink);font:inherit}
+.ivlist{display:grid;gap:8px}.ivq{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0 14px}.ivq.known{border-color:var(--accent)}
+.ivq summary{cursor:pointer;padding:12px 0;display:flex;gap:10px;justify-content:space-between;align-items:baseline;font-weight:600;list-style-position:inside}
+.ivq summary em{font-style:normal;font-weight:500;font-size:.75rem;color:var(--accent);background:var(--accent-soft);border-radius:99px;padding:2px 10px;flex:none}
+.iva{padding:2px 0 12px;color:var(--ink)}.iva p{margin:.2em 0 .8em}.ivk{font-size:.88rem;color:var(--ink2);display:flex;gap:8px;align-items:center}
+.ivcard{margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(7rem,1fr));gap:10px;margin:12px 0}
+.stats>div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}.stats b{display:block;font-size:1.8rem;color:var(--accent)}.stats span{font-size:.8rem;color:var(--ink2)}
+.dcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.dcmd{display:block;background:var(--term-bg);color:var(--term-ink);padding:10px 14px;border-radius:10px;font:1rem var(--mono);overflow-x:auto;white-space:pre}
+.bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(13rem,1fr));gap:12px;margin-top:14px}
+.bdg{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px;text-align:center;opacity:.55;filter:grayscale(1)}
+.bdg.on{opacity:1;filter:none;border-color:var(--accent)}.bic{width:3rem;height:3rem;margin:0 auto 6px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}.bic .svgi{width:1.5rem;height:1.5rem}
+.bdg b{display:block}.bdg span{display:block;font-size:.85rem;color:var(--ink2);margin:2px 0 6px}.bdg em{font-style:normal;font-size:.75rem;font-weight:700;color:var(--accent)}
+.pathcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin:14px 0}.pathcard .row{align-items:center;gap:14px}.pathcard .row>div:nth-child(2){flex:1}.ptitle{display:block;font-size:1.1rem}
+.pathsteps{margin:10px 0 0;padding-left:1.4em}.pathsteps li{margin:5px 0}.pathsteps li.done a{color:var(--ink2)}.ptick{color:var(--accent);font-weight:700}
+.langbar{margin:10px 0}.langbar label{font-size:.88rem;color:var(--ink2);display:flex;gap:8px;align-items:center}.langbar select{padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit}
+.lbox{background:var(--accent-soft);border-left:4px solid var(--accent);border-radius:8px;padding:10px 14px;margin-top:10px}.lbox p{margin:.3em 0;font-size:1.02rem;line-height:1.7}.lbox small{color:var(--ink2)}
+.speaking{background:rgba(217,162,27,.18);border-radius:4px;box-shadow:0 0 0 4px rgba(217,162,27,.18)}
+.listenbar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--db) + 12px);z-index:46;background:var(--panel);color:var(--ink);border:2px solid var(--accent);border-radius:999px;padding:6px 14px;display:flex;gap:10px;align-items:center;box-shadow:var(--shadow);font-size:.88rem;max-width:calc(100vw - 20px)}
+.listenbar[hidden]{display:none}.listenbar .btn{padding:4px 12px;font-size:.85rem}.listenbar select{padding:2px 6px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}.lt{display:flex;gap:6px;align-items:center;color:var(--accent);font-weight:600}
+body.dockopen .listenbar{bottom:calc(min(48vh,26rem) + 12px)}
+@media(max-width:600px){.listenbar{flex-wrap:wrap;border-radius:16px;justify-content:center}}
+@media print{.listenbar,.mpanel{display:none!important}}
+@media(max-width:600px){.mpanel{max-height:30vh}.mpanel .eyebrow,.mpanel .mbrief{display:none!important}}
 </style></head><body>
 <header class="topbar"><button class="iconbtn" id="menuBtn" aria-label="Menu"><i class="svgi" data-i="menu"></i></button>
 <a class="brand" href="#/home" style="color:inherit"><i class="svgi" data-i="terminal-square"></i><span>Navigating Linux<small>by Ammar Hashmi · IIT Madras BS</small></span></a><span class="spacer"></span>
@@ -456,6 +501,7 @@ h1>.svgi{color:var(--accent);width:.8em;height:.8em;margin-right:.1em;vertical-a
     book: 'M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2zM22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z',
     home: 'M3 11l9-8 9 8M5 9.5V20h14V9.5M10 20v-6h4v6',
     map: 'M9 4L3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14',
+    flag: 'M5 21V4M5 4h12l-2.5 4L17 12H5',
     flask: 'M9 3h6M10 3v6l-5.5 10a1.6 1.6 0 0 0 1.4 2.4h12.2a1.6 1.6 0 0 0 1.4-2.4L14 9V3M7.5 15h9',
     target: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM12 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2z',
     help: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9.6 9.3a2.5 2.5 0 1 1 3.6 2.2c-.8.4-1.2.9-1.2 1.8M12 16.8h.01',
@@ -2318,6 +2364,106 @@ if (typeof module !== 'undefined') module.exports = { VirtualShell, awkRun, sedR
   const API = { INSTALL, DISTROS, PICKER, pickDistro, CMD, FLAG, OPS, tokenize, explain, lev, suggest, hint, TOUR, tourMatch, EXAMS, rng, buildExam, gradeExam, gradeLabel, fmtTime, hash, certReady, certRef, cardText, shareText };
   root.GROW = API; if (typeof module !== 'undefined' && module.exports) module.exports = API;
 })(typeof window !== 'undefined' ? window : globalThis);
+</script><script>/* Second batch of DOM-free logic: story missions, streaks, daily picks, badges, role paths, pipeline share links.
+   Extends window.GROW (growth.js must load first). */
+(function (root) {
+  'use strict';
+  const G = root.GROW || (typeof require !== 'undefined' ? require('./growth.js') : null);
+  const norm = s => String(s || '').replace(/\s+/g, ' ').trim();
+
+  /* ---------- Story missions ---------- */
+  function prepareMission(sh, m) {
+    const home = sh.env.HOME || '/home/student';
+    Object.keys(m.files || {}).forEach(rel => {
+      const path = home + '/' + rel, i = path.lastIndexOf('/');
+      sh.run('mkdir -p ' + path.slice(0, i));
+      sh.run('touch ' + path);
+      const n = sh.get(path); n.s = m.files[rel]; if ('sz' in n) n.sz = n.s.length;
+    });
+    sh.cwd = m.cwd ? home + '/' + m.cwd : home;
+    return sh;
+  }
+  function missionExpected(makeShell, m) {
+    const sh = prepareMission(makeShell(), m), r = sh.run(m.sol);
+    return m.mode === 'out' ? norm(r.out) : m.expect;
+  }
+  // r = result of the student's command; probe = a copy of the live sandbox (for state missions)
+  function missionPass(m, expected, r, probe) {
+    if (r.err && m.mode === 'out') return false;
+    if (m.mode === 'out') return norm(r.out) === expected && expected !== '';
+    const v = probe.run(m.verify);
+    return !v.err && (v.out || '').replace(/\n+$/, '') === m.expect;
+  }
+  const allMissions = list => list.flatMap(s => s.missions.map(m => ({ ...m, story: s.id })));
+
+  /* ---------- Streaks ---------- */
+  const dayNum = iso => { const [y, m, d] = iso.split('-').map(Number); return Math.round(Date.UTC(y, m - 1, d) / 86400000); };
+  function streakNext(st, iso) {
+    st = st || { last: null, count: 0, best: 0, days: 0 };
+    if (st.last === iso) return st;
+    const gap = st.last ? dayNum(iso) - dayNum(st.last) : null;
+    const count = gap === 1 ? st.count + 1 : 1;
+    return { last: iso, count, best: Math.max(st.best || 0, count), days: (st.days || 0) + 1 };
+  }
+  function streakNow(st, iso) { if (!st || !st.last) return 0; const gap = dayNum(iso) - dayNum(st.last); return gap <= 1 ? st.count : 0; }
+
+  /* ---------- Daily picks (same for everyone on the same date) ---------- */
+  function dailyIndex(iso, n, salt) { return parseInt(G.hash(iso + '|' + (salt || '')), 16) % n; }
+  function dailyCommand(chapters, iso) {
+    const pool = [];
+    chapters.forEach(c => c.sections.forEach(s => (s.cmds || []).forEach(k => { if (/^[a-z]/.test(k[0]) && k[0].length <= 40 && k[1]) pool.push({ cmd: k[0], desc: k[1], ch: c.title, chId: c.id }); })));
+    return pool[dailyIndex(iso, pool.length, 'cmd')];
+  }
+  function dailyQuestion(chapters, iso) {
+    const pool = chapters.flatMap(c => c.quiz.map(q => ({ ...q, _c: c.title })));
+    return pool[dailyIndex(iso, pool.length, 'q')];
+  }
+
+  /* ---------- Badges ---------- */
+  const BADGES = [
+    { id: 'first-steps', t: 'First steps', d: 'Finish the guided first run.', icon: 'play', test: s => s.tour },
+    { id: 'quiz-1', t: 'Quiz taker', d: 'Finish a chapter quiz.', icon: 'help', test: s => s.quizzes >= 1 },
+    { id: 'quiz-perfect', t: 'Flawless', d: 'Score 100% on a chapter quiz.', icon: 'check', test: s => s.perfectQuiz },
+    { id: 'chap-5', t: 'Getting serious', d: 'Complete 5 chapters.', icon: 'book', test: s => s.chaptersDone >= 5 },
+    { id: 'chap-all', t: 'Cover to cover', d: 'Complete every chapter.', icon: 'book', test: s => s.chaptersDone >= s.chapters && s.chapters > 0 },
+    { id: 'chal-10', t: 'Terminal hand', d: 'Solve 10 terminal challenges.', icon: 'target', test: s => s.chal >= 10 },
+    { id: 'chal-all', t: 'Challenge master', d: 'Solve every terminal challenge.', icon: 'target', test: s => s.chal >= s.challenges && s.challenges > 0 },
+    { id: 'fix-5', t: 'Bug hunter', d: 'Fix 5 broken commands.', icon: 'wrench', test: s => s.fix >= 5 },
+    { id: 'pred-5', t: 'Mind reader', d: 'Predict 5 outputs correctly.', icon: 'eye', test: s => s.pred >= 5 },
+    { id: 'mission-1', t: 'Case opened', d: 'Complete your first story mission.', icon: 'flask', test: s => s.missions >= 1 },
+    { id: 'mission-all', t: 'Case closed', d: 'Complete every story mission.', icon: 'flask', test: s => s.missions >= s.totalMissions && s.totalMissions > 0 },
+    { id: 'streak-3', t: 'Three in a row', d: 'Keep a 3-day streak.', icon: 'cpu', test: s => s.bestStreak >= 3 },
+    { id: 'streak-7', t: 'One week strong', d: 'Keep a 7-day streak.', icon: 'cpu', test: s => s.bestStreak >= 7 },
+    { id: 'streak-30', t: 'Habit formed', d: 'Keep a 30-day streak.', icon: 'cpu', test: s => s.bestStreak >= 30 },
+    { id: 'exam-80', t: 'Exam ready', d: 'Score 80% or more on a mock exam.', icon: 'clipboard', test: s => s.examBest >= 80 },
+    { id: 'project-1', t: 'Builder', d: 'Finish a real-world mini project.', icon: 'code', test: s => s.projects >= 1 }
+  ];
+  const earned = stats => BADGES.filter(b => b.test(stats));
+
+  /* ---------- Role paths ("Linux for X") ---------- */
+  const PATHS = [
+    { id: 'exam', title: 'Exam-only student', for: 'You need to pass SE2001 / CS1102 and want the shortest sensible route.', icon: 'clipboard',
+      steps: [
+        { t: 'Learn the shell basics', go: 'ch/essentials', ch: 'essentials' }, { t: 'Redirection and pipes', go: 'ch/streams', ch: 'streams' }, { t: 'Patterns, grep, sed and awk', go: 'ch/pattern', ch: 'pattern' },
+        { t: 'Shell variables and scripting', go: 'ch/scripting', ch: 'scripting' }, { t: 'Drill with the Predict and Fix pages', go: 'predict' }, { t: 'Take a mock exam', go: 'exam' } ] },
+    { id: 'ds', title: 'Data science and AI', for: 'You live in notebooks today and want to be comfortable on servers and GPUs.', icon: 'cpu',
+      steps: [
+        { t: 'Shell basics', go: 'ch/essentials', ch: 'essentials' }, { t: 'Pipes for quick data work', go: 'ch/streams', ch: 'streams' }, { t: 'awk for CSV and logs', go: 'ch/awk', ch: 'awk' },
+        { t: 'SSH into remote machines', go: 'ch/network', ch: 'network' }, { t: 'Processes and background jobs', go: 'ch/process', ch: 'process' }, { t: 'Linux for AI/ML', go: 'ch/aiml', ch: 'aiml' }, { t: 'Data Detective missions', go: 'missions' } ] },
+    { id: 'web', title: 'Web and backend developer', for: 'You ship apps and need to run, debug and deploy them on Linux.', icon: 'code',
+      steps: [
+        { t: 'Shell basics', go: 'ch/essentials', ch: 'essentials' }, { t: 'Processes, jobs and signals', go: 'ch/process', ch: 'process' }, { t: 'Networking and SSH', go: 'ch/network', ch: 'network' },
+        { t: 'Shell scripting', go: 'ch/scripting', ch: 'scripting' }, { t: 'Utilities: find, tar, cron', go: 'ch/utils', ch: 'utils' }, { t: 'Deploy a Flask app (mini project)', go: 'projects/flask' }, { t: 'Interview questions', go: 'interview' } ] }
+  ];
+  const pathProgress = (path, prog) => { const withCh = path.steps.filter(s => s.ch), done = withCh.filter(s => prog.done[s.ch]).length; return { done, total: withCh.length }; };
+
+  /* ---------- Share-a-pipeline links ---------- */
+  function enc(s) { return encodeURIComponent(s).replace(/%/g, '~'); }
+  function dec(s) { try { return decodeURIComponent(String(s || '').replace(/~/g, '%')); } catch (e) { return ''; } }
+
+  Object.assign(G, { norm, prepareMission, missionExpected, missionPass, allMissions, dayNum, streakNext, streakNow, dailyIndex, dailyCommand, dailyQuestion, BADGES, earned, PATHS, pathProgress, enc, dec });
+  if (typeof module !== 'undefined' && module.exports) module.exports = G;
+})(typeof window !== 'undefined' ? window : globalThis);
 </script>
 <script>window.CH = window.CH || [];
 const ch = (o) => window.CH.push(o);
@@ -3000,6 +3146,109 @@ window.CHALLENGES = [
   { id: 19, ch: 'scripting', t: 'Print the squares of 1 to 5, one per line, using a for loop.', sol: 'for i in {1..5}; do echo $((i*i)); done', hint: '$((i*i))' },
   { id: 20, ch: 'streams', t: 'Find the client IP (column 1 of access.log) that made the most requests; print only the IP.', sol: "awk '{print $1}' access.log | sort | uniq -c | sort -rn | head -n 1 | awk '{print $2}'", hint: 'Count, rank, take first, extract column 2.' },
 ];
+</script><script>/* Bonus chapter: Linux for AI/ML and remote work */
+window.CH.push({
+  id: 'aiml', n: 15, weeks: 'Bonus', title: 'Linux for AI/ML and Remote Work', icon: 'cpu',
+  intro: 'How machine-learning work actually runs: remote GPU servers, environments, tmux, logs, data and containers.',
+  sections: [
+    { id: 'why', h: 'Why ML work happens on Linux',
+      html: `<p>Notebooks are fine for exploring, but training runs on <b>servers</b>: a university cluster, a cloud VM, or a GPU box in a lab. Nearly all of them run Linux, and you reach them through a terminal. The skills from earlier chapters are exactly what you use there.</p>
+      <pre class="diagram">laptop  --ssh-->  GPU server  (tmux session)
+                    |-- data/      your datasets
+                    |-- src/       training code
+                    |-- logs/      train.log  (tail -f to watch)
+                    '-- models/    saved checkpoints</pre>
+      <ul><li><b>Remote:</b> you log in with <code>ssh</code>, so everything is text commands.</li><li><b>Long jobs:</b> training can take hours, so it must survive your laptop closing (tmux or nohup).</li><li><b>Shared resources:</b> disk, RAM and GPU memory are limited, so you check them with <code>df</code>, <code>free</code> and <code>nvidia-smi</code>.</li><li><b>Reproducible:</b> environments and containers pin versions so the code runs the same elsewhere.</li></ul>`,
+      ex: [{ c: 'uname -m; df -h | head -n 2', n: 'Machine type and disk' }, { c: 'free -h', n: 'Memory overview' }],
+      cmds: [['uname -m', 'CPU architecture (x86_64 or aarch64)'], ['nproc', 'Number of CPU cores available'], ['free -h', 'RAM and swap in human-readable units'], ['df -h', 'Free space on each disk']] },
+    { id: 'env', h: 'A tidy project and a Python environment',
+      html: `<p>Start every project the same way, so you always know where things are. Brace expansion creates the whole layout in one command.</p>
+      <pre class="diagram">proj/
+  data/      raw and processed data (never commit large files)
+  src/       training and evaluation code
+  models/    checkpoints
+  logs/      one log file per run</pre>
+      <p>Each project gets its own <b>virtual environment</b>, so library versions do not clash between projects:</p>
+      <pre class="diagram">python3 -m venv .venv           create the environment in .venv
+source .venv/bin/activate       turn it on (prompt shows (.venv))
+pip install -r requirements.txt install the pinned versions
+pip freeze > requirements.txt   record what you use now
+deactivate                      turn it off</pre>
+      <p>The Python commands run on a real machine; the sandbox here does not simulate Python. The folder commands do work here.</p>`,
+      ex: [{ c: 'mkdir -p proj/{data,src,models,logs}; ls proj', n: 'Whole layout in one line' }, { c: 'mkdir -p proj/logs; echo run1 > proj/logs/run1.log; ls proj/logs', n: 'One log per run' }],
+      cmds: [['python3 -m venv .venv', 'Create a virtual environment'], ['source .venv/bin/activate', 'Activate the environment'], ['pip install -r requirements.txt', 'Install pinned packages'], ['pip freeze > requirements.txt', 'Save the current package versions'], ['which python', 'Check which Python you are using (should be inside .venv)']] },
+    { id: 'ssh', h: 'Working on a remote machine',
+      html: `<p>Log in with <code>ssh user@host</code>. Passwords work but <b>keys</b> are better: you make a key pair once and the server trusts your public key.</p>
+      <pre class="diagram">ssh-keygen -t ed25519              make a key pair (~/.ssh/id_ed25519{,.pub})
+ssh-copy-id user@server            install your public key on the server
+ssh user@server                    log in without a password
+
+scp model.pt user@server:~/proj/   copy one file
+rsync -avz data/ user@server:~/proj/data/   copy a folder, resumable</pre>
+      <p><b>Jupyter on a server:</b> forward a port so the notebook opens in your own browser: <code>ssh -L 8888:localhost:8888 user@server</code>, start Jupyter on the server, then browse to <code>http://localhost:8888</code> on your laptop.</p>
+      <p>Save typing with <code>~/.ssh/config</code>:</p>
+      <pre class="diagram">Host gpu
+    HostName 10.20.30.40
+    User asha
+    IdentityFile ~/.ssh/id_ed25519
+# now just:  ssh gpu</pre>
+      <p>Tip: a trailing slash matters to rsync. <code>data/</code> copies the contents; <code>data</code> copies the folder itself.</p>`,
+      cmds: [['ssh-keygen -t ed25519', 'Create a modern key pair'], ['ssh-copy-id user@server', 'Install your public key on the server'], ['ssh -L 8888:localhost:8888 user@server', 'Forward the server\'s port 8888 to your laptop'], ['scp -r data/ user@server:~/proj/', 'Copy a folder to the server'], ['rsync -avz --progress data/ user@server:~/proj/data/', 'Sync a folder, skipping files already there']] },
+    { id: 'tmux', h: 'Keep long jobs alive: tmux and nohup',
+      html: `<p>If you start training in a plain SSH session and the connection drops, the job dies. Two fixes:</p>
+      <pre class="diagram">tmux new -s train        start a named session, run your job inside it
+Ctrl+b then d            detach (the job keeps running)
+tmux ls                  list sessions
+tmux attach -t train     come back to it later, from any login
+
+nohup python src/train.py > logs/run1.log 2>&1 &
+                         run in the background, immune to logout,
+                         with output (and errors) saved to a file</pre>
+      <p>Then watch progress without attaching: <code>tail -f logs/run1.log</code> (press Ctrl+C to stop watching; the job keeps going). This is just redirection and background jobs from the Streams and Process chapters.</p>`,
+      ex: [{ c: 'echo "epoch 1 loss 0.90" > train.log; echo "epoch 2 loss 0.55" >> train.log; tail -n 1 train.log', n: 'The latest line of a log' }, { c: 'grep -c epoch scores.csv; wc -l < access.log', n: 'Counting lines is a daily habit' }],
+      cmds: [['tmux new -s train', 'Start a named tmux session'], ['tmux attach -t train', 'Re-attach to a running session'], ['tmux ls', 'List tmux sessions'], ['nohup python src/train.py > logs/run1.log 2>&1 &', 'Background job that survives logout'], ['tail -f logs/run1.log', 'Follow a log as it grows'], ['jobs', 'List this shell\'s background jobs']] },
+    { id: 'gpu', h: 'Watching the GPU, memory and disk',
+      html: `<p>Out-of-memory errors are the most common ML failure, so learn to look before you launch.</p>
+      <pre class="diagram">nvidia-smi                      GPU model, utilisation, memory used / total, processes
+watch -n 1 nvidia-smi           refresh every second (Ctrl+C to quit)
+CUDA_VISIBLE_DEVICES=1 python src/train.py    use only GPU number 1
+free -h                         system RAM
+df -h                           disk space (checkpoints are big!)
+du -sh models/*                 size of each checkpoint
+htop                            live CPU and RAM per process</pre>
+      <p>In <code>nvidia-smi</code>, <b>Memory-Usage</b> is VRAM in use (limits batch size) and <b>GPU-Util</b> shows whether the GPU is actually busy. Low utilisation usually means the data loading is the bottleneck.</p>`,
+      ex: [{ c: 'df -h', n: 'Disk space (always check before saving checkpoints)' }, { c: 'free -h', n: 'RAM' }],
+      cmds: [['nvidia-smi', 'GPU status and memory'], ['watch -n 1 nvidia-smi', 'Live GPU monitor'], ['CUDA_VISIBLE_DEVICES=0 python train.py', 'Pin a job to GPU 0'], ['du -sh models/*', 'Size of each model file'], ['htop', 'Interactive process viewer']] },
+    { id: 'logs', h: 'Reading logs and data with pipes',
+      html: `<p>Training logs are text, so the tools you know apply directly. Find the best epoch, count errors, or plot-ready columns:</p>
+      <pre class="diagram">grep -i error logs/run1.log | tail -n 5          last five errors
+sort -k4 -n logs/run1.log | head -n 1            epoch with the lowest loss (column 4)
+awk '{s+=$4} END {print s/NR}' logs/run1.log     average loss
+cut -d, -f1,3 data/train.csv | head              pick two columns of a CSV</pre>
+      <p>Before training, sanity-check data: <code>wc -l</code> (how many rows), <code>head -n 3</code> (does it look right), <code>sort | uniq -c</code> (class balance).</p>`,
+      ex: [{ c: "printf 'epoch 1 loss 0.90\\nepoch 2 loss 0.55\\nepoch 3 loss 0.61\\n' > train.log; sort -k4 -n train.log | head -n 1", n: 'Best epoch' }, { c: "printf 'epoch 1 loss 0.90\\nepoch 2 loss 0.55\\nepoch 3 loss 0.61\\n' > train.log; awk '{s+=$4} END {print s/NR}' train.log", n: 'Average loss' }, { c: 'tail -n +2 scores.csv | cut -d, -f2 | sort | uniq -c', n: 'Class balance of a column' }],
+      cmds: [['grep -i error logs/run1.log | tail -n 5', 'The last five error lines'], ['wc -l data/train.csv', 'How many rows?'], ['head -n 3 data/train.csv', 'Peek at the first rows'], ['cut -d, -f1,3 data/train.csv', 'Keep columns 1 and 3']] },
+    { id: 'docker', h: 'Containers in one page',
+      html: `<p>A <b>container</b> packages your code with its libraries, so it runs the same everywhere. ML teams use them for GPU stacks that are hard to install by hand.</p>
+      <pre class="diagram">docker ps                          running containers
+docker images                      downloaded images
+docker run --rm -it --gpus all \\
+   -v "$PWD":/workspace -w /workspace \\
+   pytorch/pytorch bash            interactive shell with GPUs and your folder inside</pre>
+      <ul><li><code>-v host:container</code> mounts a folder, so files you save survive after the container exits.</li><li><code>--rm</code> deletes the container when it stops; <code>-it</code> gives an interactive terminal.</li><li><code>--gpus all</code> needs the NVIDIA Container Toolkit on the host.</li></ul>`,
+      cmds: [['docker ps', 'List running containers'], ['docker images', 'List images on this machine'], ['docker run --rm -it ubuntu bash', 'Throw-away Ubuntu shell'], ['docker run --rm -it --gpus all pytorch/pytorch bash', 'GPU-enabled PyTorch shell']] }
+  ],
+  quiz: [
+    { q: 'Your training job dies whenever your laptop sleeps and the SSH connection drops. What is the standard fix?', o: ['Run it inside tmux (or with nohup)', 'Increase the batch size', 'Use cd before running it', 'Run it as root'], a: 0, e: 'tmux or nohup keeps the process running after the SSH session ends.' },
+    { q: 'Which key sequence detaches from a tmux session without stopping it?', o: ['Ctrl+c', 'Ctrl+b then d', 'Ctrl+d twice', 'Ctrl+z'], a: 1, e: 'Ctrl+b is the tmux prefix; d means detach. The job keeps running.' },
+    { q: 'What does ssh -L 8888:localhost:8888 user@server do?', o: ['Copies port 8888 files to the server', 'Forwards your laptop\'s port 8888 to port 8888 on the server', 'Blocks port 8888', 'Logs in as root'], a: 1, e: 'It tunnels your local port to the server, so Jupyter opens at http://localhost:8888 on your laptop.' },
+    { q: 'Why use a virtual environment for each project?', o: ['It makes Python faster', 'It keeps each project\'s library versions separate', 'It is required to run any script', 'It encrypts your code'], a: 1, e: 'Different projects need different package versions; venvs stop them clashing.' },
+    { q: 'In nvidia-smi, which value tells you how much GPU memory (VRAM) is in use?', o: ['GPU-Util', 'Memory-Usage', 'Pwr:Usage', 'Fan'], a: 1, e: 'Memory-Usage shows used / total VRAM. GPU-Util shows how busy the GPU cores are.' },
+    { q: 'What does this do?  nohup python train.py > run.log 2>&1 &', o: ['Runs in the foreground and prints to the screen', 'Runs in the background, immune to logout, with output and errors saved to run.log', 'Deletes run.log', 'Runs train.py twice'], a: 1, e: 'nohup ignores the hangup signal, > redirects stdout, 2>&1 sends errors to the same file, & backgrounds the job.' },
+    { q: 'rsync -avz data/ server:~/proj/data/ versus rsync -avz data server:~/proj/data/ . What is the difference?', o: ['None', 'With the trailing slash it copies the contents; without it, it copies the folder itself into the target', 'Only the first one works', 'The second one deletes files'], a: 1, e: 'A trailing slash on the source means "the contents of". Without it you get data/data on the server.' },
+    { q: 'Which command finds the epoch with the lowest loss when loss is in column 4 of train.log?', o: ['sort -k4 -n train.log | head -n 1', 'grep loss train.log', 'cut -f4 train.log', 'uniq -c train.log'], a: 0, e: 'Sort numerically by field 4 (smallest first) and take the first line.' }
+  ]
+});
 </script><script>/* Extra practice questions per chapter. Format: [question, correct, [3 wrong], explanation] */
 (function () {
   const X = {
@@ -3341,6 +3590,249 @@ window.PRACTICE = {
     { id: 'awk-average', ch: 'awk', c: "awk '{s+=$4} END{print s/NR}' employees.txt", expect: '50333.3\n', why: 'The salaries add up to 302000 over 6 lines. awk prints numbers with six significant digits by default.' }
   ]
 };
+</script><script>/* Story missions. Each mission sets up its own files in the sandbox, then checks the student's work.
+   mode 'out'   : passes when a command prints exactly what `sol` prints (whitespace-insensitive).
+   mode 'state' : passes when `verify` (run on a copy of the sandbox) prints `expect`, i.e. the student changed the files correctly. */
+window.MISSIONS = [
+  { id: 'leak', icon: 'target', title: 'The Leaked Key', blurb: 'You are the on-call sysadmin. An API key has leaked and the logs hold the evidence.',
+    missions: [
+      { id: 'leak1', t: 'Which log leaked it?', cwd: 'ops',
+        files: {
+          'ops/app.log': 'INFO  service started\nINFO  request /health ok\nERROR LEAK detected: api key printed to stdout\nINFO  request /login ok\n',
+          'ops/db.log': 'INFO  connection pool ready\nWARN  slow query 1.2s\nINFO  checkpoint complete\n',
+          'ops/web.log': 'GET /index.html 200\nGET /about.html 200\nGET /missing 404\n',
+          'ops/notes.txt': 'Remember to rotate the keys every 90 days.\n' },
+        brief: 'Three log files sit in ~/ops. The word LEAK appears in exactly one of them.',
+        task: 'Print only the name of the .log file that contains the word LEAK.', mode: 'out', sol: 'grep -l LEAK *.log',
+        hint: 'grep can print file names instead of matching lines. Look for the "list files" flag, and search *.log.', learn: 'grep -l lists the files that match, which is the quickest way to find where something lives.' },
+      { id: 'leak2', t: 'How bad was the attack?', cwd: 'ops',
+        files: { 'ops/auth.log': [
+          'Nov 03 02:14:01 srv sshd[411]: Failed password for root from 203.0.113.7',
+          'Nov 03 02:14:03 srv sshd[411]: Failed password for root from 203.0.113.7',
+          'Nov 03 02:14:05 srv sshd[411]: Failed password for admin from 203.0.113.7',
+          'Nov 03 02:15:10 srv sshd[413]: Accepted password for student from 10.0.0.5',
+          'Nov 03 02:16:22 srv sshd[415]: Failed password for root from 198.51.100.23',
+          'Nov 03 02:16:25 srv sshd[415]: Failed password for ubuntu from 198.51.100.23',
+          'Nov 03 02:17:40 srv sshd[418]: Failed password for root from 203.0.113.7',
+          'Nov 03 02:18:02 srv sshd[420]: Failed password for test from 203.0.113.7',
+          'Nov 03 02:19:30 srv sshd[422]: Failed password for guest from 192.0.2.44',
+          'Nov 03 02:20:11 srv sshd[425]: Accepted password for student from 10.0.0.5', ''].join('\n') },
+        brief: 'ops/auth.log records every SSH login attempt.',
+        task: 'Print how many lines in auth.log contain "Failed password" (just the number).', mode: 'out', sol: "grep -c 'Failed password' auth.log",
+        hint: 'grep -c counts matching lines. Quote the phrase because it has a space.', learn: 'grep -c answers "how many?" without printing every line.' },
+      { id: 'leak3', t: 'Who is attacking?', cwd: 'ops',
+        files: { 'ops/auth.log': [
+          'Nov 03 02:14:01 srv sshd[411]: Failed password for root from 203.0.113.7',
+          'Nov 03 02:14:03 srv sshd[411]: Failed password for root from 203.0.113.7',
+          'Nov 03 02:14:05 srv sshd[411]: Failed password for admin from 203.0.113.7',
+          'Nov 03 02:15:10 srv sshd[413]: Accepted password for student from 10.0.0.5',
+          'Nov 03 02:16:22 srv sshd[415]: Failed password for root from 198.51.100.23',
+          'Nov 03 02:16:25 srv sshd[415]: Failed password for ubuntu from 198.51.100.23',
+          'Nov 03 02:17:40 srv sshd[418]: Failed password for root from 203.0.113.7',
+          'Nov 03 02:18:02 srv sshd[420]: Failed password for test from 203.0.113.7',
+          'Nov 03 02:19:30 srv sshd[422]: Failed password for guest from 192.0.2.44',
+          'Nov 03 02:20:11 srv sshd[425]: Accepted password for student from 10.0.0.5', ''].join('\n') },
+        brief: 'Every failed line ends with the attacker\'s IP address.',
+        task: 'Print the single IP address with the most failed attempts, with its count in front (for example "9 1.2.3.4").', mode: 'out',
+        sol: "grep Failed auth.log | awk '{print $NF}' | sort | uniq -c | sort -rn | head -n 1",
+        hint: 'Chain it: keep the Failed lines, take the last field, sort, count with uniq -c, sort by count, keep the top row.', learn: 'sort | uniq -c | sort -rn is the classic "top N" pipeline.' },
+      { id: 'leak4', t: 'Lock the key file', cwd: 'ops',
+        files: { 'ops/secrets.env': 'API_KEY=abc123\nDB_PASS=hunter2\n' },
+        brief: 'secrets.env is readable by other users on the machine.',
+        task: 'Change its permissions so only the owner can read and write it (rw-------).', mode: 'state', sol: 'chmod 600 secrets.env', verify: 'ls -l secrets.env | cut -c1-10', expect: '-rw-------',
+        hint: 'chmod takes three octal digits: owner, group, others. Read is 4, write is 2.', learn: '600 = owner read+write, nobody else gets anything. That is the standard for secrets.' } ] },
+
+  { id: 'tidy', icon: 'folder', title: 'Tidy the Server', blurb: 'A teammate left a mess in the web folder. Sort it out without losing anything.',
+    missions: [
+      { id: 'tidy1', t: 'Build the site skeleton', cwd: '',
+        files: { 'readme.txt': 'work in ~/web\n' },
+        brief: 'You need a new site folder with three sub-folders for CSS, JavaScript and images.',
+        task: 'Create site/css, site/js and site/img (in your home folder) in one command.', mode: 'state', sol: 'mkdir -p site/css site/js site/img', verify: 'find site -type d | sort', expect: 'site\nsite/css\nsite/img\nsite/js',
+        hint: 'mkdir -p creates missing parent folders, and it accepts several paths at once.', learn: 'mkdir -p builds a whole tree in one go.' },
+      { id: 'tidy2', t: 'Move the stylesheets', cwd: '',
+        files: { 'mess/a.css': 'body{margin:0}\n', 'mess/b.css': 'h1{color:teal}\n', 'mess/app.js': 'console.log(1)\n', 'mess/logo.png': 'PNG\n', 'site/css/.keep': '', 'site/js/.keep': '' },
+        brief: 'All the .css files are lying in ~/mess. The folder ~/site/css already exists.',
+        task: 'Move every .css file from mess into site/css (leave the rest alone).', mode: 'state', sol: 'mv mess/*.css site/css/', verify: 'ls -1 mess; echo --; ls -1 site/css', expect: 'app.js\nlogo.png\n--\na.css\nb.css',
+        hint: 'A wildcard like mess/*.css matches them all, and mv accepts several sources followed by a destination folder.', learn: 'mv with a wildcard moves many files at once. Moving is safer than copy-then-delete.' },
+      { id: 'tidy3', t: 'Delete only the temp files', cwd: 'mess',
+        files: { 'mess/a.css': 'x\n', 'mess/draft.tmp': 'x\n', 'mess/cache.tmp': 'x\n', 'mess/index.html': '<h1>hi</h1>\n', 'mess/notes.tmp.bak': 'keep me\n' },
+        brief: 'You are inside ~/mess. Files ending in .tmp are junk. notes.tmp.bak is a backup and must survive.',
+        task: 'Delete exactly the files ending in .tmp.', mode: 'state', sol: 'rm *.tmp', verify: 'ls -1', expect: 'a.css\nindex.html\nnotes.tmp.bak',
+        hint: 'The wildcard *.tmp only matches names that END in .tmp. Run ls first to see what is there.', learn: 'Always ls with the same wildcard before rm. If ls shows the right files, rm is safe.' } ] },
+
+  { id: 'data', icon: 'table', title: 'Data Detective', blurb: 'A shop owner hands you a sales spreadsheet and three questions. Answer them with pipes.',
+    missions: [
+      { id: 'data1', t: 'Total units sold', cwd: 'shop',
+        files: { 'shop/sales.csv': 'region,product,units,price\nNorth,pen,40,10\nSouth,pen,25,10\nNorth,book,12,150\nEast,book,30,150\nSouth,bag,8,700\nEast,pen,60,10\nNorth,bag,5,700\n' },
+        brief: 'sales.csv has a header row, then one row per sale: region, product, units, price.',
+        task: 'Print the total of the units column (third column).', mode: 'out', sol: "awk -F, 'NR>1 {s+=$3} END {print s}' sales.csv",
+        hint: 'awk -F, splits on commas. Skip the header with NR>1, add $3 to a running total, print it in END.', learn: 'awk with an accumulator and END is a one-line spreadsheet SUM.' },
+      { id: 'data2', t: 'Best-selling region', cwd: 'shop',
+        files: { 'shop/sales.csv': 'region,product,units,price\nNorth,pen,40,10\nSouth,pen,25,10\nNorth,book,12,150\nEast,book,30,150\nSouth,bag,8,700\nEast,pen,60,10\nNorth,bag,5,700\n' },
+        brief: 'Now the owner wants to know which region sold the most units.',
+        task: 'Print one line: the top region with its units total in front (for example "90 West").', mode: 'out',
+        sol: "awk -F, 'NR>1 {u[$1]+=$3} END {for (r in u) print u[r], r}' sales.csv | sort -rn | head -n 1",
+        hint: 'Use an awk array keyed by region to add up units, print "total region" in END, then sort -rn | head -n 1.', learn: 'awk arrays group like a pivot table; sort -rn | head picks the winner.' },
+      { id: 'data3', t: 'Save the North report', cwd: 'shop',
+        files: { 'shop/sales.csv': 'region,product,units,price\nNorth,pen,40,10\nSouth,pen,25,10\nNorth,book,12,150\nEast,book,30,150\nSouth,bag,8,700\nEast,pen,60,10\nNorth,bag,5,700\n' },
+        brief: 'The owner wants a file with only the North rows, biggest units first.',
+        task: 'Create north.txt containing the rows that start with North, sorted by the units column from high to low.', mode: 'state',
+        sol: "grep '^North' sales.csv | sort -t, -k3 -rn > north.txt", verify: 'cat north.txt', expect: 'North,pen,40,10\nNorth,book,12,150\nNorth,bag,5,700',
+        hint: 'grep for lines starting with North, then sort -t, -k3 -rn (numeric, reversed, third field), then redirect with >.', learn: 'Filter, sort, redirect: three small tools produce a report file.' } ] }
+];
+</script><script>/* Real-world mini projects: guided, step by step. These run on a real Linux machine (WSL, a VM or a server). */
+window.PROJECTS = [
+  { id: 'backup', title: 'Automatic backup script', level: 'Beginner', time: '30 min', icon: 'package',
+    goal: 'Write a shell script that makes a dated .tar.gz of a folder and deletes backups older than a week.',
+    skills: 'Shell scripting, tar, find, variables, exit on error',
+    steps: [
+      { t: 'Make some data to protect', why: 'A throw-away folder lets you test safely.', code: 'mkdir -p ~/backup-demo/{data,backups} ~/bin\necho "important notes" > ~/backup-demo/data/notes.txt\necho "a,b,c" > ~/backup-demo/data/table.csv' },
+      { t: 'Write the script', why: 'set -euo pipefail makes the script stop at the first error instead of carrying on and doing damage. $(date +%F_%H%M) puts a timestamp in the file name.', code: 'cat > ~/bin/backup.sh <<\'EOF\'\n#!/usr/bin/env bash\nset -euo pipefail\n\nSRC="$HOME/backup-demo/data"\nDEST="$HOME/backup-demo/backups"\nSTAMP=$(date +%F_%H%M)\n\nmkdir -p "$DEST"\ntar -czf "$DEST/data-$STAMP.tar.gz" -C "$(dirname "$SRC")" "$(basename "$SRC")"\necho "backup written: $DEST/data-$STAMP.tar.gz"\n\n# keep only the last 7 days\nfind "$DEST" -name \'data-*.tar.gz\' -mtime +7 -delete\nEOF' },
+      { t: 'Make it executable and run it', why: 'chmod +x sets the execute bit so you can run the file directly.', code: 'chmod +x ~/bin/backup.sh\n~/bin/backup.sh\nls -l ~/backup-demo/backups' },
+      { t: 'Look inside the archive', why: 'Never trust a backup you have not opened. tar -t lists contents without extracting.', code: 'tar -tzf ~/backup-demo/backups/data-*.tar.gz' },
+      { t: 'Test a restore', why: 'A backup is only real if you can restore it. diff -r compares two folders and prints nothing when they match.', code: 'mkdir -p /tmp/restore\ntar -xzf ~/backup-demo/backups/data-*.tar.gz -C /tmp/restore\ndiff -r ~/backup-demo/data /tmp/restore/data && echo "restore matches"' },
+      { t: 'Stretch goals', why: 'Make it your own.', code: '# 1. take the folder to back up as an argument:  SRC="${1:?usage: backup.sh FOLDER}"\n# 2. write a log line to ~/backup-demo/backup.log with the date\n# 3. send the archive to another machine with rsync or scp' } ],
+    check: ['The script runs without errors', 'A dated .tar.gz appears in backups/', 'tar -t shows notes.txt and table.csv inside', 'diff -r says the restored copy matches', 'You can explain what set -euo pipefail does'] },
+
+  { id: 'cron', title: 'Schedule it with cron', level: 'Beginner', time: '20 min', icon: 'swap',
+    goal: 'Run your backup script automatically every few minutes (then daily), with a log you can read.',
+    skills: 'cron syntax, absolute paths, redirecting output, debugging scheduled jobs',
+    steps: [
+      { t: 'Learn the five fields', why: 'A cron line is: minute hour day-of-month month day-of-week command. A * means "every".', code: '# m   h   dom mon dow   command\n*/5   *   *   *   *     every 5 minutes\n30    2   *   *   *     every day at 02:30\n0     9   *   *   1-5   weekdays at 09:00' },
+      { t: 'Run the command by hand first', why: 'If it fails in your shell it will fail in cron. Use absolute paths because cron has a tiny PATH and does not start in your home folder.', code: '/home/$USER/bin/backup.sh' },
+      { t: 'Add the job', why: 'crontab -e opens your personal schedule. Redirect both output streams to a log, or errors vanish.', code: 'crontab -e\n# add this line at the bottom (replace YOURNAME):\n*/5 * * * * /home/YOURNAME/bin/backup.sh >> /home/YOURNAME/backup-demo/cron.log 2>&1' },
+      { t: 'Check that it is scheduled and running', why: 'Wait five minutes, then read the log.', code: 'crontab -l\ntail -n 5 ~/backup-demo/cron.log\nls -l ~/backup-demo/backups' },
+      { t: 'If nothing happens', why: 'These are the usual causes.', code: '# 1. relative paths in the script (use $HOME or absolute paths)\n# 2. script not executable:  chmod +x\n# 3. a % in the command must be written \\%\n# 4. cron service stopped:  systemctl status cron   (or crond)\n# 5. on WSL, cron may need:  sudo service cron start' },
+      { t: 'Change to a daily job and clean up', why: 'Edit the line to 30 2 * * * for a real schedule. Remove the test job when you are finished so it does not run forever.', code: 'crontab -e        # change */5 to: 30 2 * * *   (or delete the line)' } ],
+    check: ['crontab -l shows your job', 'cron.log contains the "backup written" lines', 'New archives appear without you running anything', 'You can read a cron line aloud: "every 5 minutes"'] },
+
+  { id: 'ssh', title: 'Harden SSH on a server', level: 'Intermediate', time: '40 min', icon: 'globe',
+    goal: 'Switch a server to key-only logins, block root login and add a basic firewall, without locking yourself out.',
+    skills: 'SSH keys, sshd_config, systemctl, ufw, testing safely',
+    steps: [
+      { t: 'Read this before you start', why: 'A mistake here can lock you out. Do this on a test VM or cloud server first. Keep your current SSH window open the entire time and only close it after a NEW window logs in successfully.', code: '# Golden rule: never close your working session until a second one works.' },
+      { t: 'Make sure key login works', why: 'Turn off passwords only after keys are proven.', code: 'ssh-keygen -t ed25519            # on your laptop, if you have no key yet\nssh-copy-id YOURUSER@SERVER_IP\nssh YOURUSER@SERVER_IP           # should log in without a password' },
+      { t: 'Back up the config', why: 'You can always copy it back.', code: 'sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak' },
+      { t: 'Edit the settings', why: 'Newer Ubuntu also reads /etc/ssh/sshd_config.d/*.conf, which can override your edit. Check both.', code: 'sudo nano /etc/ssh/sshd_config\n# set (remove any leading #):\nPasswordAuthentication no\nPermitRootLogin no\nMaxAuthTries 3\n\nls /etc/ssh/sshd_config.d/       # look for files that set PasswordAuthentication yes' },
+      { t: 'Test the config, then reload', why: 'sshd -t checks syntax and prints nothing when it is fine. reload applies the change without dropping current sessions.', code: 'sudo sshd -t\nsudo systemctl reload ssh        # the service is called sshd on RHEL/Fedora' },
+      { t: 'Prove it from a NEW terminal', why: 'First check that your key still works, then that passwords are refused.', code: 'ssh YOURUSER@SERVER_IP                                   # works\nssh -o PubkeyAuthentication=no YOURUSER@SERVER_IP        # must say: Permission denied (publickey)' },
+      { t: 'Add a firewall (allow SSH first!)', why: 'Order matters: if you enable ufw before allowing SSH you lock yourself out.', code: 'sudo ufw allow OpenSSH\nsudo ufw enable\nsudo ufw status' },
+      { t: 'Optional: slow down guessers', why: 'fail2ban bans IPs that keep failing to log in.', code: 'sudo apt install -y fail2ban\nsudo fail2ban-client status sshd' } ],
+    check: ['Key login works from a new terminal', 'Password login is refused', 'ssh root@SERVER_IP is refused', 'ufw status shows SSH allowed', 'You kept a second session open while testing'] },
+
+  { id: 'flask', title: 'Deploy a Flask app', level: 'Intermediate', time: '60 min', icon: 'code',
+    goal: 'Run a Flask app with gunicorn, keep it alive with systemd and serve it through nginx.',
+    skills: 'venv, gunicorn, systemd units, nginx reverse proxy, logs',
+    steps: [
+      { t: 'Install the tools', why: 'You need Python venv support and nginx.', code: 'sudo apt update\nsudo apt install -y python3-venv nginx' },
+      { t: 'Create the app', why: 'The smallest possible Flask app.', code: 'mkdir -p ~/myapp && cd ~/myapp\ncat > app.py <<\'EOF\'\nfrom flask import Flask\napp = Flask(__name__)\n\n@app.route("/")\ndef home():\n    return "Hello from Linux!"\nEOF' },
+      { t: 'Create the environment and install', why: 'gunicorn is a production-grade server; the Flask dev server is not meant for the internet.', code: 'python3 -m venv .venv\nsource .venv/bin/activate\npip install flask gunicorn' },
+      { t: 'Run it with gunicorn and test', why: 'Bind to 127.0.0.1 so only nginx can reach it. In a second terminal, curl the address.', code: 'gunicorn -w 2 -b 127.0.0.1:8000 app:app\n# second terminal:\ncurl http://127.0.0.1:8000' },
+      { t: 'Keep it running with systemd', why: 'A service unit restarts the app if it crashes and starts it at boot. Replace YOURNAME.', code: 'sudo nano /etc/systemd/system/myapp.service\n\n[Unit]\nDescription=My Flask app\nAfter=network.target\n\n[Service]\nUser=YOURNAME\nWorkingDirectory=/home/YOURNAME/myapp\nExecStart=/home/YOURNAME/myapp/.venv/bin/gunicorn -w 2 -b 127.0.0.1:8000 app:app\nRestart=always\n\n[Install]\nWantedBy=multi-user.target' },
+      { t: 'Start and check the service', why: 'journalctl shows the app\'s logs.', code: 'sudo systemctl daemon-reload\nsudo systemctl enable --now myapp\nsystemctl status myapp\njournalctl -u myapp -f' },
+      { t: 'Put nginx in front', why: 'nginx handles the public port 80 and forwards requests to gunicorn.', code: 'sudo nano /etc/nginx/sites-available/myapp\n\nserver {\n    listen 80;\n    server_name _;\n    location / {\n        proxy_pass http://127.0.0.1:8000;\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n    }\n}' },
+      { t: 'Enable the site and reload', why: 'nginx -t checks the config before you apply it.', code: 'sudo ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled/\nsudo rm -f /etc/nginx/sites-enabled/default\nsudo nginx -t\nsudo systemctl reload nginx\ncurl http://localhost' },
+      { t: 'Open it to the world (and add HTTPS later)', why: 'Allow web traffic in the firewall. For HTTPS on a real domain use certbot.', code: 'sudo ufw allow \'Nginx Full\'\n# with a domain name:\nsudo apt install -y certbot python3-certbot-nginx\nsudo certbot --nginx -d example.com' } ],
+    check: ['curl http://127.0.0.1:8000 prints the greeting', 'systemctl status myapp says active (running)', 'Killing the gunicorn process makes systemd restart it', 'The page loads through nginx on port 80', 'You can find the app logs with journalctl'] }
+];
+</script><script>/* Linux interview questions (DevOps, backend, SRE and campus placements). t = topic. */
+window.INTERVIEW = [
+  /* Files and permissions */
+  { t: 'Files', q: 'What is the difference between a hard link and a symbolic link?', a: 'A hard link is another name for the same inode, so the data survives until every name is removed and it cannot cross file systems or point to directories. A symbolic link is a small file that stores a path to another file; it can cross file systems and point to directories, but it breaks if the target is removed or moved.' },
+  { t: 'Files', q: 'Explain the permission string -rwxr-xr--.', a: 'The first character is the type (- file, d directory, l link). Then three triplets: owner rwx (read, write, execute), group r-x (read, execute), others r-- (read only). In octal that is 754.' },
+  { t: 'Files', q: 'What does chmod 755 do versus chmod 644?', a: '755 is rwxr-xr-x: the owner can read, write and execute; everyone else can read and execute. It is typical for scripts and directories. 644 is rw-r--r--: owner can read and write, others can only read. It is typical for ordinary files.' },
+  { t: 'Files', q: 'What does the execute permission mean on a directory?', a: 'It lets you enter the directory (cd into it) and access files inside by name. Without x you cannot reach its contents even if you have r. Read lets you list names; execute lets you traverse.' },
+  { t: 'Files', q: 'What is an inode?', a: 'A data structure that stores a file\'s metadata (owner, permissions, size, timestamps, where its data blocks are) but not its name. Directory entries map names to inode numbers. ls -i shows them.' },
+  { t: 'Files', q: 'How would you find the 10 largest files under /var?', a: 'du -ah /var 2>/dev/null | sort -rh | head -n 10. du reports sizes, sort -rh orders human-readable sizes largest first, head keeps ten. find /var -type f -size +100M is another route.' },
+  { t: 'Files', q: 'What are the setuid, setgid and sticky bits?', a: 'setuid makes an executable run with its owner\'s privileges (passwd uses it). setgid does the same for the group, and on directories makes new files inherit the directory\'s group. The sticky bit on a directory (like /tmp) lets only a file\'s owner delete or rename it.' },
+  { t: 'Files', q: 'What is the difference between rm, rmdir and rm -rf?', a: 'rm deletes files; rmdir deletes only empty directories; rm -rf deletes a directory tree and ignores missing files and prompts. rm -rf is irreversible and dangerous with a wrong path or an unquoted variable.' },
+  { t: 'Files', q: 'What does the Linux directory structure look like? Name some key directories.', a: '/ is the root. /home holds user files, /etc configuration, /var variable data like logs, /tmp temporary files, /usr installed programs and libraries, /bin and /sbin essential commands, /dev device files, /proc and /sys kernel and process information.' },
+  { t: 'Files', q: 'How do you check disk space and which folder is using it?', a: 'df -h shows free space per file system. du -sh * inside a folder shows the size of each item, and du -h --max-depth=1 /path summarises one level down.' },
+  /* Processes */
+  { t: 'Processes', q: 'What is the difference between a process and a thread?', a: 'A process is a running program with its own memory space. Threads are lines of execution inside a process that share its memory, so they are cheaper to create and communicate but can corrupt shared data without careful locking.' },
+  { t: 'Processes', q: 'What is a zombie process and how do you get rid of it?', a: 'A child that has exited but whose parent has not yet read its exit status, so its entry stays in the process table (state Z). You cannot kill a zombie; you fix the parent (make it wait() on children) or kill the parent so init adopts and reaps the zombies.' },
+  { t: 'Processes', q: 'What is the difference between kill, kill -9 and kill -15?', a: 'kill sends SIGTERM (15) by default, asking the process to shut down cleanly. kill -9 sends SIGKILL, which cannot be caught or ignored, so no cleanup happens. Try 15 first; use 9 as a last resort.' },
+  { t: 'Processes', q: 'How do you run a command in the background and keep it alive after logout?', a: 'Append & to background it, and use nohup (nohup cmd > out.log 2>&1 &) or run it inside tmux or screen so it survives the hangup signal. For services, use systemd.' },
+  { t: 'Processes', q: 'What does the load average in top and uptime mean?', a: 'It is the average number of processes that are running or waiting to run (and in uninterruptible I/O wait on Linux) over 1, 5 and 15 minutes. Compare it with the number of CPU cores: a load of 4 on a 4-core machine is fully used.' },
+  { t: 'Processes', q: 'How do you find which process is using port 8080?', a: 'ss -ltnp | grep 8080 (or sudo lsof -i :8080). The -p flag shows the process name and PID; you may need sudo to see processes owned by others.' },
+  { t: 'Processes', q: 'What is the difference between fg, bg and jobs?', a: 'jobs lists the shell\'s background and stopped jobs. Ctrl+Z stops the foreground job; bg resumes it in the background; fg brings a job back to the foreground.' },
+  { t: 'Processes', q: 'What is PID 1 and why is it special?', a: 'The first process the kernel starts (systemd on most modern distros). It is the ancestor of all other processes, adopts orphaned processes, and if it dies the system panics. Inside a container, your main process is PID 1.' },
+  /* Text processing */
+  { t: 'Text', q: 'How do you count how many times each word appears in a file?', a: "tr -cs 'A-Za-z' '\\n' < file | tr A-Z a-z | sort | uniq -c | sort -rn. The tr commands split into one word per line and lowercase them; sort groups equal words; uniq -c counts; sort -rn ranks them." },
+  { t: 'Text', q: 'What is the difference between grep, egrep and fgrep?', a: 'grep uses basic regular expressions, grep -E (egrep) uses extended ones (+, ?, |, () without backslashes), and grep -F (fgrep) treats the pattern as a plain string, which is fastest and safest for literal text.' },
+  { t: 'Text', q: 'How do you replace foo with bar in a file in place?', a: "sed -i 's/foo/bar/g' file. The g flag replaces every match on a line, not just the first. Use -i.bak to keep a backup copy." },
+  { t: 'Text', q: 'How do you print the 2nd and 5th column of a CSV?', a: "awk -F, '{print $2, $5}' file.csv, or cut -d, -f2,5 file.csv. awk is better when fields contain irregular spacing or you need logic; cut is simpler for fixed delimiters." },
+  { t: 'Text', q: 'What is the difference between > , >> , 2> and 2>&1?', a: '> overwrites a file with stdout, >> appends, 2> redirects stderr, and 2>&1 sends stderr to wherever stdout is currently going. Order matters: cmd > file 2>&1 captures both; cmd 2>&1 > file does not.' },
+  { t: 'Text', q: 'What does a pipe do, and what is the difference between | and tee?', a: 'A pipe connects the stdout of one command to the stdin of the next. tee copies its input to a file and to stdout, so you can save an intermediate result while still piping onward: cmd | tee out.txt | next.' },
+  { t: 'Text', q: 'How do you view the last 100 lines of a log and keep following it?', a: 'tail -n 100 -f /var/log/syslog (or tail -F to keep following across log rotation). Press Ctrl+C to stop. journalctl -f does the same for the systemd journal.' },
+  { t: 'Text', q: 'How do you find lines in file A that are not in file B?', a: 'grep -vxFf B A (lines of A that are not whole-line matches of any line in B). Alternatively sort both and use comm -23 A_sorted B_sorted.' },
+  { t: 'Text', q: 'Why does sort | uniq need the sort first?', a: 'uniq only collapses adjacent duplicate lines. Sorting puts identical lines next to each other so uniq (or uniq -c) sees them all.' },
+  { t: 'Text', q: 'What is the difference between find and locate?', a: 'find walks the file system live and can filter by name, type, size, time and run actions (-exec), but is slower. locate searches a prebuilt database (updated by updatedb), so it is instant but can be stale and cannot filter by attributes.' },
+  /* Networking and SSH */
+  { t: 'Network', q: 'How does SSH key authentication work?', a: 'You keep a private key and put the matching public key in the server\'s ~/.ssh/authorized_keys. At login the server challenges you to prove you hold the private key by signing data; the key itself never crosses the network. The private key must stay secret (permissions 600).' },
+  { t: 'Network', q: 'What does ssh -L 8080:localhost:80 user@host do?', a: 'Local port forwarding: connections to port 8080 on your machine travel through the SSH tunnel and come out on the remote machine, connecting to localhost:80 there. -R does the reverse and -D makes a SOCKS proxy.' },
+  { t: 'Network', q: 'How do you check whether a remote port is open?', a: 'nc -zv host 443 (or curl -v telnet://host:443). From the server side, ss -ltn lists listening ports. Firewalls may drop packets rather than refuse, in which case you see a timeout instead of "connection refused".' },
+  { t: 'Network', q: 'What is the difference between TCP and UDP?', a: 'TCP is connection-oriented and reliable: handshake, ordered delivery, retransmission, congestion control. UDP is connectionless and best-effort: no guarantees but lower latency, used for DNS, streaming and games.' },
+  { t: 'Network', q: 'What happens when you type a URL in the browser, at the network level?', a: 'DNS resolves the name to an IP; the browser opens a TCP connection (three-way handshake), usually followed by a TLS handshake for HTTPS; it sends an HTTP request; the server replies; the browser renders the response and loads more resources.' },
+  { t: 'Network', q: 'How do you see your IP address and routes on modern Linux?', a: 'ip addr (or ip a) shows interfaces and addresses; ip route shows the routing table; ip neigh shows ARP entries. ifconfig and route are older tools.' },
+  { t: 'Network', q: 'What is the difference between curl and wget?', a: 'Both fetch URLs. curl is a flexible request tool (any HTTP method, headers, uploads, many protocols) that prints to stdout by default; wget is built for downloading files and whole sites, with recursion and resume, and saves to disk by default.' },
+  /* Shell scripting */
+  { t: 'Scripting', q: 'What does set -euo pipefail do at the top of a script?', a: '-e exits on the first command that fails, -u treats use of an unset variable as an error, and -o pipefail makes a pipeline fail if any command in it fails (not just the last). Together they make scripts fail loudly instead of continuing in a bad state.' },
+  { t: 'Scripting', q: 'What is the difference between $@ and $*?', a: 'Unquoted they are the same. Quoted, "$@" expands to each argument as a separate word (preserving spaces inside arguments), while "$*" joins them into one string. Almost always use "$@".' },
+  { t: 'Scripting', q: 'What is the difference between single and double quotes?', a: 'Single quotes keep everything literal. Double quotes still expand $variables, $(commands) and backslash escapes but prevent word splitting and globbing. Always quote variables: "$file".' },
+  { t: 'Scripting', q: 'What does $? hold, and how do you use it?', a: 'The exit status of the last command: 0 means success, anything else is failure. Use if cmd; then ... or cmd && next || handle_error. Your scripts should end with exit 0 or a meaningful non-zero code.' },
+  { t: 'Scripting', q: 'How do you loop over files safely when names may contain spaces?', a: 'Use a glob, not ls: for f in *.txt; do echo "$f"; done, with "$f" always quoted. For find, use find . -name "*.txt" -print0 | while IFS= read -r -d "" f; do ... done.' },
+  { t: 'Scripting', q: 'What is the difference between source script.sh and ./script.sh?', a: './script.sh runs the script in a child process, so its variable and cd changes vanish when it ends. source (or .) runs it in the current shell, so those changes persist, as when activating a virtual environment.' },
+  { t: 'Scripting', q: 'What is a shebang?', a: 'The first line, such as #!/usr/bin/env bash, which tells the kernel which interpreter to use when the file is executed directly. It also needs the execute permission (chmod +x).' },
+  { t: 'Scripting', q: 'How do you schedule a script to run every night at 2:30?', a: 'Edit your crontab with crontab -e and add 30 2 * * * /full/path/script.sh >> /path/log 2>&1. Use absolute paths, since cron has a minimal environment. systemd timers are the modern alternative.' },
+  /* System and admin */
+  { t: 'System', q: 'What is the difference between su and sudo?', a: 'su switches to another user (needs that user\'s password). sudo runs a single command with elevated privileges using your own password, according to rules in /etc/sudoers, and logs each use. sudo is preferred because access is granular and auditable.' },
+  { t: 'System', q: 'How do you check logs for a systemd service?', a: 'journalctl -u servicename (add -f to follow, --since "1 hour ago" to limit). Classic text logs live under /var/log, such as /var/log/syslog or /var/log/auth.log.' },
+  { t: 'System', q: 'How do you start a service now and at every boot?', a: 'sudo systemctl enable --now servicename. enable makes it start at boot; --now also starts it immediately. Check with systemctl status servicename.' },
+  { t: 'System', q: 'What is swap, and when is it a problem?', a: 'Disk space used as overflow when RAM is full. It prevents out-of-memory kills but is far slower, so a machine that is constantly swapping ("thrashing") becomes very slow. free -h and vmstat show usage.' },
+  { t: 'System', q: 'What is the difference between a package manager like apt and building from source?', a: 'apt installs prebuilt packages with dependency resolution, updates and clean removal. Building from source gives the newest or customised version but you manage dependencies, updates and uninstalling yourself.' },
+  { t: 'System', q: 'What is a container, and how is it different from a virtual machine?', a: 'A container is an isolated process (namespaces and cgroups) sharing the host kernel, so it starts in seconds and is lightweight. A VM runs a full guest operating system on virtualised hardware, giving stronger isolation but more overhead.' },
+  { t: 'System', q: 'A server is slow. How do you start investigating?', a: 'Check load and CPU with uptime and top/htop, memory with free -h, disk space with df -h and I/O with iostat or iotop, then network, and finally logs (journalctl, /var/log). Work from the broad picture to the specific process.' }
+];
+</script><script>/* Chapter summaries in other languages. Commands always stay in English. */
+window.I18N = {
+  hi: { name: 'हिन्दी', lang: 'hi-IN', label: 'संक्षेप', note: 'यह सार मशीन की मदद से तैयार किया गया है; कोई ग़लती दिखे तो सुधार सुझाएँ।',
+    ch: {
+      essentials: 'Linux एक ओपन-सोर्स ऑपरेटिंग सिस्टम है और शेल वह टेक्स्ट इंटरफ़ेस है जिससे आप उसे कमांड देते हैं। इस अध्याय में फ़ाइल सिस्टम की बनावट (/, /home, /etc) और शुरुआती कमांड जैसे pwd, ls, cd, cat, mkdir सीखते हैं।',
+      editors: 'टर्मिनल में फ़ाइल बदलने के लिए एडिटर चाहिए: ed, vi/vim, nano और emacs। vim में मोड होते हैं (Normal, Insert, Command); i दबाकर लिखना शुरू करें, Esc से बाहर आएँ, और :wq से सेव करके निकलें।',
+      network: 'नेटवर्किंग में IP पता, सबनेट, पोर्ट और फ़ायरवॉल की बुनियादी बातें हैं। ssh से दूसरी मशीन में सुरक्षित लॉगिन करते हैं; ping, ip addr और ss जैसे कमांड कनेक्शन जाँचने में काम आते हैं।',
+      process: 'प्रोसेस चलता हुआ प्रोग्राम है, जो foreground या background में चल सकता है। ps और top से देखें, jobs/fg/bg से संभालें, और kill से सिग्नल भेजकर रोकें (पहले सामान्य kill, आख़िर में kill -9)।',
+      software: 'Debian/Ubuntu में सॉफ़्टवेयर apt और dpkg से इंस्टॉल, अपडेट और हटाया जाता है। apt update पैकेज सूची ताज़ा करता है और apt install पैकेज के साथ उसकी निर्भरताएँ भी जोड़ता है।',
+      streams: 'हर प्रोग्राम के पास तीन स्ट्रीम होती हैं: stdin (0), stdout (1) और stderr (2)। > और >> आउटपुट को फ़ाइल में भेजते हैं, 2> एरर को, और पाइप | एक कमांड का आउटपुट अगले कमांड का इनपुट बना देता है।',
+      pattern: 'ग्लोब (*, ?, [ ]) फ़ाइलों के नाम मिलाते हैं, जबकि रेगुलर एक्सप्रेशन टेक्स्ट के पैटर्न। cut, tr, sort, uniq और paste जैसे छोटे टूल मिलकर टेक्स्ट को छानते और बदलते हैं।',
+      grep: 'grep फ़ाइलों में पैटर्न वाली पंक्तियाँ खोजता है। उपयोगी फ़्लैग: -i (अक्षर-भेद अनदेखा), -v (उलटा), -n (पंक्ति संख्या), -c (गिनती), -r (फ़ोल्डर में खोज), -E (extended regex)।',
+      vars: 'शेल वेरिएबल में = के दोनों तरफ़ स्पेस नहीं होता: name=Asha। $name से मान पढ़ें; सिंगल कोट सब कुछ शब्दशः रखते हैं, डबल कोट वेरिएबल फैलाते हैं। export करने पर चाइल्ड प्रोसेस को उसकी कॉपी मिलती है।',
+      scripting: 'शेल स्क्रिप्ट की पहली पंक्ति #!/bin/bash होती है और फ़ाइल को chmod +x से चलने योग्य बनाना पड़ता है। इसमें arguments ($1, $@), if/for/while और टेस्ट [ ] या [[ ]] होते हैं; exit status $? में मिलता है।',
+      sed: 'sed टेक्स्ट को पंक्ति-दर-पंक्ति बदलने वाला स्ट्रीम एडिटर है। सबसे आम उपयोग: sed \'s/पुराना/नया/g\'; -n और p चुनी हुई पंक्तियाँ छापते हैं, d पंक्ति हटाता है, और -i फ़ाइल को सीधे बदल देता है।',
+      awk: 'awk हर पंक्ति को फ़ील्ड ($1, $2…) में बाँटकर पैटर्न-ऐक्शन चलाता है। -F से सेपरेटर तय करें और BEGIN/END से शुरुआत और अंत के काम करें; जोड़, औसत और समूह-गणना जैसे काम एक पंक्ति में हो जाते हैं।',
+      utils: 'find फ़ाइलें खोजता है (नाम, प्रकार या आकार से), tar फ़ाइलों का आर्काइव बनाता है, cron कामों को समय पर चलाता है, और make बिल्ड को स्वचालित करता है।',
+      extras: 'Git से कोड के संस्करण संभालते हैं, hardware कमांड (lscpu, lsblk, free) मशीन की जानकारी देते हैं, और PS1 से शेल प्रॉम्प्ट बदला जा सकता है। स्टोरेज में डिस्क, पार्टिशन और RAID की बुनियादी समझ भी शामिल है।',
+      aiml: 'ML का काम ज़्यादातर रिमोट Linux सर्वर पर होता है: ssh से लॉगिन, tmux या nohup से लंबी ट्रेनिंग चालू रखना, nvidia-smi से GPU देखना, और venv या containers से वातावरण अलग रखना।'
+    } },
+  ta: { name: 'தமிழ்', lang: 'ta-IN', label: 'சுருக்கம்', note: 'இந்தச் சுருக்கம் இயந்திர உதவியுடன் தயாரிக்கப்பட்டது; பிழை இருந்தால் திருத்தம் தெரிவிக்கவும்.',
+    ch: {
+      essentials: 'Linux என்பது திறந்த மூல இயக்க முறைமை; shell என்பது அதற்குக் கட்டளைகள் கொடுக்கும் உரை இடைமுகம். இந்த அத்தியாயத்தில் கோப்பு அமைப்பு (/, /home, /etc) மற்றும் pwd, ls, cd, cat, mkdir போன்ற தொடக்கக் கட்டளைகளைக் கற்கிறோம்.',
+      editors: 'டெர்மினலில் கோப்புகளைத் திருத்த ed, vi/vim, nano, emacs போன்ற எடிட்டர்கள் தேவை. vim-இல் முறைகள் (Normal, Insert, Command) உள்ளன: i அழுத்தி எழுதத் தொடங்கி, Esc அழுத்தி வெளியே வந்து, :wq மூலம் சேமித்து வெளியேறலாம்.',
+      network: 'நெட்வொர்க்கிங்கில் IP முகவரி, subnet, port, firewall அடிப்படைகள் உள்ளன. ssh மூலம் வேறொரு கணினியில் பாதுகாப்பாக உள்நுழையலாம்; ping, ip addr, ss போன்றவை இணைப்பைச் சோதிக்க உதவும்.',
+      process: 'Process என்பது ஓடிக்கொண்டிருக்கும் நிரல்; அது foreground அல்லது background-இல் ஓடலாம். ps, top மூலம் பார்க்கலாம், jobs/fg/bg மூலம் கையாளலாம், kill மூலம் signal அனுப்பி நிறுத்தலாம் (முதலில் சாதாரண kill, கடைசியாக kill -9).',
+      software: 'Debian/Ubuntu-வில் மென்பொருளை apt மற்றும் dpkg மூலம் நிறுவலாம், புதுப்பிக்கலாம், நீக்கலாம். apt update தொகுப்புப் பட்டியலைப் புதுப்பிக்கும்; apt install தொகுப்பையும் அதன் சார்புகளையும் நிறுவும்.',
+      streams: 'ஒவ்வொரு நிரலுக்கும் மூன்று streams உண்டு: stdin (0), stdout (1), stderr (2). > மற்றும் >> வெளியீட்டைக் கோப்பிற்கு அனுப்பும், 2> பிழைகளை அனுப்பும், pipe | ஒரு கட்டளையின் வெளியீட்டை அடுத்ததின் உள்ளீடாக்கும்.',
+      pattern: 'Glob (*, ?, [ ]) கோப்புப் பெயர்களைப் பொருத்தும்; regular expression உரையின் வடிவங்களைப் பொருத்தும். cut, tr, sort, uniq, paste போன்ற சிறிய கருவிகள் சேர்ந்து உரையை வடிகட்டி மாற்றுகின்றன.',
+      grep: 'grep கோப்புகளில் ஒரு வடிவம் உள்ள வரிகளைத் தேடும். பயனுள்ள flags: -i (எழுத்து வேறுபாடு பார்க்காது), -v (தலைகீழ்), -n (வரி எண்), -c (எண்ணிக்கை), -r (கோப்புறைகளில் தேடல்), -E (extended regex).',
+      vars: 'Shell variable-இல் = குறியின் இரு பக்கமும் இடைவெளி கூடாது: name=Asha. $name மூலம் மதிப்பைப் படிக்கலாம்; single quote எல்லாவற்றையும் அப்படியே வைக்கும், double quote variable-ஐ விரிக்கும். export செய்தால் child process-க்கு நகல் கிடைக்கும்.',
+      scripting: 'Shell script-இன் முதல் வரி #!/bin/bash; கோப்பை chmod +x மூலம் இயக்கத்தக்கதாக்க வேண்டும். இதில் arguments ($1, $@), if/for/while, சோதனைகள் [ ] அல்லது [[ ]] உள்ளன; exit status $?-இல் கிடைக்கும்.',
+      sed: 'sed என்பது உரையை வரி வரியாக மாற்றும் stream editor. மிகப் பொதுவான பயன்பாடு: sed \'s/பழையது/புதியது/g\'; -n மற்றும் p தேர்ந்த வரிகளை அச்சிடும், d வரியை நீக்கும், -i கோப்பையே மாற்றும்.',
+      awk: 'awk ஒவ்வொரு வரியையும் fields ($1, $2…) ஆகப் பிரித்து pattern-action இயக்கும். -F மூலம் பிரிப்பானை அமைக்கலாம்; BEGIN/END ஆரம்ப, இறுதி வேலைகளுக்கு. கூட்டல், சராசரி, குழு எண்ணிக்கை போன்றவை ஒரே வரியில் முடியும்.',
+      utils: 'find கோப்புகளைத் தேடும் (பெயர், வகை, அளவு மூலம்), tar கோப்புகளைத் தொகுக்கும், cron வேலைகளை நேரப்படி இயக்கும், make கட்டமைப்பைத் தானியக்கும்.',
+      extras: 'Git குறியீட்டின் பதிப்புகளை நிர்வகிக்கும்; hardware கட்டளைகள் (lscpu, lsblk, free) கணினித் தகவலைத் தரும்; PS1 மூலம் shell prompt-ஐ மாற்றலாம். சேமிப்பகத்தில் disk, partition, RAID அடிப்படைகளும் அடங்கும்.',
+      aiml: 'ML வேலை பெரும்பாலும் தொலைநிலை Linux server-இல் நடக்கும்: ssh மூலம் உள்நுழைவு, tmux/nohup மூலம் நீண்ட பயிற்சியை இயங்க வைத்தல், nvidia-smi மூலம் GPU பார்த்தல், venv அல்லது containers மூலம் சூழல்களைப் பிரித்தல்.'
+    } }
+};
 </script>
 <script>(function () {
 'use strict';
@@ -3353,7 +3845,7 @@ const store = {
   set(k, v) { mem[k] = v; try { localStorage.setItem('nl2026:' + k, JSON.stringify(v)); } catch (e) {} }
 };
 const prog = store.get('prog', { done: {}, quiz: {}, lect: {}, cards: {}, chal: {} });
-const save = () => store.set('prog', prog);
+const save = () => { store.set('prog', prog); markActive(); };
 prog.fix = prog.fix || {}; prog.pred = prog.pred || {};
 const strip = h => h.replace(/<[^>]+>/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
 
@@ -3401,12 +3893,13 @@ function runCmd(cmd, opts) {
   friendlyHint(cmd, r);
   checkChallenge(cmd, r);
   tourAfter(cmd, r);
+  missionAfter(cmd, r);
   return r;
 }
 function updPrompt() { $('#tprompt').innerHTML = promptHTML(); }
 function openDock(open) { $('#dock').classList.toggle('open', open ?? true); document.body.classList.toggle('dockopen', $('#dock').classList.contains('open')); if (open !== false) setTimeout(() => term.input.focus(), 50); }
 function setInput(cmd) { openDock(true); term.input.value = cmd; term.input.focus(); }
-function resetSandbox() { sh = VirtualShell(); stubs(sh); term.active = null; $('#activeChal').style.display = 'none'; term.log.innerHTML = ''; tprint('<span class="ok">Sandbox reset — fresh file system.</span>'); updPrompt(); renderTree(null); }
+function resetSandbox() { missionReset(); sh = VirtualShell(); stubs(sh); term.active = null; $('#activeChal').style.display = 'none'; term.log.innerHTML = ''; tprint('<span class="ok">Sandbox reset — fresh file system.</span>'); updPrompt(); renderTree(null); }
 function complete() {
   const v = term.input.value; const parts = v.split(/\s+/); const last = parts[parts.length - 1]; let cands = [];
   if (parts.length === 1) cands = Object.keys(sh.C).filter(c => c.startsWith(last));
@@ -3486,29 +3979,37 @@ function doneCount() { return CH.filter(c => prog.done[c.id]).length; }
 function renderSide() {
   const r = route(); const pct = Math.round(doneCount() / CH.length * 100);
   $('#side').innerHTML = `
-    <div class="ring"><i style="width:${pct}%"></i></div><div class="ringtxt">${doneCount()} of ${CH.length} chapters complete</div>
-    <h6>Start</h6><nav class="nav"><a href="#/start" class="${r.view === 'start' ? 'on' : ''}"><span class="n">${ICON('globe')}</span>Start here</a><a href="#/home" class="${r.view === 'home' ? 'on' : ''}"><span class="n">${ICON('home')}</span>Overview</a><a href="#/map" class="${r.view === 'map' ? 'on' : ''}"><span class="n">${ICON('map')}</span>Lecture map</a></nav>
+    <div class="ring"><i style="width:${pct}%"></i></div><div class="ringtxt">${doneCount()} of ${CH.length} chapters complete</div>${streakHTML()}
+    <h6>Start</h6><nav class="nav"><a href="#/start" class="${r.view === 'start' ? 'on' : ''}"><span class="n">${ICON('globe')}</span>Start here</a><a href="#/home" class="${r.view === 'home' ? 'on' : ''}"><span class="n">${ICON('home')}</span>Overview</a><a href="#/map" class="${r.view === 'map' ? 'on' : ''}"><span class="n">${ICON('map')}</span>Lecture map</a><a href="#/paths" class="${r.view === 'paths' ? 'on' : ''}"><span class="n">${ICON('flag')}</span>Learning paths</a></nav>
     <h6>Chapters</h6><nav class="nav">${CH.map(c => `<a href="#/ch/${c.id}" class="${r.view === 'ch' && r.a === c.id ? 'on' : ''} ${prog.done[c.id] ? 'done' : ''}"><span class="n">${prog.done[c.id] ? '✓' : c.n}</span>${esc(c.title)}<span class="wk">${esc(c.weeks.replace('Week', 'W').replace('Weeks', 'W'))}</span></a>`).join('')}</nav>
     <h6>Practice</h6><nav class="nav">
       <a href="#/playground/regex" class="${r.view === 'playground' ? 'on' : ''}"><span class="n">${ICON('flask')}</span>Playground</a>
       <a href="#/challenges" class="${r.view === 'challenges' ? 'on' : ''}"><span class="n">${ICON('target')}</span>Challenges</a>
+      <a href="#/missions" class="${r.view === 'missions' ? 'on' : ''}"><span class="n">${ICON('flask')}</span>Story missions</a>
       <a href="#/pipes" class="${r.view === 'pipes' ? 'on' : ''}"><span class="n">${ICON('pipe')}</span>Pipe lab</a>
       <a href="#/fix" class="${r.view === 'fix' ? 'on' : ''}"><span class="n">${ICON('wrench')}</span>Fix the command</a>
       <a href="#/predict" class="${r.view === 'predict' ? 'on' : ''}"><span class="n">${ICON('eye')}</span>Predict the output</a>
       <a href="#/quiz" class="${r.view === 'quiz' ? 'on' : ''}"><span class="n">${ICON('help')}</span>Mixed quiz</a>
       <a href="#/cards" class="${r.view === 'cards' ? 'on' : ''}"><span class="n">${ICON('layers')}</span>Flashcards</a>
       <a href="#/exam" class="${r.view === 'exam' ? 'on' : ''}"><span class="n">${ICON('clipboard')}</span>Mock exam</a>
-      <a href="#/certificate" class="${r.view === 'certificate' ? 'on' : ''}"><span class="n">${ICON('check')}</span>Certificate</a>
-      <a href="#/cheat" class="${r.view === 'cheat' ? 'on' : ''}"><span class="n">${ICON('clipboard')}</span>Cheat sheet</a></nav>`;
+      <a href="#/cheat" class="${r.view === 'cheat' ? 'on' : ''}"><span class="n">${ICON('clipboard')}</span>Cheat sheet</a></nav>
+    <h6>Build and get hired</h6><nav class="nav">
+      <a href="#/projects" class="${r.view === 'projects' ? 'on' : ''}"><span class="n">${ICON('code')}</span>Mini projects</a>
+      <a href="#/interview" class="${r.view === 'interview' ? 'on' : ''}"><span class="n">${ICON('help')}</span>Interview prep</a></nav>
+    <h6>Progress</h6><nav class="nav">
+      <a href="#/daily" class="${r.view === 'daily' ? 'on' : ''}"><span class="n">${ICON('cpu')}</span>Daily practice</a>
+      <a href="#/badges" class="${r.view === 'badges' ? 'on' : ''}"><span class="n">${ICON('target')}</span>Badges</a>
+      <a href="#/certificate" class="${r.view === 'certificate' ? 'on' : ''}"><span class="n">${ICON('check')}</span>Certificate</a></nav>`;
 }
 
 function render(opts) {
   const r = route();
-  renderSide(); $('#side').classList.remove('open');
+  renderSide(); sideExtras(); $('#side').classList.remove('open');
   const m = main();
   const y = window.scrollY;
   if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
-  ({ home: vHome, ch: vChapter, map: vMap, playground: vPlayground, cards: vCards, cheat: vCheat, quiz: vQuiz, challenges: vChallenges, pipes: vPipes, fix: vFix, predict: vPredict, start: vStart, certificate: vCert, exam: vExam }[r.view] || vHome)(m, r);
+  ({ home: vHome, ch: vChapter, map: vMap, playground: vPlayground, cards: vCards, cheat: vCheat, quiz: vQuiz, challenges: vChallenges, pipes: vPipes, fix: vFix, predict: vPredict, start: vStart, certificate: vCert, exam: vExam, missions: vMissions, projects: vProjects, interview: vInterview, daily: vDaily, badges: vBadges, paths: vPaths }[r.view] || vHome)(m, r);
+  if (r.view === 'ch') chapterExtras(m, r);
   if (opts && opts.keepScroll) window.scrollTo(0, y);
 }
 
@@ -3524,6 +4025,13 @@ function vHome(m) {
     <div class="row" style="margin-top:16px;color:var(--ink2);font-size:.86rem"><span class="badge">${cmdCount} commands</span><span class="badge">${nQ} quiz questions</span><span class="badge">${window.CHALLENGES.length} terminal challenges</span></div></div>
     <div class="cards">${CH.map(c => `<a class="card" href="#/ch/${c.id}"><div class="tile">${ICON(c.icon)}</div><b>${c.n}. ${esc(c.title)}</b><span>${esc(c.intro)}</span><div class="meta"><span class="badge">${esc(c.weeks)}</span>${prog.done[c.id] ? '<span class="badge ok">complete</span>' : ''}${prog.quiz[c.id] ? `<span class="badge">quiz ${prog.quiz[c.id].score}/${prog.quiz[c.id].total}</span>` : ''}</div></a>`).join('')}</div>
     <div class="tools"><div class="eyebrow">Practice tools</div></div><div class="cards"><a class="card" href="#/pipes"><div class="tile">${ICON('pipe')}</div><b>Pipe lab</b><span>Step through a pipeline and see the text after every stage.</span></a><a class="card" href="#/fix"><div class="tile">${ICON('wrench')}</div><b>Fix the command</b><span>Find the bug in a broken command: a wrong option, a missing quote, the wrong redirect.</span><div class="meta"><span class="badge">${window.PRACTICE.FIX.filter(x => prog.fix[x.id]).length}/${window.PRACTICE.FIX.length} fixed</span></div></a><a class="card" href="#/predict"><div class="tile">${ICON('eye')}</div><b>Predict the output</b><span>Guess what a command prints, then run it and see how you did.</span><div class="meta"><span class="badge">${window.PRACTICE.PREDICT.filter(x => prog.pred[x.id]).length}/${window.PRACTICE.PREDICT.length} correct</span></div></a><a class="card" href="#/exam"><div class="tile">${ICON('clipboard')}</div><b>Mock exam</b><span>Timed papers drawn from every chapter, with a review of what you missed.</span></a><a class="card" href="#/start"><div class="tile">${ICON('globe')}</div><b>Start here</b><span>New to Linux? Install paths, a distro picker and a guided first run.</span></a><a class="card" href="#/certificate"><div class="tile">${ICON('check')}</div><b>Certificate</b><span>Finish every chapter to unlock a printable completion certificate.</span></a></div>
+    <div class="tools"><div class="eyebrow">Learn by doing, then get hired</div></div><div class="cards">
+      <a class="card" href="#/missions"><div class="tile">${ICON('flask')}</div><b>Story missions</b><span>Solve cases in the sandbox: a leaked key, a messy server, a sales file.</span><div class="meta"><span class="badge">${G.allMissions(window.MISSIONS).filter(x => prog.mis[x.id]).length}/${G.allMissions(window.MISSIONS).length} complete</span></div></a>
+      <a class="card" href="#/projects"><div class="tile">${ICON('code')}</div><b>Mini projects</b><span>Backups, cron, SSH hardening and a Flask deployment on a real machine.</span></a>
+      <a class="card" href="#/interview"><div class="tile">${ICON('help')}</div><b>Interview prep</b><span>${window.INTERVIEW.length} Linux questions with answers and a quiz-me mode.</span></a>
+      <a class="card" href="#/daily"><div class="tile">${ICON('cpu')}</div><b>Daily practice</b><span>A command and a question every day. Build a streak.</span></a>
+      <a class="card" href="#/badges"><div class="tile">${ICON('target')}</div><b>Badges</b><span>Earn badges for quizzes, challenges, missions and streaks.</span></a>
+      <a class="card" href="#/paths"><div class="tile">${ICON('flag')}</div><b>Learning paths</b><span>Linux for exams, for data science and AI, and for web developers.</span></a></div>
     <p class="credit-line">Curated and created by Ammar Hashmi for IIT Madras BS students.</p></div>`;
   $('#hTerm').onclick = () => openDock(true); $('#hSearch').onclick = () => openPal();
 }
@@ -3582,7 +4090,7 @@ function buildQuiz(host, qs, onFinish, title) {
       host.innerHTML = `<div class="qdone"><div class="score">${score} / ${qs.length}</div><p class="lede" style="margin:.4em auto 1em">${score === qs.length ? 'Perfect score.' : score >= qs.length * .7 ? 'Solid. Review the ones you missed in the chapter.' : 'Re-read the chapter, run its examples, then try again.'}</p><button class="btn" id="qs">Share result</button> <button class="btn ghost" id="qr">Try again</button></div>`;
       $('#qr', host).onclick = () => buildQuiz(host, qs, onFinish, title);
       $('#qs', host).onclick = () => shareModal({ title: title || 'Linux quiz', score, total: qs.length });
-      onFinish && onFinish({ score, total: qs.length });
+      onFinish && onFinish({ score, total: qs.length }); markActive();
       return;
     }
     const q = qs[i];
@@ -3749,13 +4257,15 @@ function mountPipe(host, cmd) {
   draw();
 }
 let plLast = (window.PRACTICE.PIPES || [])[0] || 'cat fruits.txt | sort | uniq -c';
-function vPipes(m) {
+function vPipes(m, r) {
+  if (r && r.a) { const pre = G.dec(r.a); if (pre) plLast = pre; }
   m.innerHTML = `<div class="page"><div class="eyebrow">Pipes</div><h1>${ICON('pipe')} Pipe lab</h1>
     <p class="lede">Type a pipeline, then step through it. You see the exact text each program receives and what it passes on. The lab works on a copy of your sandbox files, so nothing here changes them.</p>
-    <div class="term-in"><input id="plIn" aria-label="Pipeline to visualize" value="${esc(plLast)}" spellcheck="false" autocomplete="off" autocapitalize="off"><button class="btn" id="plGo">Visualize</button></div>
+    <div class="term-in"><input id="plIn" aria-label="Pipeline to visualize" value="${esc(plLast)}" spellcheck="false" autocomplete="off" autocapitalize="off"><button class="btn" id="plGo">Visualize</button><button class="btn ghost" id="plShare" title="Copy a link that opens this pipeline">Copy link</button></div>
     <div class="chips" id="plChips">${(window.PRACTICE.PIPES || []).map(c => `<button class="chip" data-c="${esc(c)}">${esc(c)}</button>`).join('')}</div>
     <div id="plHost"></div></div>`;
   const run = () => { plLast = $('#plIn').value; mountPipe($('#plHost'), plLast); };
+  $('#plShare').onclick = () => { const url = location.href.split('#')[0] + '#/pipes/' + G.enc($('#plIn').value.trim()), b = $('#plShare'), done = ok => { b.textContent = ok ? 'Link copied' : 'Copy failed'; setTimeout(() => { b.textContent = 'Copy link'; }, 1600); }; try { navigator.clipboard.writeText(url).then(() => done(true), () => done(false)); } catch (e) { done(false); } };
   $('#plGo').onclick = run; $('#plIn').onkeydown = e => { if (e.key === 'Enter') run(); };
   $('#plChips').onclick = e => { const b = e.target.closest('.chip'); if (b) { $('#plIn').value = b.dataset.c; run(); } };
   run();
@@ -3841,7 +4351,7 @@ function buildIndex() {
   index = [];
   CH.forEach(c => { c.sections.forEach(s => { index.push({ k: 'sec', t: s.h, sub: `Ch ${c.n} · ${c.title}`, txt: (s.h + ' ' + strip(s.html)).toLowerCase(), go: `ch/${c.id}/${s.id}` }); (s.cmds || []).forEach(k => index.push({ k: 'cmd', t: k[0], sub: k[1], txt: (k[0] + ' ' + k[1]).toLowerCase(), go: `ch/${c.id}/${s.id}`, cmd: true })); }); });
   LECT.forEach(w => w.lectures.forEach(l => l.items.forEach(it => index.push({ k: 'lec', t: it.x, sub: `Week ${w.week} · ${l.title} @ ${it.t}`, txt: (it.x + ' ' + l.title).toLowerCase(), go: 'map' }))));
-  [['Start here', 'Install paths, distro picker and a guided first run for new people', 'start', 'start here install wsl ubuntu distro beginner new tour'], ['Mock exam', 'Timed mock paper drawn from every chapter', 'exam', 'mock exam test timed practice paper'], ['Certificate', 'Completion certificate once every chapter is done', 'certificate', 'certificate completion print pdf'], ['Pipe lab', 'Step through a pipeline stage by stage', 'pipes', 'pipe pipeline visualizer stdin stdout stage'], ['Fix the command', 'Practice: find the bug in a broken command', 'fix', 'fix debug broken bug command practice'], ['Predict the output', 'Practice: guess the output, then run it', 'predict', 'predict guess output practice']]
+  [['Story missions', 'Cases with a story, checked automatically in the sandbox', 'missions', 'story missions case mystery sysadmin leaked key data detective'], ['Mini projects', 'Backup script, cron, SSH hardening, Flask deployment', 'projects', 'project backup cron ssh flask deploy nginx gunicorn systemd'], ['Interview prep', 'Linux interview questions with answers', 'interview', 'interview questions answers devops placement job'], ['Daily practice', 'Command and question of the day, streaks', 'daily', 'daily streak command of the day'], ['Badges', 'Your earned badges', 'badges', 'badges achievements progress'], ['Learning paths', 'Linux for exams, data science and web developers', 'paths', 'paths roadmap route data science web exam'], ['Start here', 'Install paths, distro picker and a guided first run for new people', 'start', 'start here install wsl ubuntu distro beginner new tour'], ['Mock exam', 'Timed mock paper drawn from every chapter', 'exam', 'mock exam test timed practice paper'], ['Certificate', 'Completion certificate once every chapter is done', 'certificate', 'certificate completion print pdf'], ['Pipe lab', 'Step through a pipeline stage by stage', 'pipes', 'pipe pipeline visualizer stdin stdout stage'], ['Fix the command', 'Practice: find the bug in a broken command', 'fix', 'fix debug broken bug command practice'], ['Predict the output', 'Practice: guess the output, then run it', 'predict', 'predict guess output practice']]
     .forEach(x => index.push({ k: 'sec', t: x[0], sub: x[1], txt: (x[0] + ' ' + x[3]).toLowerCase(), go: x[2] }));
 }
 function openPal() { if (!index) buildIndex(); $('#pal').classList.add('open'); const i = $('#palq'); i.value = ''; i.focus(); palSearch(''); }
@@ -3950,6 +4460,7 @@ function tourAfter(cmd, r) {
   if (!tour.on || tour.i >= G.TOUR.length || r.err || !G.tourMatch(tour.i, cmd)) return;
   tprint('<span class="ok">✔ ' + esc(G.TOUR[tour.i].why) + '</span>');
   tour.i++; tourSave(); tourRender();
+  if (tour.i >= G.TOUR.length) { prog.tourDone = true; save(); }
 }
 function tourBoot() { setTimeout(tourRender, 900); window.addEventListener('hashchange', tourRender); }
 
@@ -4024,7 +4535,7 @@ function shareModal(info) {
 /* ---------- Certificate ---------- */
 function certStats() {
   const q = CH.map(c => prog.quiz[c.id]).filter(Boolean), avg = q.length ? Math.round(q.reduce((a, b) => a + b.score / b.total, 0) / q.length * 100) : null;
-  return { chapters: CH.filter(c => prog.done[c.id]).length, avg, chal: window.CHALLENGES.filter(c => prog.chal[c.id]).length };
+  return { chapters: CORE.filter(c => prog.done[c.id]).length, avg, chal: window.CHALLENGES.filter(c => prog.chal[c.id]).length };
 }
 function drawCert(name, date, ref, st) {
   const cv = document.createElement('canvas'); cv.width = 1600; cv.height = 1130; const c = cv.getContext('2d');
@@ -4043,10 +4554,10 @@ function drawCert(name, date, ref, st) {
   return cv;
 }
 function vCert(m) {
-  const cr = G.certReady(CH, prog), st = certStats(), pct = Math.round(st.chapters / CH.length * 100);
+  const cr = G.certReady(CORE, prog), st = certStats(), pct = Math.round(st.chapters / CORE.length * 100);
   if (!cr.ready) {
     m.innerHTML = `<div class="page"><div class="eyebrow">Your record</div><h1>Certificate</h1><p class="lede">Finish every chapter to unlock a completion certificate you can print, save as PDF or download as an image.</p>
-      <div class="ring"><i style="width:${pct}%"></i></div><p class="tiny">${st.chapters} of ${CH.length} chapters marked complete.</p>
+      <div class="ring"><i style="width:${pct}%"></i></div><p class="tiny">${st.chapters} of ${CORE.length} chapters marked complete.</p>
       <div class="cards">${cr.left.map(c => `<a class="card" href="#/ch/${c.id}"><div class="tile">${ICON(c.icon)}</div><b>${c.n}. ${esc(c.title)}</b><span>Mark this chapter complete at its end.</span></a>`).join('')}</div></div>`;
     return;
   }
@@ -4067,7 +4578,7 @@ function vCert(m) {
   $('#cName').oninput = () => { store.set('certname', $('#cName').value); paint(); };
   $('#cPrint').onclick = () => window.print();
   $('#cPng').onclick = () => { const { n, ref } = paint(); download(drawCert(n, date, ref, st), 'navigating-linux-certificate.png'); };
-  $('#cShare').onclick = () => shareModal({ title: 'Completed all ' + CH.length + ' chapters', score: st.chapters, total: CH.length, cmd: '$ chapters --done', caption: 'I just completed all ' + CH.length + ' chapters of "Navigating Linux", an interactive book for IIT Madras BS students by Ammar Hashmi. #Linux #IITMadrasBS' });
+  $('#cShare').onclick = () => shareModal({ title: 'Completed all ' + CORE.length + ' chapters', score: st.chapters, total: CORE.length, cmd: '$ chapters --done', caption: 'I just completed all ' + CORE.length + ' chapters of "Navigating Linux", an interactive book for IIT Madras BS students by Ammar Hashmi. #Linux #IITMadrasBS' });
 }
 
 /* ---------- Exam prep mode ---------- */
@@ -4094,7 +4605,7 @@ function examRun(m) {
     const left = e.ans.filter(a => a === null).length;
     if (!auto && left && !e.warned) { e.warned = true; const sb = $('#xSub'); sb.textContent = 'Submit anyway (' + left + ' blank)'; return; }
     clearInterval(examTimer); e.res = G.gradeExam(e.qs, e.ans); e.took = Math.min(Date.now(), e.end) - e.start;
-    const best = store.get('exam', {}); if (!best[e.cfg.id] || best[e.cfg.id].pct < e.res.pct) best[e.cfg.id] = { pct: e.res.pct, date: todayISO() }; store.set('exam', best);
+    const best = store.get('exam', {}); if (!best[e.cfg.id] || best[e.cfg.id].pct < e.res.pct) best[e.cfg.id] = { pct: e.res.pct, date: todayISO() }; store.set('exam', best); markActive();
     examResult(m);
   };
   const draw = () => {
@@ -4132,6 +4643,218 @@ function examResult(m) {
   $('#xShare').onclick = () => shareModal({ title: e.cfg.name + ' (mock exam)', score: r.score, total: r.total });
 }
 
+/* ================= Batch 2: streaks, missions, projects ================= */
+prog.mis = prog.mis || {}; prog.proj = prog.proj || {}; prog.iv = prog.iv || {};
+const CORE = CH.filter(c => c.weeks !== 'Bonus');
+let streak = store.get('streak', null);
+const streakHTML = () => { const n = G.streakNow(streak, todayISO()); return `<div class="streakline" id="streakLine">${n ? `<b>${n}</b> day streak · best ${streak.best}` : 'No streak yet. Do one thing today.'}</div>`; };
+function markActive() {
+  const n = G.streakNext(streak, todayISO());
+  if (n !== streak) { streak = n; store.set('streak', streak); const el = $('#streakLine'); if (el) el.outerHTML = streakHTML(); }
+}
+function sideExtras() {
+  const side = $('#side'); if (!side || !deferredInstall) return;
+  side.insertAdjacentHTML('beforeend', '<div class="instwrap"><button class="btn ghost" id="installBtn">Install as an app</button></div>');
+  $('#installBtn').onclick = () => { const p = deferredInstall; deferredInstall = null; $('#installBtn').remove(); p.prompt(); };
+}
+
+/* ---------- Story missions ---------- */
+let activeMission = null, missionDone = false, hintShown = false;
+const mkShell = () => { const s = VirtualShell(); stubs(s); return s; };
+const missionExp = {};
+const storyOf = m => (window.MISSIONS.find(s => s.missions.some(x => x.id === m.id)) || {}).title || '';
+function missionEl() { let el = $('#mpanel'); if (!el) { el = document.createElement('div'); el.id = 'mpanel'; el.className = 'tour mpanel'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Mission'); document.body.appendChild(el); } return el; }
+function missionRender() {
+  const el = missionEl();
+  if (!activeMission) { el.hidden = true; return; }
+  const m = activeMission, all = G.allMissions(window.MISSIONS), next = all[all.findIndex(x => x.id === m.id) + 1];
+  el.hidden = false;
+  if (missionDone) {
+    el.innerHTML = `<b>${ICON('check')} Mission complete</b><p>${esc(m.learn)}</p><div class="row">${next ? `<button class="btn" id="mNext">Next: ${esc(next.t)}</button>` : ''}<a class="btn ghost" href="#/missions" id="mList">All missions</a><button class="btn ghost" id="mX">Close</button></div>`;
+    if (next) $('#mNext').onclick = () => startMission(next.id);
+  } else {
+    el.innerHTML = `<div class="eyebrow">${esc(storyOf(m))}</div><b>${esc(m.t)}</b><p class="mbrief">${esc(m.brief)}</p><p class="mtask"><b>Your task:</b> ${esc(m.task)}</p><div class="mhint" ${hintShown ? '' : 'hidden'}><b>Hint:</b> ${esc(m.hint)}</div>
+      <div class="row"><button class="btn ghost" id="mHint">Hint</button><button class="btn ghost" id="mRestart">Restart</button><button class="btn ghost" id="mX">Close</button></div>`;
+    $('#mHint').onclick = () => { hintShown = true; $('.mhint', el).hidden = false; };
+    $('#mRestart').onclick = () => startMission(m.id);
+  }
+  $('#mX').onclick = () => { activeMission = null; missionRender(); };
+}
+function missionReset() { activeMission = null; if ($('#mpanel')) missionRender(); }
+function startMission(id) {
+  const m = G.allMissions(window.MISSIONS).find(x => x.id === id); if (!m) return;
+  if (tour.on) tourClose();
+  resetSandbox(); G.prepareMission(sh, m);
+  activeMission = m; missionDone = false; hintShown = false;
+  tprint('<span class="ok">▶ Mission: ' + esc(m.t) + '</span>'); tprint(esc(m.brief)); tprint('<span class="p">Task:</span> ' + esc(m.task));
+  updPrompt(); renderTree(null); openDock(true); missionRender();
+}
+function missionAfter(cmd, r) {
+  if (!activeMission || missionDone) return;
+  const m = activeMission, exp = missionExp[m.id] || (missionExp[m.id] = G.missionExpected(mkShell, m));
+  const probe = m.mode === 'state' ? LEARN.cloneState(sh, mkShell()) : null;
+  if (!G.missionPass(m, exp, r, probe)) return;
+  missionDone = true; prog.mis[m.id] = true; save();
+  tprint('<span class="ok">✔ Mission complete: ' + esc(m.t) + '</span>'); tprint(esc(m.learn));
+  missionRender(); if (route().view === 'missions') render({ keepScroll: true });
+}
+function vMissions(m) {
+  const all = G.allMissions(window.MISSIONS), n = all.filter(x => prog.mis[x.id]).length;
+  m.innerHTML = `<div class="page"><div class="eyebrow">Story mode</div><h1>${ICON('flask')} Story missions</h1>
+    <p class="lede">Short cases with a story. Each one builds its own files in the sandbox and checks your work automatically. ${n} of ${all.length} complete.</p>
+    ${window.MISSIONS.map(s => `<h2 class="sh">${ICON(s.icon)} ${esc(s.title)}</h2><p class="lede sm">${esc(s.blurb)}</p><div class="mlist">${s.missions.map((x, i) => `<div class="mcard ${prog.mis[x.id] ? 'done' : ''}"><span class="mnum">${prog.mis[x.id] ? '✓' : i + 1}</span><div><b>${esc(x.t)}</b><span>${esc(x.task)}</span></div><button class="btn ${prog.mis[x.id] ? 'ghost' : ''}" data-id="${x.id}">${prog.mis[x.id] ? 'Replay' : 'Start'}</button></div>`).join('')}</div>`).join('')}
+    <p class="credit-line">Curated and created by Ammar Hashmi for IIT Madras BS students.</p></div>`;
+  $$('.mcard .btn', m).forEach(b => b.onclick = () => startMission(b.dataset.id));
+}
+
+/* ---------- Real-world mini projects ---------- */
+const projDone = p => p.steps.every((_, i) => prog.proj[p.id + ':s' + i]) && p.check.every((_, i) => prog.proj[p.id + ':c' + i]);
+const projCount = p => p.steps.filter((_, i) => prog.proj[p.id + ':s' + i]).length + p.check.filter((_, i) => prog.proj[p.id + ':c' + i]).length;
+function vProjects(m, r) {
+  const P = window.PROJECTS, p = P.find(x => x.id === r.a);
+  if (!p) {
+    m.innerHTML = `<div class="page"><div class="eyebrow">Build something real</div><h1>${ICON('code')} Mini projects</h1>
+      <p class="lede">Four guided projects that use what the chapters teach. They run on a real Linux machine (WSL, a virtual machine or a server), so do the risky ones on a test machine.</p>
+      <div class="cards">${P.map(x => `<a class="card" href="#/projects/${x.id}"><div class="tile">${ICON(x.icon)}</div><b>${esc(x.title)}</b><span>${esc(x.goal)}</span><div class="meta"><span class="badge">${esc(x.level)}</span><span class="badge">${esc(x.time)}</span>${projDone(x) ? '<span class="badge ok">done</span>' : projCount(x) ? `<span class="badge">${projCount(x)}/${x.steps.length + x.check.length}</span>` : ''}</div></a>`).join('')}</div>
+      <p class="tiny" style="margin-top:16px">New to Linux? Start with <a href="#/start">Start here</a> to get a machine to practise on.</p></div>`;
+    return;
+  }
+  const total = p.steps.length + p.check.length, i0 = P.indexOf(p), next = P[i0 + 1];
+  m.innerHTML = `<div class="page projpage"><div class="eyebrow"><a href="#/projects">Mini projects</a> · ${esc(p.level)} · ${esc(p.time)}</div><h1>${ICON(p.icon)} ${esc(p.title)}</h1>
+    <p class="lede">${esc(p.goal)}</p><p class="tiny"><b>Skills:</b> ${esc(p.skills)}</p>
+    <div class="tipbox"><b>Real machine needed.</b> These commands run on actual Linux (WSL, a VM or a server), not in the sandbox. Replace words in CAPITALS such as YOURNAME with your own values.</div>
+    <div class="ring"><i id="pjBar" style="width:${Math.round(projCount(p) / total * 100)}%"></i></div><p class="tiny" id="pjProg">${projCount(p)} of ${total} done</p>
+    ${p.steps.map((s, i) => `<section class="pstep"><label class="pshead"><input type="checkbox" data-k="s${i}" ${prog.proj[p.id + ':s' + i] ? 'checked' : ''}><span class="psn">${i + 1}</span><b>${esc(s.t)}</b></label><p>${esc(s.why)}</p><div class="codebox"><button class="copy" aria-label="Copy commands">Copy</button><pre>${esc(s.code)}</pre></div></section>`).join('')}
+    <h2 class="sh">Done when</h2><ul class="chk">${p.check.map((c, i) => `<li><label><input type="checkbox" data-k="c${i}" ${prog.proj[p.id + ':c' + i] ? 'checked' : ''}><span>${esc(c)}</span></label></li>`).join('')}</ul>
+    <div class="row" style="margin-top:18px"><a class="btn ghost" href="#/projects">All projects</a>${next ? `<a class="btn" href="#/projects/${next.id}">Next: ${esc(next.title)}</a>` : ''}</div></div>`;
+  $$('input[data-k]', m).forEach(c => c.onchange = () => {
+    prog.proj[p.id + ':' + c.dataset.k] = c.checked; save();
+    const n = projCount(p); $('#pjProg').textContent = n + ' of ' + total + ' done' + (n === total ? '. Project complete!' : ''); $('#pjBar').style.width = Math.round(n / total * 100) + '%';
+  });
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('button.copy'); if (!b) return;
+  const t = $('pre', b.parentElement).textContent, done = ok => { b.textContent = ok ? 'Copied' : 'Select and copy'; setTimeout(() => { b.textContent = 'Copy'; }, 1500); };
+  try { navigator.clipboard.writeText(t).then(() => done(true), () => done(false)); } catch (err) { done(false); }
+});
+
+/* ---------- Interview prep ---------- */
+let ivTopic = 'All', ivSearch = '', ivMode = 'list', ivCur = null, ivShown = false;
+const ivKey = i => G.hash(i.q);
+function vInterview(m) {
+  const IV = window.INTERVIEW, topics = ['All', ...new Set(IV.map(i => i.t))], known = () => IV.filter(i => prog.iv[ivKey(i)]).length;
+  const pickNext = () => { const pool = IV.filter(i => (ivTopic === 'All' || i.t === ivTopic) && !prog.iv[ivKey(i)]), all = IV.filter(i => ivTopic === 'All' || i.t === ivTopic); const src = pool.length ? pool : all; ivCur = src[Math.floor(Math.random() * src.length)]; ivShown = false; };
+  const head = () => `<div class="page"><div class="eyebrow">Get hired</div><h1>${ICON('help')} Interview prep</h1><p class="lede">${IV.length} Linux questions that come up in DevOps, backend, SRE and campus placement interviews. Read the answer, say it out loud in your own words, then mark it as known.</p>
+    <div class="row noprint"><span class="badge ok" id="ivKnown">${known()} of ${IV.length} known</span><button class="btn ${ivMode === 'list' ? '' : 'ghost'}" data-mode="list">Browse</button><button class="btn ${ivMode === 'quiz' ? '' : 'ghost'}" data-mode="quiz">Quiz me</button></div>
+    <div class="chips" style="margin:12px 0">${topics.map(t => `<button class="chip2 ${t === ivTopic ? 'on' : ''}" data-t="${esc(t)}">${esc(t)}</button>`).join('')}</div>`;
+  const draw = () => {
+    let body;
+    if (ivMode === 'list') {
+      const q = ivSearch.toLowerCase(), list = IV.filter(i => (ivTopic === 'All' || i.t === ivTopic) && (!q || (i.q + ' ' + i.a).toLowerCase().includes(q)));
+      body = `<input id="ivSearch" class="ivsearch" type="search" placeholder="Search questions and answers" value="${esc(ivSearch)}" aria-label="Search interview questions">
+        <div class="ivlist">${list.map(i => `<details class="ivq ${prog.iv[ivKey(i)] ? 'known' : ''}"><summary><span>${esc(i.q)}</span><em>${esc(i.t)}</em></summary><div class="iva"><p>${esc(i.a)}</p><label class="ivk"><input type="checkbox" data-k="${ivKey(i)}" ${prog.iv[ivKey(i)] ? 'checked' : ''}> I can explain this</label></div></details>`).join('') || '<p class="lede sm">No matches.</p>'}</div>`;
+    } else {
+      if (!ivCur || (ivTopic !== 'All' && ivCur.t !== ivTopic)) pickNext();
+      body = `<div class="q ivcard"><div class="qtop"><span>${esc(ivCur.t)}</span></div><p>${esc(ivCur.q)}</p>
+        ${ivShown ? `<div class="iva"><p>${esc(ivCur.a)}</p></div><div class="row"><button class="btn" id="ivYes">I knew it</button><button class="btn ghost" id="ivNo">Still learning</button></div>` : '<div class="row"><button class="btn" id="ivShow">Show answer</button><button class="btn ghost" id="ivSkip">Skip</button></div>'}</div>`;
+    }
+    m.innerHTML = head() + body + '</div>';
+    $$('[data-mode]', m).forEach(b => b.onclick = () => { ivMode = b.dataset.mode; draw(); });
+    $$('[data-t]', m).forEach(b => b.onclick = () => { ivTopic = b.dataset.t; if (ivMode === 'quiz') pickNext(); draw(); });
+    const s = $('#ivSearch'); if (s) { s.oninput = () => { ivSearch = s.value; const pos = s.selectionStart; draw(); const n = $('#ivSearch'); n.focus(); n.setSelectionRange(pos, pos); }; }
+    $$('.ivq input[data-k]', m).forEach(c => c.onchange = () => { prog.iv[c.dataset.k] = c.checked; save(); c.closest('.ivq').classList.toggle('known', c.checked); $('#ivKnown').textContent = known() + ' of ' + IV.length + ' known'; });
+    const on = (id, f) => { const b = $(id, m); if (b) b.onclick = f; };
+    on('#ivShow', () => { ivShown = true; draw(); }); on('#ivSkip', () => { pickNext(); draw(); });
+    on('#ivYes', () => { prog.iv[ivKey(ivCur)] = true; save(); pickNext(); draw(); }); on('#ivNo', () => { pickNext(); draw(); });
+  };
+  draw();
+}
+
+/* ---------- Daily command + question, badges, paths ---------- */
+function vDaily(m) {
+  const t = todayISO(), cmd = G.dailyCommand(CH, t), q = G.dailyQuestion(CH, t); let d = store.get('daily', {});
+  if (d.date !== t) d = { date: t, cmd: false, q: false, pick: null };
+  const sv = () => store.set('daily', d), n = G.streakNow(streak, t), done = (d.cmd ? 1 : 0) + (d.q ? 1 : 0);
+  m.innerHTML = `<div class="page"><div class="eyebrow">Today · ${esc(t)}</div><h1>${ICON('cpu')} Daily practice</h1>
+    <div class="stats"><div><b>${n}</b><span>day streak</span></div><div><b>${streak ? streak.best : 0}</b><span>best streak</span></div><div><b>${streak ? streak.days : 0}</b><span>days practised</span></div><div><b>${done}/2</b><span>done today</span></div></div>
+    <p class="lede sm">Any real activity keeps your streak alive: a quiz, a challenge, a mission, or the two small things below. Two minutes is enough.</p>
+    <h2 class="sh">Command of the day</h2><div class="dcard"><code class="dcmd">${esc(cmd.cmd)}</code><p>${esc(cmd.desc)}</p><p class="tiny">From <a href="#/ch/${cmd.chId}">${esc(cmd.ch)}</a></p>
+      <div class="row"><button class="btn" id="dTry">Try it in the terminal</button><button class="btn ghost" id="dExp">Explain it</button><button class="btn ${d.cmd ? 'ghost' : ''}" id="dDone">${d.cmd ? '✓ Done' : 'I tried it'}</button></div><div id="dExpBox"></div></div>
+    <h2 class="sh">Question of the day</h2><div class="q dcard"><div class="qtop"><span>${esc(q._c)}</span></div><p>${esc(q.q)}</p>${q.code ? `<pre class="qcode">${esc(q.code)}</pre>` : ''}<div class="opts">${q.o.map((o, j) => `<button class="opt" data-j="${j}">${esc(o)}</button>`).join('')}</div><div class="why" hidden></div></div></div>`;
+  $('#dTry').onclick = () => setInput(cmd.cmd);
+  $('#dExp').onclick = () => { const b = $('#dExpBox'); b.innerHTML = b.innerHTML ? '' : explainHTML(cmd.cmd); };
+  $('#dDone').onclick = () => { d.cmd = true; sv(); markActive(); vDaily(m); };
+  const lock = j => { $$('.opt', m).forEach((x, k) => { x.disabled = true; if (k === q.a) x.classList.add('right'); if (k === j && j !== q.a) x.classList.add('wrong'); }); const w = $('.why', m); w.hidden = false; w.textContent = (j === q.a ? '✔ ' : '✘ ') + q.e; };
+  if (d.q && d.pick !== null) lock(d.pick);
+  $$('.opt', m).forEach(b => b.onclick = () => { if (d.q) return; d.q = true; d.pick = +b.dataset.j; sv(); markActive(); lock(d.pick); $$('.stats b', m)[3].textContent = ((d.cmd ? 1 : 0) + 1) + '/2'; });
+}
+function badgeStats() {
+  const qz = CH.map(c => prog.quiz[c.id]).filter(Boolean), ex = store.get('exam', {});
+  return { tour: !!prog.tourDone, quizzes: qz.length, perfectQuiz: qz.some(x => x.score === x.total), chaptersDone: CORE.filter(c => prog.done[c.id]).length, chapters: CORE.length,
+    chal: window.CHALLENGES.filter(c => prog.chal[c.id]).length, challenges: window.CHALLENGES.length, fix: window.PRACTICE.FIX.filter(x => prog.fix[x.id]).length, pred: window.PRACTICE.PREDICT.filter(x => prog.pred[x.id]).length,
+    missions: G.allMissions(window.MISSIONS).filter(x => prog.mis[x.id]).length, totalMissions: G.allMissions(window.MISSIONS).length, bestStreak: Math.max(streak ? streak.best : 0, 0),
+    examBest: Math.max(0, ...Object.values(ex).map(x => x.pct)), projects: window.PROJECTS.filter(projDone).length };
+}
+function vBadges(m) {
+  const s = badgeStats(), have = new Set(G.earned(s).map(b => b.id));
+  m.innerHTML = `<div class="page"><div class="eyebrow">Your progress</div><h1>${ICON('target')} Badges</h1><p class="lede">${have.size} of ${G.BADGES.length} earned. Badges unlock automatically as you learn.</p>
+    <div class="bgrid">${G.BADGES.map(b => `<div class="bdg ${have.has(b.id) ? 'on' : ''}"><div class="bic">${ICON(b.icon)}</div><b>${esc(b.t)}</b><span>${esc(b.d)}</span><em>${have.has(b.id) ? 'Earned' : 'Locked'}</em></div>`).join('')}</div></div>`;
+}
+function vPaths(m) {
+  m.innerHTML = `<div class="page"><div class="eyebrow">Linux for you</div><h1>${ICON('map')} Learning paths</h1><p class="lede">You do not have to read everything in order. Pick the route that matches your goal. Ticks show chapters you have completed.</p>
+    ${G.PATHS.map(p => { const pp = G.pathProgress(p, prog); return `<div class="pathcard"><div class="row"><div class="tile">${ICON(p.icon)}</div><div><b class="ptitle">${esc(p.title)}</b><span class="tiny">${esc(p.for)}</span></div><span class="badge">${pp.done}/${pp.total} chapters</span></div>
+      <ol class="pathsteps">${p.steps.map(s => `<li class="${s.ch && prog.done[s.ch] ? 'done' : ''}"><a href="#/${s.go}">${esc(s.t)}</a>${s.ch && prog.done[s.ch] ? ' <span class="ptick">✓</span>' : ''}</li>`).join('')}</ol></div>`; }).join('')}</div>`;
+}
+
+/* ---------- Summaries in other languages + listen mode ---------- */
+let lang = store.get('lang', 'en'), listen = { on: false, paused: false, queue: [], i: 0, rate: 1 };
+function chapterExtras(m, r) {
+  const c = CH.find(x => x.id === r.a), page = $('.page', m), h1 = page && $('h1', page); if (!c || !h1) return;
+  const opts = [['en', 'English']].concat(Object.keys(window.I18N).map(k => [k, window.I18N[k].name]));
+  const bar = document.createElement('div'); bar.className = 'langbar noprint';
+  bar.innerHTML = `<div class="row"><label>Summary language <select id="langSel">${opts.map(o => `<option value="${o[0]}" ${o[0] === lang ? 'selected' : ''}>${esc(o[1])}</option>`).join('')}</select></label>${'speechSynthesis' in window ? '<button class="btn ghost" id="listenBtn">Listen</button>' : ''}</div><div id="langBox"></div>`;
+  ($('.lede', page) || h1).insertAdjacentElement('afterend', bar);
+  const draw = () => { const box = $('#langBox'); if (lang === 'en' || !window.I18N[lang]) { box.innerHTML = ''; return; } const L = window.I18N[lang]; box.innerHTML = `<div class="lbox" lang="${L.lang.slice(0, 2)}"><b>${esc(L.label)}</b><p>${esc(L.ch[c.id] || '')}</p><small>${esc(L.note)}</small></div>`; };
+  $('#langSel').onchange = e => { lang = e.target.value; store.set('lang', lang); draw(); };
+  draw();
+  const lb = $('#listenBtn'); if (lb) lb.onclick = () => listenStart(page, c);
+}
+function chunkText(t, max) { const out = []; let cur = ''; (t.replace(/\s+/g, ' ').match(/[^.!?।]+[.!?।]?\s*/g) || [t]).forEach(s => { if ((cur + s).length > max && cur) { out.push(cur); cur = ''; } cur += s; }); if (cur.trim()) out.push(cur); return out.map(x => x.trim()).filter(Boolean); }
+function listenBar() { let el = $('#listenBar'); if (!el) { el = document.createElement('div'); el.id = 'listenBar'; el.className = 'listenbar noprint'; document.body.appendChild(el); } return el; }
+function listenStart(page, c) {
+  stopListen(); const synth = window.speechSynthesis; if (!synth) return;
+  const L = lang !== 'en' ? window.I18N[lang] : null, queue = [];
+  if (L) chunkText(L.ch[c.id] || '', 180).forEach(t => queue.push({ t, lang: L.lang, el: $('#langBox .lbox') }));
+  else $$('h1, h2, h3, p, li', page).filter(e => !e.closest('pre, .ex, .diagram, .quiz, .toc, .langbar, table, .noprint, .xp')).forEach(e => chunkText(e.textContent, 180).forEach(t => { if (t.length > 3) queue.push({ t, lang: 'en-IN', el: e }); }));
+  if (!queue.length) return;
+  listen = { on: true, paused: false, queue, i: 0, rate: listen.rate || 1 }; listenDraw(); listenNext();
+}
+function listenDraw() {
+  const el = listenBar(); if (!listen.on) { el.hidden = true; return; } el.hidden = false;
+  el.innerHTML = `<span class="lt">${ICON('play')} Reading aloud</span><button class="btn ghost" id="lPause">${listen.paused ? 'Resume' : 'Pause'}</button><button class="btn ghost" id="lStop">Stop</button><label>Speed <select id="lRate">${[.8, 1, 1.25, 1.5].map(x => `<option value="${x}" ${x === listen.rate ? 'selected' : ''}>${x}x</option>`).join('')}</select></label>`;
+  $('#lPause').onclick = () => { const s = window.speechSynthesis; if (listen.paused) { s.resume(); listen.paused = false; } else { s.pause(); listen.paused = true; } listenDraw(); };
+  $('#lStop').onclick = stopListen; $('#lRate').onchange = e => { listen.rate = +e.target.value; const at = listen.i; window.speechSynthesis.cancel(); listen.i = at; listenNext(); };
+}
+function listenNext() {
+  $$('.speaking').forEach(x => x.classList.remove('speaking'));
+  if (!listen.on || listen.i >= listen.queue.length) { stopListen(); return; }
+  const it = listen.queue[listen.i], u = new window.SpeechSynthesisUtterance(it.t), my = listen.queue;
+  u.lang = it.lang; u.rate = listen.rate; if (it.el) { it.el.classList.add('speaking'); try { it.el.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) { /* ignore */ } }
+  u.onend = () => { if (listen.on && listen.queue === my) { listen.i++; listenNext(); } };
+  u.onerror = e => { if (e && (e.error === 'interrupted' || e.error === 'canceled')) return; stopListen(); };
+  window.speechSynthesis.speak(u);
+}
+function stopListen() { listen.on = false; listen.queue = []; try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) { /* ignore */ } $$('.speaking').forEach(x => x.classList.remove('speaking')); if ($('#listenBar')) $('#listenBar').hidden = true; }
+
+/* ---------- Install as an app ---------- */
+let deferredInstall = null;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredInstall = e; if (!$('#installBtn')) sideExtras(); });
+window.addEventListener('appinstalled', () => { deferredInstall = null; const b = $('#installBtn'); if (b) b.remove(); });
+function growthBoot() {
+  tourBoot(); window.addEventListener('hashchange', stopListen);
+  if (/^https?:$/.test(location.protocol) && 'serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+
 
 /* ================= Boot ================= */
 function boot() {
@@ -4141,7 +4864,7 @@ function boot() {
   $$('#themes button').forEach(b => b.onclick = () => setTheme(b.dataset.t));
   $('#menuBtn').onclick = () => $('#side').classList.toggle('open');
   $('#searchBtn').onclick = openPal; $('#termBtn').onclick = () => openDock(!$('#dock').classList.contains('open'));
-  initTerminal(); initPal(); render(); tourBoot();
+  initTerminal(); initPal(); render(); growthBoot();
 }
 document.addEventListener('DOMContentLoaded', boot);
 })();

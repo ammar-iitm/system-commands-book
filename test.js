@@ -57,7 +57,7 @@ for (const [cmd, out, err] of cases) { const r = run(cmd); check(cmd, r.out, out
 
 // ---- book content ----
 const ctx = { console }; ctx.window = ctx; vm.createContext(ctx);
-for (const f of ['engine', 'content1', 'content2', 'content3', 'quiz_extra', 'learn', 'practice', 'growth'])
+for (const f of ['engine', 'content1', 'content2', 'content3', 'content4', 'quiz_extra', 'learn', 'practice', 'growth', 'growth2', 'missions', 'projects', 'interview', 'i18n'])
   vm.runInContext(fs.readFileSync(path.join(__dirname, 'src', f + '.js'), 'utf8'), ctx, { filename: f });
 for (const c of ctx.CH) {
   for (const s of c.sections) for (const e of s.ex || []) {
@@ -221,6 +221,63 @@ check('answer missing line', LEARN.compareAnswer('a', 'a\nb').rows[1].got, null)
   check('certRef stable + name sensitive', GROW.certRef('Ammar', '2026-11-08') === GROW.certRef(' ammar ', '2026-11-08') && GROW.certRef('Ammar', '2026-11-08') !== GROW.certRef('Sara', '2026-11-08'), true);
   const prog = { done: {} }; check('cert locked', GROW.certReady(ctx.CH, prog).ready, false);
   ctx.CH.forEach(c => prog.done[c.id] = true); check('cert unlocked', GROW.certReady(ctx.CH, prog).ready, true);
+}
+
+// ---- missions, streaks, badges, paths, projects, interview, languages ----
+{
+  const GROW = require('./src/growth.js'); require('./src/growth2.js');
+  const ms = GROW.allMissions(ctx.MISSIONS);
+  check('mission ids unique', new Set(ms.map(m => m.id)).size, ms.length);
+  ms.forEach(m => {
+    check(`mission ${m.id} has text`, !!(m.t && m.brief && m.task && m.hint && m.learn && m.sol), true);
+    const exp = GROW.missionExpected(VirtualShell, m);
+    if (m.mode === 'out') {
+      const sh = GROW.prepareMission(VirtualShell(), m), r = sh.run(m.sol);
+      check(`mission ${m.id}: solution prints something`, !r.err && exp !== '', true);
+      const wrong = GROW.prepareMission(VirtualShell(), m).run('ls');
+      check(`mission ${m.id}: ls is not accepted`, GROW.missionPass(m, exp, wrong, null), false);
+      check(`mission ${m.id}: solution is accepted`, GROW.missionPass(m, exp, r, null), true);
+    } else {
+      const before = GROW.prepareMission(VirtualShell(), m).run(m.verify);
+      check(`mission ${m.id}: starts unsolved`, (before.out || '').replace(/\n+$/, '') !== m.expect, true);
+      const sh = GROW.prepareMission(VirtualShell(), m), r = sh.run(m.sol);
+      check(`mission ${m.id}: solution runs clean`, !r.err, true);
+      const probe = LEARN.cloneState(sh, VirtualShell());
+      check(`mission ${m.id}: solution is accepted`, GROW.missionPass(m, exp, r, probe), true);
+      const fresh = GROW.prepareMission(VirtualShell(), m);
+      check(`mission ${m.id}: untouched sandbox is not accepted`, GROW.missionPass(m, exp, { out: '', err: '' }, LEARN.cloneState(fresh, VirtualShell())), false);
+    }
+  });
+  // streaks
+  let st = GROW.streakNext(null, '2026-11-01'); check('streak starts at 1', st.count, 1);
+  st = GROW.streakNext(st, '2026-11-01'); check('same day does not double count', st.count + '/' + st.days, '1/1');
+  st = GROW.streakNext(st, '2026-11-02'); st = GROW.streakNext(st, '2026-11-03'); check('consecutive days grow', st.count + '/' + st.best, '3/3');
+  check('streak across month end', GROW.streakNext({ last: '2026-10-31', count: 4, best: 4, days: 4 }, '2026-11-01').count, 5);
+  const broken = GROW.streakNext(st, '2026-11-06'); check('gap resets count but keeps best', broken.count + '/' + broken.best, '1/3');
+  check('streakNow shows yesterday as alive', GROW.streakNow(st, '2026-11-04'), 3);
+  check('streakNow expires after a missed day', GROW.streakNow(st, '2026-11-05'), 0);
+  // daily
+  const d1 = GROW.dailyCommand(ctx.CH, '2026-11-08'), d2 = GROW.dailyCommand(ctx.CH, '2026-11-08');
+  check('daily command is stable for a date', d1.cmd + d1.desc, d2.cmd + d2.desc);
+  const set = new Set(); for (let i = 1; i <= 28; i++) set.add(GROW.dailyCommand(ctx.CH, '2026-12-' + String(i).padStart(2, '0')).cmd);
+  check('daily command varies across 28 days', set.size >= 15, true);
+  check('daily question has a valid answer', (q => q.a >= 0 && q.a < q.o.length)(GROW.dailyQuestion(ctx.CH, '2026-11-08')), true);
+  // badges
+  const none = { tour: false, quizzes: 0, perfectQuiz: false, chaptersDone: 0, chapters: 15, chal: 0, challenges: 20, fix: 0, pred: 0, missions: 0, totalMissions: 10, bestStreak: 0, examBest: 0, projects: 0 };
+  check('no badges at the start', GROW.earned(none).length, 0);
+  const all = { tour: true, quizzes: 5, perfectQuiz: true, chaptersDone: 15, chapters: 15, chal: 20, challenges: 20, fix: 21, pred: 27, missions: 10, totalMissions: 10, bestStreak: 30, examBest: 90, projects: 4 };
+  check('every badge is reachable', GROW.earned(all).length, GROW.BADGES.length);
+  check('badge ids unique', new Set(GROW.BADGES.map(b => b.id)).size, GROW.BADGES.length);
+  // role paths
+  const chIds = new Set(ctx.CH.map(c => c.id)), routes = new Set(['predict', 'exam', 'missions', 'interview', 'fix', 'pipes', 'challenges']);
+  GROW.PATHS.forEach(p => p.steps.forEach(s => check(`path ${p.id}: "${s.t}" goes somewhere real`, s.go.startsWith('ch/') ? chIds.has(s.go.slice(3)) && s.ch === s.go.slice(3) : s.go.startsWith('projects/') ? ctx.PROJECTS.some(x => x.id === s.go.slice(9)) : routes.has(s.go), true)));
+  // projects, interview, languages, new chapter
+  check('4 projects with steps and checklists', ctx.PROJECTS.length === 4 && ctx.PROJECTS.every(p => p.steps.length >= 5 && p.check.length >= 4 && p.steps.every(s => s.t && s.why && s.code)), true);
+  check('50 interview questions, unique, with answers', ctx.INTERVIEW.length >= 50 && new Set(ctx.INTERVIEW.map(i => i.q)).size === ctx.INTERVIEW.length && ctx.INTERVIEW.every(i => i.t && i.q.length > 10 && i.a.length > 40), true);
+  for (const k of Object.keys(ctx.I18N)) check(`language ${k} covers every chapter`, ctx.CH.filter(c => !ctx.I18N[k].ch[c.id]).map(c => c.id).join(','), '');
+  check('chapter ids unique', new Set(ctx.CH.map(c => c.id)).size, ctx.CH.length);
+  check('AI/ML chapter present with quiz', ctx.CH.some(c => c.id === 'aiml' && c.quiz.length >= 8), true);
+  check('share link round-trips', GROW.dec(GROW.enc("grep -c 'a b' f | sort")), "grep -c 'a b' f | sort");
 }
 
 console.log(failed ? `\n${failed} check(s) failed` : 'all checks passed');

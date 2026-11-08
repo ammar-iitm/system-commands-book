@@ -9,7 +9,7 @@ const store = {
   set(k, v) { mem[k] = v; try { localStorage.setItem('nl2026:' + k, JSON.stringify(v)); } catch (e) {} }
 };
 const prog = store.get('prog', { done: {}, quiz: {}, lect: {}, cards: {}, chal: {} });
-const save = () => store.set('prog', prog);
+const save = () => { store.set('prog', prog); markActive(); };
 prog.fix = prog.fix || {}; prog.pred = prog.pred || {};
 const strip = h => h.replace(/<[^>]+>/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
 
@@ -57,12 +57,13 @@ function runCmd(cmd, opts) {
   friendlyHint(cmd, r);
   checkChallenge(cmd, r);
   tourAfter(cmd, r);
+  missionAfter(cmd, r);
   return r;
 }
 function updPrompt() { $('#tprompt').innerHTML = promptHTML(); }
 function openDock(open) { $('#dock').classList.toggle('open', open ?? true); document.body.classList.toggle('dockopen', $('#dock').classList.contains('open')); if (open !== false) setTimeout(() => term.input.focus(), 50); }
 function setInput(cmd) { openDock(true); term.input.value = cmd; term.input.focus(); }
-function resetSandbox() { sh = VirtualShell(); stubs(sh); term.active = null; $('#activeChal').style.display = 'none'; term.log.innerHTML = ''; tprint('<span class="ok">Sandbox reset — fresh file system.</span>'); updPrompt(); renderTree(null); }
+function resetSandbox() { missionReset(); sh = VirtualShell(); stubs(sh); term.active = null; $('#activeChal').style.display = 'none'; term.log.innerHTML = ''; tprint('<span class="ok">Sandbox reset — fresh file system.</span>'); updPrompt(); renderTree(null); }
 function complete() {
   const v = term.input.value; const parts = v.split(/\s+/); const last = parts[parts.length - 1]; let cands = [];
   if (parts.length === 1) cands = Object.keys(sh.C).filter(c => c.startsWith(last));
@@ -142,29 +143,37 @@ function doneCount() { return CH.filter(c => prog.done[c.id]).length; }
 function renderSide() {
   const r = route(); const pct = Math.round(doneCount() / CH.length * 100);
   $('#side').innerHTML = `
-    <div class="ring"><i style="width:${pct}%"></i></div><div class="ringtxt">${doneCount()} of ${CH.length} chapters complete</div>
-    <h6>Start</h6><nav class="nav"><a href="#/start" class="${r.view === 'start' ? 'on' : ''}"><span class="n">${ICON('globe')}</span>Start here</a><a href="#/home" class="${r.view === 'home' ? 'on' : ''}"><span class="n">${ICON('home')}</span>Overview</a><a href="#/map" class="${r.view === 'map' ? 'on' : ''}"><span class="n">${ICON('map')}</span>Lecture map</a></nav>
+    <div class="ring"><i style="width:${pct}%"></i></div><div class="ringtxt">${doneCount()} of ${CH.length} chapters complete</div>${streakHTML()}
+    <h6>Start</h6><nav class="nav"><a href="#/start" class="${r.view === 'start' ? 'on' : ''}"><span class="n">${ICON('globe')}</span>Start here</a><a href="#/home" class="${r.view === 'home' ? 'on' : ''}"><span class="n">${ICON('home')}</span>Overview</a><a href="#/map" class="${r.view === 'map' ? 'on' : ''}"><span class="n">${ICON('map')}</span>Lecture map</a><a href="#/paths" class="${r.view === 'paths' ? 'on' : ''}"><span class="n">${ICON('flag')}</span>Learning paths</a></nav>
     <h6>Chapters</h6><nav class="nav">${CH.map(c => `<a href="#/ch/${c.id}" class="${r.view === 'ch' && r.a === c.id ? 'on' : ''} ${prog.done[c.id] ? 'done' : ''}"><span class="n">${prog.done[c.id] ? '✓' : c.n}</span>${esc(c.title)}<span class="wk">${esc(c.weeks.replace('Week', 'W').replace('Weeks', 'W'))}</span></a>`).join('')}</nav>
     <h6>Practice</h6><nav class="nav">
       <a href="#/playground/regex" class="${r.view === 'playground' ? 'on' : ''}"><span class="n">${ICON('flask')}</span>Playground</a>
       <a href="#/challenges" class="${r.view === 'challenges' ? 'on' : ''}"><span class="n">${ICON('target')}</span>Challenges</a>
+      <a href="#/missions" class="${r.view === 'missions' ? 'on' : ''}"><span class="n">${ICON('flask')}</span>Story missions</a>
       <a href="#/pipes" class="${r.view === 'pipes' ? 'on' : ''}"><span class="n">${ICON('pipe')}</span>Pipe lab</a>
       <a href="#/fix" class="${r.view === 'fix' ? 'on' : ''}"><span class="n">${ICON('wrench')}</span>Fix the command</a>
       <a href="#/predict" class="${r.view === 'predict' ? 'on' : ''}"><span class="n">${ICON('eye')}</span>Predict the output</a>
       <a href="#/quiz" class="${r.view === 'quiz' ? 'on' : ''}"><span class="n">${ICON('help')}</span>Mixed quiz</a>
       <a href="#/cards" class="${r.view === 'cards' ? 'on' : ''}"><span class="n">${ICON('layers')}</span>Flashcards</a>
       <a href="#/exam" class="${r.view === 'exam' ? 'on' : ''}"><span class="n">${ICON('clipboard')}</span>Mock exam</a>
-      <a href="#/certificate" class="${r.view === 'certificate' ? 'on' : ''}"><span class="n">${ICON('check')}</span>Certificate</a>
-      <a href="#/cheat" class="${r.view === 'cheat' ? 'on' : ''}"><span class="n">${ICON('clipboard')}</span>Cheat sheet</a></nav>`;
+      <a href="#/cheat" class="${r.view === 'cheat' ? 'on' : ''}"><span class="n">${ICON('clipboard')}</span>Cheat sheet</a></nav>
+    <h6>Build and get hired</h6><nav class="nav">
+      <a href="#/projects" class="${r.view === 'projects' ? 'on' : ''}"><span class="n">${ICON('code')}</span>Mini projects</a>
+      <a href="#/interview" class="${r.view === 'interview' ? 'on' : ''}"><span class="n">${ICON('help')}</span>Interview prep</a></nav>
+    <h6>Progress</h6><nav class="nav">
+      <a href="#/daily" class="${r.view === 'daily' ? 'on' : ''}"><span class="n">${ICON('cpu')}</span>Daily practice</a>
+      <a href="#/badges" class="${r.view === 'badges' ? 'on' : ''}"><span class="n">${ICON('target')}</span>Badges</a>
+      <a href="#/certificate" class="${r.view === 'certificate' ? 'on' : ''}"><span class="n">${ICON('check')}</span>Certificate</a></nav>`;
 }
 
 function render(opts) {
   const r = route();
-  renderSide(); $('#side').classList.remove('open');
+  renderSide(); sideExtras(); $('#side').classList.remove('open');
   const m = main();
   const y = window.scrollY;
   if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
-  ({ home: vHome, ch: vChapter, map: vMap, playground: vPlayground, cards: vCards, cheat: vCheat, quiz: vQuiz, challenges: vChallenges, pipes: vPipes, fix: vFix, predict: vPredict, start: vStart, certificate: vCert, exam: vExam }[r.view] || vHome)(m, r);
+  ({ home: vHome, ch: vChapter, map: vMap, playground: vPlayground, cards: vCards, cheat: vCheat, quiz: vQuiz, challenges: vChallenges, pipes: vPipes, fix: vFix, predict: vPredict, start: vStart, certificate: vCert, exam: vExam, missions: vMissions, projects: vProjects, interview: vInterview, daily: vDaily, badges: vBadges, paths: vPaths }[r.view] || vHome)(m, r);
+  if (r.view === 'ch') chapterExtras(m, r);
   if (opts && opts.keepScroll) window.scrollTo(0, y);
 }
 
@@ -180,6 +189,13 @@ function vHome(m) {
     <div class="row" style="margin-top:16px;color:var(--ink2);font-size:.86rem"><span class="badge">${cmdCount} commands</span><span class="badge">${nQ} quiz questions</span><span class="badge">${window.CHALLENGES.length} terminal challenges</span></div></div>
     <div class="cards">${CH.map(c => `<a class="card" href="#/ch/${c.id}"><div class="tile">${ICON(c.icon)}</div><b>${c.n}. ${esc(c.title)}</b><span>${esc(c.intro)}</span><div class="meta"><span class="badge">${esc(c.weeks)}</span>${prog.done[c.id] ? '<span class="badge ok">complete</span>' : ''}${prog.quiz[c.id] ? `<span class="badge">quiz ${prog.quiz[c.id].score}/${prog.quiz[c.id].total}</span>` : ''}</div></a>`).join('')}</div>
     <div class="tools"><div class="eyebrow">Practice tools</div></div><div class="cards"><a class="card" href="#/pipes"><div class="tile">${ICON('pipe')}</div><b>Pipe lab</b><span>Step through a pipeline and see the text after every stage.</span></a><a class="card" href="#/fix"><div class="tile">${ICON('wrench')}</div><b>Fix the command</b><span>Find the bug in a broken command: a wrong option, a missing quote, the wrong redirect.</span><div class="meta"><span class="badge">${window.PRACTICE.FIX.filter(x => prog.fix[x.id]).length}/${window.PRACTICE.FIX.length} fixed</span></div></a><a class="card" href="#/predict"><div class="tile">${ICON('eye')}</div><b>Predict the output</b><span>Guess what a command prints, then run it and see how you did.</span><div class="meta"><span class="badge">${window.PRACTICE.PREDICT.filter(x => prog.pred[x.id]).length}/${window.PRACTICE.PREDICT.length} correct</span></div></a><a class="card" href="#/exam"><div class="tile">${ICON('clipboard')}</div><b>Mock exam</b><span>Timed papers drawn from every chapter, with a review of what you missed.</span></a><a class="card" href="#/start"><div class="tile">${ICON('globe')}</div><b>Start here</b><span>New to Linux? Install paths, a distro picker and a guided first run.</span></a><a class="card" href="#/certificate"><div class="tile">${ICON('check')}</div><b>Certificate</b><span>Finish every chapter to unlock a printable completion certificate.</span></a></div>
+    <div class="tools"><div class="eyebrow">Learn by doing, then get hired</div></div><div class="cards">
+      <a class="card" href="#/missions"><div class="tile">${ICON('flask')}</div><b>Story missions</b><span>Solve cases in the sandbox: a leaked key, a messy server, a sales file.</span><div class="meta"><span class="badge">${G.allMissions(window.MISSIONS).filter(x => prog.mis[x.id]).length}/${G.allMissions(window.MISSIONS).length} complete</span></div></a>
+      <a class="card" href="#/projects"><div class="tile">${ICON('code')}</div><b>Mini projects</b><span>Backups, cron, SSH hardening and a Flask deployment on a real machine.</span></a>
+      <a class="card" href="#/interview"><div class="tile">${ICON('help')}</div><b>Interview prep</b><span>${window.INTERVIEW.length} Linux questions with answers and a quiz-me mode.</span></a>
+      <a class="card" href="#/daily"><div class="tile">${ICON('cpu')}</div><b>Daily practice</b><span>A command and a question every day. Build a streak.</span></a>
+      <a class="card" href="#/badges"><div class="tile">${ICON('target')}</div><b>Badges</b><span>Earn badges for quizzes, challenges, missions and streaks.</span></a>
+      <a class="card" href="#/paths"><div class="tile">${ICON('flag')}</div><b>Learning paths</b><span>Linux for exams, for data science and AI, and for web developers.</span></a></div>
     <p class="credit-line">Curated and created by Ammar Hashmi for IIT Madras BS students.</p></div>`;
   $('#hTerm').onclick = () => openDock(true); $('#hSearch').onclick = () => openPal();
 }
@@ -238,7 +254,7 @@ function buildQuiz(host, qs, onFinish, title) {
       host.innerHTML = `<div class="qdone"><div class="score">${score} / ${qs.length}</div><p class="lede" style="margin:.4em auto 1em">${score === qs.length ? 'Perfect score.' : score >= qs.length * .7 ? 'Solid. Review the ones you missed in the chapter.' : 'Re-read the chapter, run its examples, then try again.'}</p><button class="btn" id="qs">Share result</button> <button class="btn ghost" id="qr">Try again</button></div>`;
       $('#qr', host).onclick = () => buildQuiz(host, qs, onFinish, title);
       $('#qs', host).onclick = () => shareModal({ title: title || 'Linux quiz', score, total: qs.length });
-      onFinish && onFinish({ score, total: qs.length });
+      onFinish && onFinish({ score, total: qs.length }); markActive();
       return;
     }
     const q = qs[i];
@@ -405,13 +421,15 @@ function mountPipe(host, cmd) {
   draw();
 }
 let plLast = (window.PRACTICE.PIPES || [])[0] || 'cat fruits.txt | sort | uniq -c';
-function vPipes(m) {
+function vPipes(m, r) {
+  if (r && r.a) { const pre = G.dec(r.a); if (pre) plLast = pre; }
   m.innerHTML = `<div class="page"><div class="eyebrow">Pipes</div><h1>${ICON('pipe')} Pipe lab</h1>
     <p class="lede">Type a pipeline, then step through it. You see the exact text each program receives and what it passes on. The lab works on a copy of your sandbox files, so nothing here changes them.</p>
-    <div class="term-in"><input id="plIn" aria-label="Pipeline to visualize" value="${esc(plLast)}" spellcheck="false" autocomplete="off" autocapitalize="off"><button class="btn" id="plGo">Visualize</button></div>
+    <div class="term-in"><input id="plIn" aria-label="Pipeline to visualize" value="${esc(plLast)}" spellcheck="false" autocomplete="off" autocapitalize="off"><button class="btn" id="plGo">Visualize</button><button class="btn ghost" id="plShare" title="Copy a link that opens this pipeline">Copy link</button></div>
     <div class="chips" id="plChips">${(window.PRACTICE.PIPES || []).map(c => `<button class="chip" data-c="${esc(c)}">${esc(c)}</button>`).join('')}</div>
     <div id="plHost"></div></div>`;
   const run = () => { plLast = $('#plIn').value; mountPipe($('#plHost'), plLast); };
+  $('#plShare').onclick = () => { const url = location.href.split('#')[0] + '#/pipes/' + G.enc($('#plIn').value.trim()), b = $('#plShare'), done = ok => { b.textContent = ok ? 'Link copied' : 'Copy failed'; setTimeout(() => { b.textContent = 'Copy link'; }, 1600); }; try { navigator.clipboard.writeText(url).then(() => done(true), () => done(false)); } catch (e) { done(false); } };
   $('#plGo').onclick = run; $('#plIn').onkeydown = e => { if (e.key === 'Enter') run(); };
   $('#plChips').onclick = e => { const b = e.target.closest('.chip'); if (b) { $('#plIn').value = b.dataset.c; run(); } };
   run();
@@ -497,7 +515,7 @@ function buildIndex() {
   index = [];
   CH.forEach(c => { c.sections.forEach(s => { index.push({ k: 'sec', t: s.h, sub: `Ch ${c.n} · ${c.title}`, txt: (s.h + ' ' + strip(s.html)).toLowerCase(), go: `ch/${c.id}/${s.id}` }); (s.cmds || []).forEach(k => index.push({ k: 'cmd', t: k[0], sub: k[1], txt: (k[0] + ' ' + k[1]).toLowerCase(), go: `ch/${c.id}/${s.id}`, cmd: true })); }); });
   LECT.forEach(w => w.lectures.forEach(l => l.items.forEach(it => index.push({ k: 'lec', t: it.x, sub: `Week ${w.week} · ${l.title} @ ${it.t}`, txt: (it.x + ' ' + l.title).toLowerCase(), go: 'map' }))));
-  [['Start here', 'Install paths, distro picker and a guided first run for new people', 'start', 'start here install wsl ubuntu distro beginner new tour'], ['Mock exam', 'Timed mock paper drawn from every chapter', 'exam', 'mock exam test timed practice paper'], ['Certificate', 'Completion certificate once every chapter is done', 'certificate', 'certificate completion print pdf'], ['Pipe lab', 'Step through a pipeline stage by stage', 'pipes', 'pipe pipeline visualizer stdin stdout stage'], ['Fix the command', 'Practice: find the bug in a broken command', 'fix', 'fix debug broken bug command practice'], ['Predict the output', 'Practice: guess the output, then run it', 'predict', 'predict guess output practice']]
+  [['Story missions', 'Cases with a story, checked automatically in the sandbox', 'missions', 'story missions case mystery sysadmin leaked key data detective'], ['Mini projects', 'Backup script, cron, SSH hardening, Flask deployment', 'projects', 'project backup cron ssh flask deploy nginx gunicorn systemd'], ['Interview prep', 'Linux interview questions with answers', 'interview', 'interview questions answers devops placement job'], ['Daily practice', 'Command and question of the day, streaks', 'daily', 'daily streak command of the day'], ['Badges', 'Your earned badges', 'badges', 'badges achievements progress'], ['Learning paths', 'Linux for exams, data science and web developers', 'paths', 'paths roadmap route data science web exam'], ['Start here', 'Install paths, distro picker and a guided first run for new people', 'start', 'start here install wsl ubuntu distro beginner new tour'], ['Mock exam', 'Timed mock paper drawn from every chapter', 'exam', 'mock exam test timed practice paper'], ['Certificate', 'Completion certificate once every chapter is done', 'certificate', 'certificate completion print pdf'], ['Pipe lab', 'Step through a pipeline stage by stage', 'pipes', 'pipe pipeline visualizer stdin stdout stage'], ['Fix the command', 'Practice: find the bug in a broken command', 'fix', 'fix debug broken bug command practice'], ['Predict the output', 'Practice: guess the output, then run it', 'predict', 'predict guess output practice']]
     .forEach(x => index.push({ k: 'sec', t: x[0], sub: x[1], txt: (x[0] + ' ' + x[3]).toLowerCase(), go: x[2] }));
 }
 function openPal() { if (!index) buildIndex(); $('#pal').classList.add('open'); const i = $('#palq'); i.value = ''; i.focus(); palSearch(''); }
@@ -528,7 +546,7 @@ function boot() {
   $$('#themes button').forEach(b => b.onclick = () => setTheme(b.dataset.t));
   $('#menuBtn').onclick = () => $('#side').classList.toggle('open');
   $('#searchBtn').onclick = openPal; $('#termBtn').onclick = () => openDock(!$('#dock').classList.contains('open'));
-  initTerminal(); initPal(); render(); tourBoot();
+  initTerminal(); initPal(); render(); growthBoot();
 }
 document.addEventListener('DOMContentLoaded', boot);
 })();
