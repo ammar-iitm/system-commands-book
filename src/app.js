@@ -10,6 +10,7 @@ const store = {
 };
 const prog = store.get('prog', { done: {}, quiz: {}, lect: {}, cards: {}, chal: {} });
 const save = () => store.set('prog', prog);
+prog.fix = prog.fix || {}; prog.pred = prog.pred || {};
 const strip = h => h.replace(/<[^>]+>/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/\s+/g, ' ');
 
 /* ================= Terminal / sandbox ================= */
@@ -45,17 +46,19 @@ function tprint(html) { const d = document.createElement('div'); d.className = '
 function runCmd(cmd, opts) {
   opts = opts || {};
   const ph = promptHTML();
+  const before = LEARN.flat(sh.fs);
   const r = sh.run(cmd);
   if (r.clear) { term.log.innerHTML = ''; }
   else { tprint(ph + esc(cmd)); if (r.out) tprint(esc(r.out.replace(/\n$/, ''))); if (r.err) tprint('<span class="e">' + esc(r.err.replace(/\n$/, '')) + '</span>'); }
   updPrompt();
+  renderTree(LEARN.fsDiff(before, LEARN.flat(sh.fs)), before);
   checkChallenge(cmd, r);
   return r;
 }
 function updPrompt() { $('#tprompt').innerHTML = promptHTML(); }
 function openDock(open) { $('#dock').classList.toggle('open', open ?? true); document.body.classList.toggle('dockopen', $('#dock').classList.contains('open')); if (open !== false) setTimeout(() => term.input.focus(), 50); }
 function setInput(cmd) { openDock(true); term.input.value = cmd; term.input.focus(); }
-function resetSandbox() { sh = VirtualShell(); stubs(sh); term.active = null; $('#activeChal').style.display = 'none'; term.log.innerHTML = ''; tprint('<span class="ok">Sandbox reset — fresh file system.</span>'); updPrompt(); }
+function resetSandbox() { sh = VirtualShell(); stubs(sh); term.active = null; $('#activeChal').style.display = 'none'; term.log.innerHTML = ''; tprint('<span class="ok">Sandbox reset — fresh file system.</span>'); updPrompt(); renderTree(null); }
 function complete() {
   const v = term.input.value; const parts = v.split(/\s+/); const last = parts[parts.length - 1]; let cands = [];
   if (parts.length === 1) cands = Object.keys(sh.C).filter(c => c.startsWith(last));
@@ -82,6 +85,35 @@ function initTerminal() {
   $('#tchips').innerHTML = chips.map(c => `<button class="chip">${esc(c)}</button>`).join('');
   $('#tchips').addEventListener('click', e => { const b = e.target.closest('.chip'); if (b) { runCmd(b.textContent); term.input.focus(); } });
   updPrompt();
+  initTree();
+}
+
+/* ================= File tree panel ================= */
+// Redrawn after every command. Rows that a command created, changed or removed are highlighted until the next command.
+const treeOpen = new Map(); let pristineFlat = null, treeState = { diff: null, before: null }, treeRows = [];
+const pristine = () => pristineFlat || (pristineFlat = LEARN.flat(VirtualShell().fs));
+function renderTree(diff, before) {
+  const el = $('#fst'); if (!el) return;
+  if (diff !== undefined) treeState = { diff, before };
+  const d = treeState.diff;
+  treeRows = LEARN.treeRows(sh.fs, { cwd: sh.cwd, diff: d || undefined, before: treeState.before || undefined, open: treeOpen, pristine: pristine() });
+  const changes = d && !LEARN.isEmptyDiff(d) ? LEARN.describeDiff(d, treeState.before, LEARN.flat(sh.fs), sh.env.HOME) : [];
+  const sign = { add: ['a', '+'], del: ['d', '−'], mod: ['m', '~'], mode: ['m', '~'] };
+  const chg = changes.length
+    ? changes.slice(0, 6).map(c => `<div class="${sign[c.k][0]}">${sign[c.k][1]} ${esc(c.text)}</div>`).join('') + (changes.length > 6 ? `<div>… and ${changes.length - 6} more</div>` : '')
+    : 'Last command changed no files.';
+  el.innerHTML = `<h4>${ICON('folder')} File system</h4><div class="chg">${chg}</div>` + treeRows.map(r => {
+    const isDir = r.type === 'd', caret = isDir && r.kids ? (r.open ? '▾' : '▸') : '';
+    return `<div class="fr ${isDir ? 'dir' : 'f'} ${r.state} ${r.cwd ? 'cwd' : ''}" data-p="${esc(r.path)}" style="padding-left:${4 + r.depth * 14}px" title="${esc(r.path)}"><span class="caret">${caret}</span>${ICON(isDir ? 'folder' : 'file')}<span class="nm">${esc(r.name)}${isDir && r.name !== '/' ? '/' : ''}${r.link ? ' → ' + esc(r.link) : ''}</span>${r.cwd ? '<span class="you">you are here</span>' : ''}<span class="pm">${esc(r.mode)}</span></div>`;
+  }).join('');
+}
+function initTree() {
+  const el = $('#fst'), btn = $('#treeBtn'), dock = $('#dock');
+  const set = on => { dock.classList.toggle('showtree', on); btn.classList.toggle('on', on); btn.setAttribute('aria-pressed', on); store.set('tree', on); };
+  set(store.get('tree', null) ?? innerWidth >= 900);
+  btn.onclick = () => { set(!dock.classList.contains('showtree')); if (!dock.classList.contains('open')) openDock(true); };
+  el.addEventListener('click', e => { const row = e.target.closest('.fr.dir'); if (!row) return; const r = treeRows.find(x => x.path === row.dataset.p); if (r && r.kids) { treeOpen.set(r.path, !r.open); renderTree(); } });
+  renderTree(null);
 }
 
 /* ================= Challenges ================= */
@@ -112,6 +144,9 @@ function renderSide() {
     <h6>Practice</h6><nav class="nav">
       <a href="#/playground/regex" class="${r.view === 'playground' ? 'on' : ''}"><span class="n">${ICON('flask')}</span>Playground</a>
       <a href="#/challenges" class="${r.view === 'challenges' ? 'on' : ''}"><span class="n">${ICON('target')}</span>Challenges</a>
+      <a href="#/pipes" class="${r.view === 'pipes' ? 'on' : ''}"><span class="n">${ICON('pipe')}</span>Pipe lab</a>
+      <a href="#/fix" class="${r.view === 'fix' ? 'on' : ''}"><span class="n">${ICON('wrench')}</span>Fix the command</a>
+      <a href="#/predict" class="${r.view === 'predict' ? 'on' : ''}"><span class="n">${ICON('eye')}</span>Predict the output</a>
       <a href="#/quiz" class="${r.view === 'quiz' ? 'on' : ''}"><span class="n">${ICON('help')}</span>Mixed quiz</a>
       <a href="#/cards" class="${r.view === 'cards' ? 'on' : ''}"><span class="n">${ICON('layers')}</span>Flashcards</a>
       <a href="#/cheat" class="${r.view === 'cheat' ? 'on' : ''}"><span class="n">${ICON('clipboard')}</span>Cheat sheet</a></nav>`;
@@ -123,7 +158,7 @@ function render(opts) {
   const m = main();
   const y = window.scrollY;
   if (!(opts && opts.keepScroll)) window.scrollTo(0, 0);
-  ({ home: vHome, ch: vChapter, map: vMap, playground: vPlayground, cards: vCards, cheat: vCheat, quiz: vQuiz, challenges: vChallenges }[r.view] || vHome)(m, r);
+  ({ home: vHome, ch: vChapter, map: vMap, playground: vPlayground, cards: vCards, cheat: vCheat, quiz: vQuiz, challenges: vChallenges, pipes: vPipes, fix: vFix, predict: vPredict }[r.view] || vHome)(m, r);
   if (opts && opts.keepScroll) window.scrollTo(0, y);
 }
 
@@ -138,12 +173,13 @@ function vHome(m) {
     <div class="row" style="margin-top:14px"><a class="btn" href="#/ch/essentials">Start chapter 1</a><button class="btn ghost" id="hTerm">Open terminal</button><button class="btn ghost" id="hSearch">Search <kbd>Ctrl K</kbd></button></div>
     <div class="row" style="margin-top:16px;color:var(--ink2);font-size:.86rem"><span class="badge">${cmdCount} commands</span><span class="badge">${nQ} quiz questions</span><span class="badge">${window.CHALLENGES.length} terminal challenges</span></div></div>
     <div class="cards">${CH.map(c => `<a class="card" href="#/ch/${c.id}"><div class="tile">${ICON(c.icon)}</div><b>${c.n}. ${esc(c.title)}</b><span>${esc(c.intro)}</span><div class="meta"><span class="badge">${esc(c.weeks)}</span>${prog.done[c.id] ? '<span class="badge ok">complete</span>' : ''}${prog.quiz[c.id] ? `<span class="badge">quiz ${prog.quiz[c.id].score}/${prog.quiz[c.id].total}</span>` : ''}</div></a>`).join('')}</div>
+    <div class="tools"><div class="eyebrow">Practice tools</div></div><div class="cards"><a class="card" href="#/pipes"><div class="tile">${ICON('pipe')}</div><b>Pipe lab</b><span>Step through a pipeline and see the text after every stage.</span></a><a class="card" href="#/fix"><div class="tile">${ICON('wrench')}</div><b>Fix the command</b><span>Find the bug in a broken command: a wrong option, a missing quote, the wrong redirect.</span><div class="meta"><span class="badge">${window.PRACTICE.FIX.filter(x => prog.fix[x.id]).length}/${window.PRACTICE.FIX.length} fixed</span></div></a><a class="card" href="#/predict"><div class="tile">${ICON('eye')}</div><b>Predict the output</b><span>Guess what a command prints, then run it and see how you did.</span><div class="meta"><span class="badge">${window.PRACTICE.PREDICT.filter(x => prog.pred[x.id]).length}/${window.PRACTICE.PREDICT.length} correct</span></div></a></div>
     <p class="credit-line">Curated and created by Ammar Hashmi for IIT Madras BS students.</p></div>`;
   $('#hTerm').onclick = () => openDock(true); $('#hSearch').onclick = () => openPal();
 }
 
 /* ---------- Chapter ---------- */
-function exHTML(e) { return `<div class="ex"><div class="exhead"><code>${esc(e.c)}</code>${e.n ? `<span class="note">${esc(e.n)}</span>` : ''}<button class="run">${ICON('play')} Run</button><button class="tt" title="Copy into terminal">${ICON('pencil')} Edit</button></div><pre class="exout" hidden></pre></div>`; }
+function exHTML(e) { const pv = LEARN.splitPipeline(e.c), canViz = !pv.error && pv.stages.length > 1; return `<div class="ex"><div class="exhead"><code>${esc(e.c)}</code>${e.n ? `<span class="note">${esc(e.n)}</span>` : ''}<button class="run">${ICON('play')} Run</button><button class="tt" title="Copy into terminal">${ICON('pencil')} Edit</button>${canViz ? `<button class="viz" title="Step through the pipeline">${ICON('pipe')} Visualize</button>` : ''}<button class="prd" title="Guess the output first">${ICON('eye')} Predict</button></div><pre class="exout" hidden></pre></div>`; }
 function vChapter(m, r) {
   const i = CH.findIndex(c => c.id === r.a); const c = CH[i] || CH[0]; const ci = CH.indexOf(c);
   const prev = CH[ci - 1], next = CH[ci + 1];
@@ -158,8 +194,11 @@ function vChapter(m, r) {
   $$('.cmd', m).forEach(b => b.onclick = () => setInput(b.dataset.c));
   $$('.ex', m).forEach(ex => {
     const cmd = $('code', ex).textContent; const out = $('.exout', ex);
-    $('.run', ex).onclick = () => { const res = runCmd(cmd); let h = esc((res.out || '').replace(/\n$/, '')); if (res.err) h += (h ? '\n' : '') + '<span class="e">' + esc(res.err.replace(/\n$/, '')) + '</span>'; if (res.clear) h = ''; out.innerHTML = h || '<span style="opacity:.5">(no output)</span>'; out.hidden = false; };
+    const runEx = () => { const res = runCmd(cmd); let h = esc((res.out || '').replace(/\n$/, '')); if (res.err) h += (h ? '\n' : '') + '<span class="e">' + esc(res.err.replace(/\n$/, '')) + '</span>'; if (res.clear) h = ''; out.innerHTML = h || '<span style="opacity:.5">(no output)</span>'; out.hidden = false; return res; };
+    $('.run', ex).onclick = runEx;
     $('.tt', ex).onclick = () => setInput(cmd);
+    const viz = $('.viz', ex); if (viz) viz.onclick = () => { const old = $('.pvhost', ex); if (old) { old.remove(); return; } const host = document.createElement('div'); host.className = 'pvhost'; ex.appendChild(host); mountPipe(host, cmd); };
+    $('.prd', ex).onclick = () => { const old = $('.pred', ex); if (old) { old.remove(); return; } predictBox(ex, cmd, runEx); };
   });
   $('#doneBtn').onclick = () => { prog.done[c.id] = !prog.done[c.id]; save(); render({ keepScroll: true }); };
   const cin = $('#cidrIn'); if (cin) { const upd = () => { $('#cidrOut').textContent = cidr(cin.value); }; cin.oninput = upd; upd(); }
@@ -317,12 +356,142 @@ function vChallenges(m) {
   $$('[data-c]', m).forEach(b => b.onclick = () => { setActive(window.CHALLENGES.find(c => c.id === +b.dataset.c)); });
 }
 
+/* ================= Pipe visualizer ================= */
+// Works on a copy of the sandbox, so stepping through a pipeline never changes the student's files.
+const pipeShell = () => { const s = VirtualShell(); stubs(s); return LEARN.cloneState(sh, s); };
+const KIND = { source: 'starts the flow', same: 'passes the text through unchanged', reorder: 'reorders the lines', filter: 'keeps some lines', transform: 'rewrites the text', empty: 'prints nothing' };
+const plural = (n, w) => n + ' ' + w + (n === 1 ? '' : 's');
+function pipeStage(s, last) {
+  const tag = s.kind === 'filter' ? `keeps ${s.outLines} of ${s.inLines} lines` : KIND[s.kind];
+  const cnt = (s.inLines === null ? plural(s.outLines, 'line') : `${s.inLines} → ${plural(s.outLines, 'line')}`) + (s.code ? ' · exit ' + s.code : '');
+  const L = LEARN.lines(s.output);
+  const body = L.slice(0, 200).map((l, i) => `<span class="ln">${i + 1}</span>${esc(l)}`).join('\n') + (L.length > 200 ? `\n… ${L.length - 200} more lines` : '');
+  const err = s.err ? `<span class="e">${esc(s.err.replace(/\n$/, ''))}</span>` : '';
+  const none = !body && !err ? `<span class="none">${/>/.test(s.cmd) ? '(output was redirected to a file)' : '(no output)'}</span>` : '';
+  const drop = s.dropped.length ? `<details class="pv-drop"><summary>${plural(s.dropped.length, 'line')} dropped here</summary><pre>${s.dropped.slice(0, 100).map(l => `<s>${esc(l)}</s>`).join('\n')}</pre></details>` : '';
+  return `<div class="pv-st ${last ? 'last' : ''}"><div class="pv-h"><span class="pv-n">${s.i + 1}</span><code>${esc(s.cmd)}</code><span class="pv-tag k-${s.kind}">${esc(tag)}</span><span class="pv-cnt">${cnt}</span></div><pre class="pv-out">${[body, err].filter(Boolean).join('\n') || none}</pre>${drop}</div>`;
+}
+function mountPipe(host, cmd) {
+  const res = LEARN.pipeSteps(pipeShell, cmd);
+  if (res.error) { host.innerHTML = `<div class="pv"><p class="pv-help" style="margin:0">${esc(res.error)}</p></div>`; return; }
+  const steps = res.steps, n = steps.length; let shown = 1, timer = null;
+  const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+  const draw = (scroll) => {
+    if (shown >= n) stop();
+    const short = c => c.length > 30 ? c.slice(0, 29) + '…' : c;
+    host.innerHTML = `<div class="pv"><div class="pv-flow">${steps.map((s, i) => `${i ? '<span class="pv-pipe">|</span>' : ''}<button class="pv-chip ${i < shown ? '' : 'wait'} ${i === shown - 1 ? 'on' : ''}" data-i="${i}" title="${esc(s.cmd)}"><span>${esc(short(s.cmd))}</span><small>${i < shown ? plural(s.outLines, 'line') : 'waiting'}</small></button>`).join('')}</div>
+      <div class="pv-ctl"><button class="btn" data-a="step" ${shown >= n ? 'disabled' : ''}>Step ▶</button><button class="btn ghost" data-a="play" ${shown >= n ? 'disabled' : ''}>${timer ? 'Pause' : 'Play'}</button><button class="btn ghost" data-a="all" ${shown >= n ? 'disabled' : ''}>Show all</button><button class="btn ghost" data-a="reset">Restart</button></div>
+      ${steps.slice(0, shown).map((s, i) => pipeStage(s, shown >= n && i === n - 1)).join('')}
+      <p class="pv-help">${n === 1 ? 'This command has no pipe, so there is only one stage. Add | and another command to see data flow between programs.' : shown < n ? `${plural(n - shown, 'stage')} still to run. Each | hands the text on its left to the program on its right as its input.` : 'This is the final output, what you would see in the terminal. Error messages do not travel through a pipe: they go straight to the screen.'}</p></div>`;
+    if (scroll) { const st = host.querySelectorAll('.pv-st'); if (st.length) st[st.length - 1].scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }
+  };
+  host.onclick = e => {
+    const chip = e.target.closest('.pv-chip'), b = e.target.closest('[data-a]');
+    if (chip) { stop(); shown = +chip.dataset.i + 1; draw(); return; }
+    if (!b || b.disabled) return;
+    const a = b.dataset.a;
+    if (a === 'step') { stop(); shown = Math.min(n, shown + 1); draw(true); }
+    else if (a === 'all') { stop(); shown = n; draw(true); }
+    else if (a === 'reset') { stop(); shown = 1; draw(); }
+    else if (a === 'play') { if (timer) { stop(); draw(); } else { timer = setInterval(() => { if (!host.isConnected) return stop(); shown = Math.min(n, shown + 1); draw(true); }, 1200); draw(); } }
+  };
+  draw();
+}
+let plLast = (window.PRACTICE.PIPES || [])[0] || 'cat fruits.txt | sort | uniq -c';
+function vPipes(m) {
+  m.innerHTML = `<div class="page"><div class="eyebrow">Pipes</div><h1>${ICON('pipe')} Pipe lab</h1>
+    <p class="lede">Type a pipeline, then step through it. You see the exact text each program receives and what it passes on. The lab works on a copy of your sandbox files, so nothing here changes them.</p>
+    <div class="term-in"><input id="plIn" aria-label="Pipeline to visualize" value="${esc(plLast)}" spellcheck="false" autocomplete="off" autocapitalize="off"><button class="btn" id="plGo">Visualize</button></div>
+    <div class="chips" id="plChips">${(window.PRACTICE.PIPES || []).map(c => `<button class="chip" data-c="${esc(c)}">${esc(c)}</button>`).join('')}</div>
+    <div id="plHost"></div></div>`;
+  const run = () => { plLast = $('#plIn').value; mountPipe($('#plHost'), plLast); };
+  $('#plGo').onclick = run; $('#plIn').onkeydown = e => { if (e.key === 'Enter') run(); };
+  $('#plChips').onclick = e => { const b = e.target.closest('.chip'); if (b) { $('#plIn').value = b.dataset.c; run(); } };
+  run();
+}
+
+/* ================= Fix it and Predict ================= */
+// Every attempt runs in a fresh sandbox so the sample files are always as shipped.
+const freshShell = () => { const s = VirtualShell(); stubs(s); return s; };
+const chTitle = id => (CH.find(c => c.id === id) || {}).title || '';
+const fmtOut = (out, err) => { const o = (out || '').replace(/\n$/, ''), e = (err || '').replace(/\n$/, ''); return (o ? esc(o) : '') + (o && e ? '\n' : '') + (e ? `<span class="e">${esc(e)}</span>` : ''); };
+function tryFix(it, cmd) {
+  const s = freshShell(); if (it.setup) s.run(it.setup);
+  const r = s.run(cmd), out = r.out || '', err = r.err || ''; let chk = '';
+  if (it.check) { const q = s.run(it.check); chk = (q.out || '') + (q.err || ''); }
+  return { out, err, chk, text: LEARN.normOut(out + err + (it.check ? '\n--check--\n' + chk : '')) };
+}
+const fixShow = (it, j) => (fmtOut(j.out, j.err) + (it.check ? `${j.out || j.err ? '\n' : ''}<span class="dim">$ ${esc(it.check)}</span>\n${esc(j.chk.replace(/\n$/, '')) || '(no output)'}` : '')) || '<span class="dim">(no output)</span>';
+const fixWant = {};
+function vFix(m) {
+  const FX = window.PRACTICE.FIX, solvedN = () => FX.filter(x => prog.fix[x.id]).length;
+  FX.forEach(it => { if (!fixWant[it.id]) fixWant[it.id] = tryFix(it, it.sol); });
+  m.innerHTML = `<div class="page"><div class="eyebrow">Debugging</div><h1>${ICON('wrench')} Fix the command</h1>
+    <p class="lede">Each command has one bug: a wrong option, a missing quote, the wrong redirect. Read what it prints, edit it in the box and press Enter. It counts as fixed when the result matches. <b id="fxCount">${solvedN()}/${FX.length}</b> fixed. Every try runs in a fresh sandbox.</p>
+    ${FX.map((it, i) => `<div class="pcard ${prog.fix[it.id] ? 'done' : ''}" data-id="${it.id}"><div class="num">${prog.fix[it.id] ? '✓' : i + 1}</div><div class="pb">
+      <p class="pt">${esc(it.t)}</p>
+      <div class="term-in"><input class="fxin" value="${esc(it.broken)}" aria-label="Command to fix" spellcheck="false" autocomplete="off" autocapitalize="off"><button class="btn fxrun">Run</button></div>
+      <div class="pres"><span class="lab fxlab">It prints this now</span><pre class="fxout">${fixShow(it, tryFix(it, it.broken))}</pre><div class="fxmsg"></div></div>
+      <div class="row"><button class="btn ghost fxreset" style="padding:4px 12px;font-size:.82rem">Start over</button><span class="badge">${esc(chTitle(it.ch))}</span></div>
+      <details><summary>Hint</summary>${esc(it.hint)}</details>
+      <details><summary>What it should print</summary><pre style="margin:6px 0">${fixShow(it, fixWant[it.id])}</pre><details style="margin:4px 0"><summary>Show a solution</summary><code>${esc(it.sol)}</code></details></details>
+      <div class="why" ${prog.fix[it.id] ? '' : 'hidden'}><b>The bug: ${esc(it.bug)}.</b> ${esc(it.why)}</div></div></div>`).join('')}</div>`;
+  $$('.pcard', m).forEach(card => {
+    const it = FX.find(x => x.id === card.dataset.id), inp = $('.fxin', card);
+    const run = () => {
+      const j = tryFix(it, inp.value), ok = j.text === fixWant[it.id].text;
+      $('.fxlab', card).textContent = 'Your command printed'; $('.fxout', card).innerHTML = fixShow(it, j);
+      $('.fxmsg', card).innerHTML = ok ? '<div class="verdict ok">✔ Fixed. The result matches.</div>' : '<div class="verdict no">Not yet: the result is different from what the task asks for. Use the hint if you are stuck.</div>';
+      if (ok) { card.classList.add('done'); $('.num', card).textContent = '✓'; $('.why', card).hidden = false; if (!prog.fix[it.id]) { prog.fix[it.id] = true; save(); $('#fxCount').textContent = solvedN() + '/' + FX.length; } }
+    };
+    $('.fxrun', card).onclick = run; inp.onkeydown = e => { if (e.key === 'Enter') run(); };
+    $('.fxreset', card).onclick = () => { inp.value = it.broken; $('.fxlab', card).textContent = 'It prints this now'; $('.fxout', card).innerHTML = fixShow(it, tryFix(it, it.broken)); $('.fxmsg', card).innerHTML = ''; inp.focus(); };
+  });
+}
+
+// marks a predicted output and returns the HTML to show; used by the Predict page and by chapter examples
+function predictVerdict(guess, actual, why) {
+  const c = LEARN.compareAnswer(guess, actual);
+  const line = (t, bad) => `<span class="cl ${bad ? 'bad' : ''}">${t === null ? '<i>(nothing)</i>' : esc(t) || '&nbsp;'}</span>`;
+  const head = c.verdict === 'exact' ? '<div class="verdict ok">✔ Exactly right.</div>'
+    : c.verdict === 'spacing' ? '<div class="verdict ok">✔ Right text. Only the gaps between words are different.</div>'
+    : `<div class="verdict no">Not quite. You expected ${plural(c.guessLines, 'line')}; it printed ${plural(c.actualLines, 'line')}. Differences are marked.</div>`;
+  const cmp = c.ok ? '' : `<div class="cmp"><div><span class="lab">You expected</span><pre>${c.rows.map(r => line(r.got, !r.same)).join('')}</pre></div><div><span class="lab">It printed</span><pre>${c.rows.map(r => line(r.want, !r.same)).join('')}</pre></div></div>`;
+  return { ok: c.ok, html: head + cmp + (why ? `<div class="why"><b>Why:</b> ${esc(why)}</div>` : '') };
+}
+function vPredict(m) {
+  const PD = window.PRACTICE.PREDICT, solvedN = () => PD.filter(x => prog.pred[x.id]).length;
+  m.innerHTML = `<div class="page"><div class="eyebrow">Build your intuition</div><h1>${ICON('eye')} Predict the output</h1>
+    <p class="lede">Read the command and type what you think it prints before you run it. Then the sandbox runs it and marks your answer. Guessing first is what makes the surprises stick. Leave the box empty if you think nothing is printed. <b id="prCount">${solvedN()}/${PD.length}</b> predicted correctly.</p>
+    ${PD.map((it, i) => `<div class="pcard ${prog.pred[it.id] ? 'done' : ''}" data-id="${it.id}"><div class="num">${prog.pred[it.id] ? '✓' : i + 1}</div><div class="pb">
+      <p class="pt">What does this print?</p><div class="cmdline"><code>${esc(it.c)}</code></div>
+      <textarea class="prin" rows="${Math.max(2, it.expect.trim().split('\n').length)}" placeholder="Type the output you expect" aria-label="Your predicted output" spellcheck="false"></textarea>
+      <div class="row"><button class="btn prrun">Run and compare</button><span class="badge">${esc(chTitle(it.ch))}</span></div><div class="pres prres"></div></div></div>`).join('')}</div>`;
+  $$('.pcard', m).forEach(card => {
+    const it = PD.find(x => x.id === card.dataset.id);
+    $('.prrun', card).onclick = () => {
+      const s = freshShell(), r = s.run(it.c), v = predictVerdict($('.prin', card).value, (r.out || '') + (r.err || ''), it.why);
+      $('.prres', card).innerHTML = v.html;
+      if (v.ok) { card.classList.add('done'); $('.num', card).textContent = '✓'; if (!prog.pred[it.id]) { prog.pred[it.id] = true; save(); $('#prCount').textContent = solvedN() + '/' + PD.length; } }
+    };
+  });
+}
+// "Predict" button on a chapter example: guess, then the example really runs in the sandbox
+function predictBox(ex, cmd, runEx) {
+  const box = document.createElement('div'); box.className = 'pred';
+  box.innerHTML = `<textarea rows="2" placeholder="What will it print? Type your guess, then check." aria-label="Your predicted output" spellcheck="false" style="width:100%;font:.86rem/1.5 var(--mono);padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--code-bg);color:var(--ink);resize:vertical"></textarea><div class="row" style="margin-top:6px"><button class="btn" style="padding:4px 14px;font-size:.84rem">Run and compare</button></div><div class="pres"></div>`;
+  $('.btn', box).onclick = () => { const res = runEx(); $('.pres', box).innerHTML = predictVerdict($('textarea', box).value, (res.out || '') + (res.err || ''), '').html; };
+  ex.insertBefore(box, $('.exout', ex)); $('textarea', box).focus();
+}
+
 /* ================= Search palette ================= */
 let index = null, palSel = 0, palRes = [];
 function buildIndex() {
   index = [];
   CH.forEach(c => { c.sections.forEach(s => { index.push({ k: 'sec', t: s.h, sub: `Ch ${c.n} · ${c.title}`, txt: (s.h + ' ' + strip(s.html)).toLowerCase(), go: `ch/${c.id}/${s.id}` }); (s.cmds || []).forEach(k => index.push({ k: 'cmd', t: k[0], sub: k[1], txt: (k[0] + ' ' + k[1]).toLowerCase(), go: `ch/${c.id}/${s.id}`, cmd: true })); }); });
   LECT.forEach(w => w.lectures.forEach(l => l.items.forEach(it => index.push({ k: 'lec', t: it.x, sub: `Week ${w.week} · ${l.title} @ ${it.t}`, txt: (it.x + ' ' + l.title).toLowerCase(), go: 'map' }))));
+  [['Pipe lab', 'Step through a pipeline stage by stage', 'pipes', 'pipe pipeline visualizer stdin stdout stage'], ['Fix the command', 'Practice: find the bug in a broken command', 'fix', 'fix debug broken bug command practice'], ['Predict the output', 'Practice: guess the output, then run it', 'predict', 'predict guess output practice']]
+    .forEach(x => index.push({ k: 'sec', t: x[0], sub: x[1], txt: (x[0] + ' ' + x[3]).toLowerCase(), go: x[2] }));
 }
 function openPal() { if (!index) buildIndex(); $('#pal').classList.add('open'); const i = $('#palq'); i.value = ''; i.focus(); palSearch(''); }
 function closePal() { $('#pal').classList.remove('open'); }
