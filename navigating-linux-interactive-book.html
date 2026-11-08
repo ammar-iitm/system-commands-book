@@ -426,6 +426,14 @@ h1>.svgi{color:var(--accent);width:.8em;height:.8em;margin-right:.1em;vertical-a
 
 .xrun .qtop{flex-wrap:wrap;gap:4px 12px}
 @media(max-width:600px){.tour{padding:10px 12px}.tour p{display:none}.tour .tcmd{margin-top:6px}.tour .row{margin-top:8px}}
+/* Start here: numbered steps with a checkbox that no longer sits on top of the list number */
+.steps{list-style:none;padding-left:0;counter-reset:st}
+.steps li{counter-increment:st}
+.steps label{align-items:flex-start;gap:12px;padding:6px 4px;border-radius:8px}
+.steps label:hover{background:var(--accent-soft)}
+.steps label::before{content:counter(st);order:-1;flex:none;width:1.7em;height:1.7em;border-radius:50%;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:.85rem;display:grid;place-items:center}
+.steps input{order:0;flex:none;width:1.15em;height:1.15em;margin-top:.3em}
+.steps input:checked+span{color:var(--ink2);text-decoration:line-through;text-decoration-color:var(--line)}
 </style></head><body>
 <header class="topbar"><button class="iconbtn" id="menuBtn" aria-label="Menu"><i class="svgi" data-i="menu"></i></button>
 <a class="brand" href="#/home" style="color:inherit"><i class="svgi" data-i="terminal-square"></i><span>Navigating Linux<small>by Ammar Hashmi · IIT Madras BS</small></span></a><span class="spacer"></span>
