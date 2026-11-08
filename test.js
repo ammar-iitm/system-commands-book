@@ -57,7 +57,7 @@ for (const [cmd, out, err] of cases) { const r = run(cmd); check(cmd, r.out, out
 
 // ---- book content ----
 const ctx = { console }; ctx.window = ctx; vm.createContext(ctx);
-for (const f of ['engine', 'content1', 'content2', 'content3', 'quiz_extra'])
+for (const f of ['engine', 'content1', 'content2', 'content3', 'quiz_extra', 'learn', 'practice'])
   vm.runInContext(fs.readFileSync(path.join(__dirname, 'src', f + '.js'), 'utf8'), ctx, { filename: f });
 for (const c of ctx.CH) {
   for (const s of c.sections) for (const e of s.ex || []) {
@@ -73,6 +73,108 @@ for (const c of ctx.CH) {
       check(`quiz ${c.id}#${i} snippet`, ((r.out || '') + '').split(/\s+/).filter(Boolean).join(' '), q.chk);
     }
   });
+}
+
+// ---- learning tools (src/learn.js) ----
+const LEARN = require('./src/learn.js');
+const sp = c => { const r = LEARN.splitPipeline(c); return r.error ? 'ERR' : r.stages.join(' // '); };
+check('split simple', sp('cat f | sort | uniq -c'), 'cat f // sort // uniq -c');
+check('split quoted pipe', sp("echo 'a | b' | wc -w"), "echo 'a | b' // wc -w");
+check('split pipe inside double quotes', sp('grep -E "a|b" f | wc -l'), 'grep -E "a|b" f // wc -l');
+check('split || is not a pipe', sp('a || b'), 'ERR');
+check('split && list', sp('a && b | c'), 'ERR');
+check('split semicolon list', sp('a; b | c'), 'ERR');
+check('split $( ) keeps its pipe', sp('echo $(a | b) | wc'), 'echo $(a | b) // wc');
+check('split &> redirect', sp('cmd &> f | wc'), 'cmd &> f // wc');
+check('split 2>&1 redirect', sp('ls 2>&1 | wc -l'), 'ls 2>&1 // wc -l');
+check('split loop is refused', sp('for i in 1; do echo $i; done | wc'), 'ERR');
+check('split empty stage', sp('a | '), 'ERR');
+check('split comment', sp('echo hi | wc # | no'), 'echo hi // wc');
+check('split awk braces', sp("awk '{print $1}' f | sort"), "awk '{print $1}' f // sort");
+
+const mk = () => VirtualShell();
+{ // stepping through a pipeline
+  const r = LEARN.pipeSteps(mk, 'cat fruits.txt | sort | uniq -c | sort -rn | head -n 3');
+  check('pipeSteps kinds', r.steps.map(s => s.kind).join(','), 'source,reorder,transform,reorder,filter');
+  check('pipeSteps head drops 3 lines', r.steps[4].dropped.length, 3);
+  check('pipeSteps line counts', r.steps.map(s => s.outLines).join(','), '9,9,6,6,3');
+  const e = LEARN.pipeSteps(mk, 'cat nope.txt | wc -l');
+  check('pipeSteps error belongs to stage 1', e.steps[0].err !== '' && e.steps[1].err === '' && e.steps[0].code === 1, true);
+  check('pipeSteps ls is piped', LEARN.pipeSteps(mk, 'ls | wc -l').steps[0].output.split('\n').length > 5, true);
+  check('pipeSteps refuses lists', !!LEARN.pipeSteps(mk, 'a; b').error, true);
+  check('classify filter', LEARN.classify('a\nb\nc\n', 'b\n'), 'filter');
+  check('classify same', LEARN.classify('a\nb\n', 'a\nb\n'), 'same');
+  check('classify empty', LEARN.classify('a\n', ''), 'empty');
+}
+
+// ---- file system diff and tree ----
+const diffOf = (setup, cmd) => { const s = VirtualShell(); if (setup) s.run(setup); const a = LEARN.flat(s.fs); s.run(cmd); const b = LEARN.flat(s.fs); return { s, a, b, d: LEARN.fsDiff(a, b) }; };
+const H = '/home/student';
+{
+  let t = diffOf('', 'mkdir -p x/y; touch x/y/z');
+  check('diff mkdir+touch', t.d.added.join(), `${H}/x,${H}/x/y,${H}/x/y/z`);
+  check('describe lists only the top new directory', LEARN.describeDiff(t.d, t.a, t.b, H).map(x => x.text).join(), 'created ~/x/');
+  t = diffOf('', 'rm fruits.txt'); check('diff rm', t.d.removed.join(), `${H}/fruits.txt`);
+  t = diffOf('', 'mv fruits.txt docs/'); check('diff mv', t.d.removed.join() + ' > ' + t.d.added.join(), `${H}/fruits.txt > ${H}/docs/fruits.txt`);
+  t = diffOf('', 'chmod 600 notes.txt');
+  check('diff chmod', LEARN.describeDiff(t.d, t.a, t.b, H).map(x => x.text).join(), 'permissions of ~/notes.txt: -rw-r--r-- → -rw-------');
+  t = diffOf('', 'echo x >> notes.txt'); check('diff append', t.d.changed.join(), `${H}/notes.txt`);
+  check('diff ls is empty', LEARN.isEmptyDiff(diffOf('', 'ls').d), true);
+  check('diff cd is empty', LEARN.isEmptyDiff(diffOf('', 'cd docs').d), true);
+  const rowOf = (rows, p) => rows.find(r => r.path === p);
+  t = diffOf('', 'touch new.txt'); let rows = LEARN.treeRows(t.s.fs, { cwd: t.s.cwd, diff: t.d, before: t.a, pristine: LEARN.flat(VirtualShell().fs) });
+  check('tree starts at /', rows[0].path, '/');
+  check('tree marks new file', rowOf(rows, `${H}/new.txt`).state, 'new');
+  check('tree flags the cwd', rows.filter(r => r.cwd).map(r => r.path).join(), H);
+  check('tree keeps /etc closed', rowOf(rows, '/etc').open, false);
+  t = diffOf('', 'rm fruits.txt'); rows = LEARN.treeRows(t.s.fs, { cwd: t.s.cwd, diff: t.d, before: t.a });
+  check('tree shows a ghost for a removed file', rowOf(rows, `${H}/fruits.txt`).state, 'gone');
+  t = diffOf('', 'touch /etc/foo'); rows = LEARN.treeRows(t.s.fs, { cwd: t.s.cwd, diff: t.d, before: t.a, pristine: LEARN.flat(VirtualShell().fs) });
+  check('tree opens a changed directory outside home', rowOf(rows, '/etc').open, true);
+}
+
+// ---- marking a predicted answer ----
+check('answer exact', LEARN.compareAnswer('a\nb\n', 'a\nb').verdict, 'exact');
+check('answer ignores trailing spaces and blank edges', LEARN.compareAnswer('\n a  \nb\n\n', ' a\nb').verdict, 'exact');
+check('answer keeps leading spaces on a line', LEARN.compareAnswer('a\n b', 'a\nb').verdict, 'spacing');
+check('answer spacing only', LEARN.compareAnswer('3 apple', '      3 apple').verdict, 'spacing');
+check('answer wrong', LEARN.compareAnswer('a\nc', 'a\nb').ok, false);
+check('answer wrong rows', JSON.stringify(LEARN.compareAnswer('a\nc', 'a\nb').rows.map(r => r.same)), '[true,false]');
+check('answer empty equals empty', LEARN.compareAnswer('', '\n').verdict, 'exact');
+check('answer missing line', LEARN.compareAnswer('a', 'a\nb').rows[1].got, null);
+
+// ---- practice sets (src/practice.js) ----
+{
+  const chIds = new Set(ctx.CH.map(c => c.id)), P = ctx.PRACTICE;
+  const judge = (it, cmd) => { const s = VirtualShell(); if (it.setup) s.run(it.setup); const r = s.run(cmd); let t = (r.out || '') + (r.err || ''); if (it.check) { const q = s.run(it.check); t += '\n--check--\n' + (q.out || '') + (q.err || ''); } return LEARN.normOut(t); };
+  for (const [name, set] of [['fix', P.FIX], ['predict', P.PREDICT]]) {
+    check(`${name}: ids are unique`, new Set(set.map(x => x.id)).size, set.length);
+    for (const it of set) {
+      if (!chIds.has(it.ch)) { failed++; console.log(`FAIL ${name} ${it.id}: unknown chapter ${it.ch}`); }
+      if (!it.why || !it.why.trim()) { failed++; console.log(`FAIL ${name} ${it.id}: missing explanation`); }
+    }
+  }
+  for (const it of P.FIX) {
+    if (!it.t || !it.hint || !it.bug) { failed++; console.log(`FAIL fix ${it.id}: missing text`); }
+    const want = judge(it, it.sol);
+    if (judge(it, it.broken) === want) { failed++; console.log(`FAIL fix ${it.id}: the broken command already gives the right result`); }
+    for (const a of it.alt || []) check(`fix ${it.id} alternative: ${a}`, judge(it, a), want);
+  }
+  for (const it of P.PREDICT) {
+    const s = VirtualShell(); const r = s.run(it.c); const got = (r.out || '') + (r.err || '');
+    check(`predict ${it.id}: the sandbox prints what real bash prints`, LEARN.compareAnswer(it.expect, got).verdict, 'exact');
+  }
+  // the Pipe lab presets all run cleanly and print something
+  for (const c of P.PIPES) {
+    const r = LEARN.pipeSteps(mk, c), last = r.steps && r.steps[r.steps.length - 1];
+    check(`pipe preset runs: ${c}`, !r.error && r.steps.every(s => !s.err) && last.output.trim() !== '', true);
+  }
+  // every pipeline example in the chapters can be stepped through, and the last stage equals a normal run
+  for (const c of ctx.CH) for (const s of c.sections) for (const e of s.ex || []) {
+    const sp2 = LEARN.splitPipeline(e.c); if (sp2.error || sp2.stages.length < 2) continue;
+    const r = LEARN.pipeSteps(mk, e.c), full = VirtualShell().run(e.c);
+    check(`pipeSteps final stage = real run: ${e.c}`, r.steps[r.steps.length - 1].output, full.out || '');
+  }
 }
 
 console.log(failed ? `\n${failed} check(s) failed` : 'all checks passed');

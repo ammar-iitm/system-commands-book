@@ -18,12 +18,12 @@ html=f'''<!doctype html>
 <button class="pill searchbtn" id="searchBtn"><span><i class="svgi" data-i="search"></i> <span class="lbl">Search</span></span><kbd>Ctrl K</kbd></button>
 <button class="pill" id="termBtn"><i class="svgi" data-i="terminal"></i> <span class="lbl">Terminal</span></button><div class="themes" id="themes" role="group" aria-label="Theme"><button data-t="light" title="Light"><i class="svgi" data-i="sun"></i><span class="tl"> Light</span></button><button data-t="dark" title="Dark"><i class="svgi" data-i="moon"></i><span class="tl"> Dark</span></button><button data-t="reading" title="Reading mode"><i class="svgi" data-i="book"></i><span class="tl"> Reading</span></button></div></header>
 <div class="layout"><aside class="side" id="side"></aside><main id="main"></main></div>
-<div class="dock" id="dock"><div class="dockbar" id="dockbar"><b>student@linuxlab</b><span>sandbox terminal</span><span class="active" id="activeChal" style="display:none"></span><span class="spacer"></span><button id="resetBtn">Reset sandbox</button><span>Ctrl+`</span></div>
-<div class="term" id="term"><div id="tlog"></div><div class="tin"><span id="tprompt"></span><input id="tinput" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="terminal input"></div></div><div class="tchips" id="tchips"></div></div>
+<div class="dock" id="dock"><div class="dockbar" id="dockbar"><b>student@linuxlab</b><span class="hint">sandbox terminal</span><span class="active" id="activeChal" style="display:none"></span><span class="spacer"></span><button id="treeBtn" aria-pressed="false" title="Show the file system as a tree">File tree</button><button id="resetBtn">Reset sandbox</button><span class="hint">Ctrl+`</span></div>
+<div class="dockbody"><div class="term" id="term"><div id="tlog"></div><div class="tin"><span id="tprompt"></span><input id="tinput" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="terminal input"></div></div><aside class="fst" id="fst" aria-label="File system tree"></aside></div><div class="tchips" id="tchips"></div></div>
 <div class="pal" id="pal"><div class="palbox"><input id="palq" placeholder="Search commands, topics, lectures…" autocomplete="off"><ul id="palul"></ul></div></div>
 <script>window.LECT={json.dumps(L,ensure_ascii=False)};</script>
-<script>{rd('icons.js')}</script><script>{rd('engine.js')}</script>
-<script>{rd('content1.js')}</script><script>{rd('content2.js')}</script><script>{rd('content3.js')}</script><script>{rd('quiz_extra.js')}</script>
+<script>{rd('icons.js')}</script><script>{rd('engine.js')}</script><script>{rd('learn.js')}</script>
+<script>{rd('content1.js')}</script><script>{rd('content2.js')}</script><script>{rd('content3.js')}</script><script>{rd('quiz_extra.js')}</script><script>{rd('practice.js')}</script>
 <script>{rd('app.js')}</script></body></html>'''
 # index.html is a copy so the site works when served from a folder (e.g. GitHub Pages)
 for name in ('navigating-linux-interactive-book.html','index.html'):
