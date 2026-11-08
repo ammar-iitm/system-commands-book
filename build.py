@@ -22,9 +22,9 @@ html=f'''<!doctype html>
 <div class="dockbody"><div class="term" id="term"><div id="tlog"></div><div class="tin"><span id="tprompt"></span><input id="tinput" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="terminal input"></div></div><aside class="fst" id="fst" aria-label="File system tree"></aside></div><div class="tchips" id="tchips"></div></div>
 <div class="pal" id="pal"><div class="palbox"><input id="palq" placeholder="Search commands, topics, lectures…" autocomplete="off"><ul id="palul"></ul></div></div>
 <script>window.LECT={json.dumps(L,ensure_ascii=False)};</script>
-<script>{rd('icons.js')}</script><script>{rd('engine.js')}</script><script>{rd('learn.js')}</script>
+<script>{rd('icons.js')}</script><script>{rd('engine.js')}</script><script>{rd('learn.js')}</script><script>{rd('growth.js')}</script>
 <script>{rd('content1.js')}</script><script>{rd('content2.js')}</script><script>{rd('content3.js')}</script><script>{rd('quiz_extra.js')}</script><script>{rd('practice.js')}</script>
-<script>{rd('app.js')}</script></body></html>'''
+<script>{rd('app.js').replace('/*@@GROWTH@@*/', rd('app_growth.js'))}</script></body></html>'''
 # index.html is a copy so the site works when served from a folder (e.g. GitHub Pages)
 for name in ('navigating-linux-interactive-book.html','index.html'):
     open(name,'w',encoding='utf8').write(html)

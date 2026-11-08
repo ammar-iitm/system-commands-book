@@ -9,6 +9,9 @@ Open `navigating-linux-interactive-book.html` (or `index.html`, an identical cop
 - a live file-system tree beside the terminal that highlights what each command created, changed, removed or chmod-ed
 - a Pipe lab (and a Visualize button on every pipeline example) that steps through a pipeline stage by stage
 - Fix the command: broken commands to debug, and Predict the output: guess first, then run (also a Predict button on every example)
+- Start here: install paths (WSL, VM, live USB, dual boot, Mac), a five-question distro picker and a nine-step guided first run in the terminal
+- Explain button on every example and an `explain <command>` terminal command that break a command into parts, plus friendly hints for common errors
+- Mock exam mode (15, 30 or 50 timed questions from every chapter, flagging, review of mistakes), shareable result cards (PNG) and a printable completion certificate
 - a cheat sheet and a regex / sed / awk / grep playground
 - Light, Dark and Reading themes
 
@@ -24,6 +27,8 @@ Layout of the source:
 - `src/engine.js` – the simulated shell, sed, awk and regex translation (no DOM, runs under Node)
 - `src/learn.js` – pipeline stepping, file-system diff and tree rows, answer marking (no DOM, runs under Node)
 - `src/practice.js` – the Fix the command and Predict the output exercises and the Pipe lab presets; `node test.js` checks every one against the simulator
+- `src/growth.js` – DOM-free logic for the install guides, distro picker, command explainer, error hints, guided tour, exam builder/grader and certificate helpers (tested by `node test.js`)
+- `src/app_growth.js` – the pages and widgets for those features; `build.py` splices it into `app.js` at the `/*@@GROWTH@@*/` marker
 - `src/content1-3.js`, `src/quiz_extra.js` – chapter text, commands, examples and quiz questions
 - `src/app.js`, `src/app.css` – the interface
 - `lectures.json` – the lecture index shown on the Lecture map (`parse.py` regenerates it from a text export of the course index)
